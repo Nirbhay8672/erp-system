@@ -1,0 +1,127 @@
+.pre-loader,
+.circle-line {
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+}
+
+.circle-line {
+    z-index: 9999;
+    width: 200px;
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: center;
+}
+
+.circle-red,
+.circle-blue {
+    position: relative;
+    width: 20px;
+    height: 20px;
+    border-radius: 30px;
+    margin: 5px;
+}
+
+.circle-red {
+    background-image: linear-gradient(195deg, #ec407a, #d81b60);
+    animation: movingUp 0.5s infinite alternate;
+    text-align: center;
+    padding-top: 8px;
+    color: white;
+}
+
+.circle-blue {
+    background-color: #4285f4;
+    animation: movingUp 0.5s 0.2s infinite alternate;
+    text-align: center;
+    padding-top: 8px;
+    color: white;
+}
+
+/* CSS ANIMATION */
+
+@keyframes movingUp {
+    from {
+        top: 0px;
+    }
+
+    to {
+        top: -30px;
+    }
+}
+
+.check-all {
+    font-size: 14px !important;
+}
+
+.file-upload {
+    position: relative;
+    display: inline-block;
+    width: 100%;
+}
+
+.file-input {
+    display: none;
+}
+
+.file-label {
+    display: flex;
+    align-items: center;
+    padding: 10px 20px;
+    background-color: #434343;
+    color: white;
+    border-radius: 4px;
+    cursor: pointer;
+    font-size: 16px;
+}
+
+.file-label:hover {
+    background-color: #000000;
+}
+
+.file-label-icon {
+    margin-right: 8px;
+}
+
+.file-name {
+    display: block;
+    margin-top: 10px;
+    font-size: 14px;
+    color: #333;
+}
+
+.tooltip {
+    position: relative;
+    display: inline-block;
+    cursor: help;
+}
+
+.tooltip .tooltiptext {
+    visibility: hidden;
+    width: 120px;
+    background-color: #555;
+    color: #fff;
+    text-align: center;
+    border-radius: 6px;
+    padding: 5px 0;
+    position: absolute;
+    z-index: 1;
+    bottom: 125%;
+    left: 50%;
+    margin-left: -60px;
+    opacity: 0;
+    transition: opacity 0.3s;
+}
+
+.tooltip:hover .tooltiptext {
+    visibility: visible;
+    opacity: 1;
+}
+
+.licence-key {
+    width: 100px;
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
+}

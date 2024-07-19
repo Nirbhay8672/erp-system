@@ -12,13 +12,13 @@
                                     <i class="material-icons opacity-10">leaderboard</i>
                                 </div>
                                 <div class="text-end pt-1">
-                                    <p class="text-sm mb-0 text-capitalize">ERP Plugins</p>
+                                    <p class="text-sm mb-0 text-capitalize">Users</p>
                                     <h4 class="mb-0">10</h4>
                                 </div>
                             </div>
                             <hr class="dark horizontal my-0">
                             <div class="card-footer p-3 text-center">
-                                <a href="" class="btn btn-outline-primary btn-sm mb-0">View</a>
+                                <a :href="`${$page.props.url}/users/index`" class="btn btn-outline-primary btn-sm mb-0">View</a>
                             </div>
                         </div>
                     </div>

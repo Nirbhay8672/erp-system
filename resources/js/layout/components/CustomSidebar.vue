@@ -104,16 +104,10 @@ let menuItems = reactive([
         has_permission: hasPermission('view_dashboard'),
     },
     {
-        name: "ERP Plugins",
+        name: "Users",
         icon: "fa fa-users",
-        url: "members/index",
-        has_permission: hasPermission('view_members'),
-    },
-    {
-        name: "Plugin Settings",
-        icon: "fa fa-cog",
-        url: "plugin/index",
-        has_permission: hasPermission('view_plugin'),
+        url: "users/index",
+        has_permission: hasPermission('view_users'),
     },
 ]);
 

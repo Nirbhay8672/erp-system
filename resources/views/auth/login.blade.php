@@ -13,7 +13,7 @@
     <link rel="shortcut icon" href="{{ asset('/images/favicon.png') }}" />
     <link rel="stylesheet" type="text/css" href="{{ asset('/font/cssa882.css') }}?family=Roboto:300,400,500,700,900|Roboto+Slab:400,700" />
     <link id="pagestyle" href="{{ asset('/css/app.css') }}?v=3.0.6" rel="stylesheet" />
-    <link rel="stylesheet" href="{{ asset('/css/font-awesome.css') }}">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
 </head>
 
 <body>

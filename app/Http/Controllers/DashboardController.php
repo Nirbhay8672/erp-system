@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers;
 
+use App\Models\User;
 use Inertia\Inertia;
 use Inertia\Response;
 
@@ -21,6 +22,7 @@ class DashboardController extends Controller
     {
         return Inertia::render('Dashboard', [
             'page_name' => 'Dashboard',
+            'total_users' => User::all()->count(),
         ]);
     }
 }

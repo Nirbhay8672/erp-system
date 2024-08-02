@@ -21,6 +21,7 @@ class UserController extends Controller
     {
         return Inertia::render('user/Index',[
             'roles' => Role::all(),
+            'page_name' => 'Users',
         ]);
     }
 

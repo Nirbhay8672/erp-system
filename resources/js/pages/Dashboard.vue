@@ -13,7 +13,7 @@
                                 </div>
                                 <div class="text-end pt-1">
                                     <p class="text-sm mb-0 text-capitalize">Users</p>
-                                    <h4 class="mb-0">10</h4>
+                                    <h4 class="mb-0">{{ $page.props.total_users }}</h4>
                                 </div>
                             </div>
                             <hr class="dark horizontal my-0">

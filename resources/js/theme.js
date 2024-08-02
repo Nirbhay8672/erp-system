@@ -617,25 +617,6 @@ function toggleSidenav() {
           iconSidenav.classList.remove("d-none"));
 }
 
-let referenceButtons = '';
-
-const navbarOnColorResided = function () {
-    referenceButtons = document.querySelector("[data-class]");
-};
-
-function navbarColorOnResize() {
-    sidenav &&
-        (1200 < window.innerWidth
-            ? referenceButtons.classList.contains("active") &&
-              "bg-transparent" === referenceButtons.getAttribute("data-class")
-                ? sidenav.classList.remove("bg-white")
-                : document
-                      .querySelector("body")
-                      .classList.contains("dark-version") ||
-                  sidenav.classList.add("bg-white")
-            : sidenav.classList.remove("bg-transparent"));
-}
-
 function sidenavTypeOnResize() {
     var e = document.querySelectorAll('[onclick="sidebarType(this)"]');
     window.innerWidth < 1200
@@ -806,8 +787,8 @@ function darkMode(e) {
         e.setAttribute("checked", "true");
     }
 }
-window.addEventListener("resize", navbarColorOnResize),
-    window.addEventListener("resize", sidenavTypeOnResize),
+
+window.addEventListener("resize", sidenavTypeOnResize),
     window.addEventListener("load", sidenavTypeOnResize),
     (window.onload = function () {
         for (
@@ -1558,7 +1539,6 @@ const initComponent = function () {
     initForSetting();
     sidenavbarToogleVariables();
     initSidebarToggle();
-    navbarOnColorResided();
 };
 
 export {

@@ -31,6 +31,7 @@ class UserSeeder extends Seeder
 
             // profile
             ['display_name' => 'View Users', 'name' => 'view_users', 'category' => 'User', 'guard_name' => 'web'],
+            ['display_name' => 'Add User', 'name' => 'add_user', 'category' => 'User', 'guard_name' => 'web'],
             ['display_name' => 'Update User', 'name' => 'update_user', 'category' => 'User', 'guard_name' => 'web'],
             ['display_name' => 'Delete User', 'name' => 'delete_user', 'category' => 'User', 'guard_name' => 'web'],
         ];

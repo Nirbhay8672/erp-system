@@ -2,6 +2,7 @@
 
 use App\Http\Controllers\Auth\RegisterController;
 use App\Http\Controllers\DashboardController;
+use App\Http\Controllers\Designation\DesignationController;
 use App\Http\Controllers\LoginController;
 use App\Http\Controllers\MemberController;
 use App\Http\Controllers\PluginController;
@@ -50,6 +51,15 @@ Route::prefix('users')->as('users.')->middleware(['auth', '2fa'])->group(functio
     Route::post('/datatable', [UserController::class, 'datatable'])->middleware(['permission:view_users'])->name('user_datatable');
     Route::post('/create-or-update/{user?}', [UserController::class, 'createOrUpdate'])->middleware(['permission:add_user'])->name('create_or_update');
     Route::get('/delete/{user?}', [UserController::class, 'delete'])->middleware(['permission:delete_user'])->name('user_delete');
+});
+
+// Designation routes
+Route::prefix('designation')->as('designation.')->middleware(['role_or_permission:Admin|View Designation','auth'])->group(function(){
+    
+    Route::get('/index', [DesignationController::class, 'index'])->name('designation');
+    Route::post('/designation', [DesignationController::class, 'fetchRecord'])->name('designation_list');
+    Route::post('/store-or-update/{designation?}', [DesignationController::class, 'storeOrUpdate'])->name('store_or_update');
+    Route::get('/delete/{designation}',[DesignationController::class, 'destroy'])->name('delete');
 });
 
 Route::get('/send-msg', [DashboardController::class, 'generateInvoice']);

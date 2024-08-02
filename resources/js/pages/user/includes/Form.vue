@@ -20,7 +20,7 @@
                                 :src="
                                     fields.profile_path
                                         ? fields.profile_path
-                                        : '/images/user.png'
+                                        : `${$page.props.url}/images/profile.png`
                                 "
                                 class="rounded"
                                 style="width: 120px; height: 120px"
@@ -72,7 +72,6 @@
                         type="text"
                         id="name"
                         field="name"
-                        placeholder="Enter name"
                         :errors="formValidation.errors"
                     ></Field>
                 </div>
@@ -84,7 +83,6 @@
                         type="text"
                         id="email"
                         field="email"
-                        placeholder="Enter email"
                         :errors="formValidation.errors"
                     ></Field>
                 </div>
@@ -96,7 +94,6 @@
                         type="text"
                         id="first_name"
                         field="first_name"
-                        placeholder="Enter first name"
                         :errors="formValidation.errors"
                     ></Field>
                 </div>
@@ -108,7 +105,6 @@
                         type="text"
                         id="last_name"
                         field="last_name"
-                        placeholder="Enter last name"
                         :errors="formValidation.errors"
                     ></Field>
                 </div>
@@ -119,7 +115,6 @@
                         type="password"
                         id="password"
                         field="password"
-                        placeholder="Enter password"
                         autocomplete="off"
                         :errors="formValidation.errors"
                     ></Field>
@@ -132,18 +127,17 @@
                         id="confirm_password"
                         field="confirm_password"
                         autocomplete="off"
-                        placeholder="Enter confirm password"
                         :errors="formValidation.errors"
                     ></Field>
                 </div>
                 <div class="col-lg-6 mb-2">
                     <Field
-                        label="Role"
                         field="role_id"
                         id="role_id"
                         label-class="required"
                         :errors="formValidation.errors"
                         no-input
+                        no-label
                     >
                         <template #input="{ hasError }">
                             <select

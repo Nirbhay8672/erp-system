@@ -1,260 +1,187 @@
 <template>
     <inertia-head title="Users" />
     <main-page>
-        <div class="row justify-content-between gy-3 mb-3">
-            <div class="col-md-auto me-auto">
-                <div class="pagetitle">
-                    <h1>Users</h1>
-                </div>
-            </div>
-            <div class="col-md-auto ms-auto">
-                <button
-                    class="btn btn-primary btn-sm"
-                    @click="openForm()"
-                    v-if="hasPermission('add_user')"
-                >
-                    <i class="bi bi-plus"></i>
-                    <span class="ms-2">Add User</span>
-                </button>
-            </div>
-        </div>
-
-        <section class="section">
-            <div class="row">
-                <div class="col">
-                    <div class="card">
-                        <div
-                            class="card-body p-4"
-                            v-if="loader"
-                            style="height: 200px"
-                        >
-                            <div class="overflow dark" id="preload">
-                                <div class="circle-line">
-                                    <div class="circle-red">
-                                    </div>
-                                    <div class="circle-blue">
-                                    </div>
-                                    <div class="circle-red">
-                                    </div>
-                                </div>
+        <div class="row">
+            <div class="col-lg-12 position-relative z-index-2">
+                <div class="card mb-4" v-if="loader" style="height: 200px">
+                    <div class="card-body p-4">
+                        <div class="overflow dark" id="preload">
+                            <div class="circle-line">
+                                <div class="circle-red"></div>
+                                <div class="circle-blue"></div>
+                                <div class="circle-red"></div>
                             </div>
                         </div>
-                        <div class="card-body p-4" v-else>
-                            <div class="row justify-content-between gy-3 mb-3">
-                                <div class="col-md-auto me-auto">
-                                    <select
-                                        class="form-select form-control"
-                                        id="per_page"
-                                        v-model="fields.per_page"
-                                        @change="changeMainFilter()"
-                                    >
-                                        <option value="5">5</option>
-                                        <option value="10">10</option>
-                                        <option value="15">15</option>
-                                        <option value="20">20</option>
-                                    </select>
+                    </div>
+                </div>
+                <div class="card mb-4" v-else>
+                    <div class="card-header pb-0 p-4">
+                        <div class="d-flex justify-content-between">
+                            <h6 class="mb-0">Users</h6>
+                            <button class="btn btn-primary btn-icon-only" @click="openForm()" v-if="hasPermission('add_user')">
+                                <i class="fa fa-plus"></i>
+                            </button>
+                        </div>
+                        <hr class="horizontal dark" />
+                    </div>
+                    <div class="card-body px-0 pt-0 pb-2">
+                        <div class="table-responsive p-0">
+                            <div class="dataTable-wrapper dataTable-loading no-footer sortable searchable fixed-columns">
+                                <div class="dataTable-top">
+                                    <div class="dataTable-dropdown">
+                                        <label>
+                                            <select class="dataTable-selector me-2" id="per_page" v-model="fields.per_page"
+                                                @change="changeMainFilter()">
+                                                <option value="5">5</option>
+                                                <option value="10">10</option>
+                                                <option value="15">15</option>
+                                                <option value="20">20</option>
+                                            </select>
+                                        </label>
+                                    </div>
+                                    <div class="dataTable-search">
+                                        <input class="dataTable-input" placeholder="Search..." type="text" id="search_input"
+                                            v-model="fields.search" @keyup="changeMainFilter()" />
+                                    </div>
                                 </div>
-                                <div class="col-md-auto ms-auto">
-                                    <input
-                                        type="text"
-                                        id="search_input"
-                                        placeholder="Search..."
-                                        class="form-control"
-                                        v-model="fields.search"
-                                        @keyup="changeMainFilter()"
-                                    />
-                                </div>
-                            </div>
-                            <div class="row mb-3">
-                                <div class="table-responsive">
-                                    <table class="table table-hover">
-                                        <thead>
+                                <div class="dataTable-container">
+                                    <table class="table table-flush dataTable-table" id="member_table">
+                                        <thead class="thead-light">
                                             <tr>
-                                                <th>Sr No.</th>
-                                                <th>Profile</th>
-                                                <th>Username</th>
-                                                <th>Name</th>
-                                                <th>Email</th>
-                                                <th>Role</th>
-                                                <th class="text-center">
+                                                <th
+                                                    class="text-uppercase text-secondary text-xxs font-weight-bolder opacity-7">
+                                                    Profile
+                                                </th>
+                                                <th
+                                                    class="text-uppercase text-secondary text-xxs font-weight-bolder opacity-7">
+                                                    Username
+                                                </th>
+                                                <th
+                                                    class="text-uppercase text-secondary text-xxs font-weight-bolder opacity-7">
+                                                    Full Name
+                                                </th>
+                                                <th
+                                                    class="text-uppercase text-secondary text-xxs font-weight-bolder opacity-7">
+                                                    Email
+                                                </th>
+                                                <th
+                                                    class="text-uppercase text-secondary text-xxs font-weight-bolder opacity-7">
+                                                    Role
+                                                </th>
+                                                <th
+                                                    class="text-center text-uppercase text-secondary text-xxs font-weight-bolder opacity-7">
                                                     Action
                                                 </th>
                                             </tr>
                                         </thead>
                                         <tbody>
                                             <template v-if="users.length > 0">
-                                                <tr
-                                                    v-for="(
-                                                        user, index
-                                                    ) in users"
-                                                    :key="`user_${index}`"
-                                                >
-                                                    <td
-                                                        style="min-width: 100px"
-                                                    >
-                                                        {{ index + 1 }}
+                                                <tr class="text-sm" v-for="(user, index) in users" :key="`user_${index}`">
+                                                    <td>
+                                                        <img :src="user.profile_path ? `${$page.props.url}/${user.profile_path}` : '' " class="avatar me-3" alt="image" />
                                                     </td>
-                                                    <td
-                                                        style="min-width: 100px"
-                                                    >
-                                                        <img
-                                                            :src="
-                                                                user.profile_path
-                                                                    ? `${$page.props.url}/${user.profile_path}`
-                                                                    : ''
-                                                            "
-                                                            class="rounded-circle avatar"
-                                                            alt="profile image"
-                                                        />
+                                                    <td>
+                                                        <p class="text-sm font-weight-normal mb-0">
+                                                            {{ user.name }}
+                                                        </p>
                                                     </td>
-                                                    <td
-                                                        style="min-width: 100px"
-                                                    >
-                                                        {{ user.name }}
+                                                    <td>
+                                                        <p class="text-sm font-weight-normal mb-0">
+                                                            {{ user.first_name }} {{ user.last_name }}
+                                                        </p>
                                                     </td>
-                                                    <td
-                                                        style="min-width: 100px"
-                                                    >
-                                                        {{
-                                                            `${user.first_name} ${user.last_name}`
-                                                        }}
+                                                    <td>
+                                                        <p class="text-sm font-weight-normal mb-0">
+                                                            {{ user.email }}
+                                                        </p>
                                                     </td>
-                                                    <td
-                                                        style="min-width: 100px"
-                                                    >
-                                                        {{ user.email }}
+                                                    <td>
+                                                        <p class="text-sm font-weight-normal mb-0">
+                                                            {{
+                                                                user.roles[0][
+                                                                    "display_name"
+                                                                ]
+                                                            }}
+                                                        </p>
                                                     </td>
-                                                    <td
-                                                        style="min-width: 100px"
-                                                    >
-                                                        {{
-                                                            user.roles[0][
-                                                                "display_name"
-                                                            ]
-                                                        }}
-                                                    </td>
-                                                    <td
-                                                        style="min-width: 200px"
-                                                        class="text-center"
-                                                    >
-                                                        <button
-                                                            class="btn btn-outline-primary btn-sm ms-3"
-                                                            @click="
-                                                                openForm(user)
-                                                            "
-                                                            v-if="
-                                                                hasPermission(
-                                                                    'update_user'
-                                                                )
-                                                            "
-                                                        >
-                                                            <i
-                                                                class="bi bi-pencil-fill"
-                                                            ></i>
-                                                        </button>
-                                                        <button
-                                                            class="btn btn-outline-danger btn-sm ms-3"
-                                                            :class="user.id == 1 ? 'd-none' : ''"
-                                                            @click="
-                                                                deleteUser(user)
-                                                            "
-                                                            v-if="hasPermission('delete_user')"
-                                                        >
-                                                            <i
-                                                                class="bi bi-trash-fill"
-                                                            ></i>
-                                                        </button>
+                                                    <td class="align-middle text-end">
+                                                        <div class="d-flex justify-content-center mb-0">
+                                                            
+                                                            <button
+                                                                class="btn btn-icon-only btn-primary ms-3"
+                                                                @click="openForm(user)"
+                                                                v-if="hasPermission('update_user')"
+                                                            >
+                                                                <i class="fa fa-pencil"></i>
+                                                            </button>
+
+                                                            <button
+                                                                class="btn btn-icon-only btn-danger ms-3"
+                                                                :class="user.id == 1 ? 'd-none' : ''"
+                                                                @click="deleteUser(user)"
+                                                                v-if="hasPermission('delete_user')"
+                                                            >
+                                                                <i class="fa fa-trash"></i>
+                                                            </button>
+                                                        </div>
                                                     </td>
                                                 </tr>
                                             </template>
-                                            <template v-else>
-                                                <tr
-                                                    style="width: 100%"
-                                                    class="text-center"
-                                                >
-                                                    <td colspan="6">
-                                                        <img
-                                                            alt=""
-                                                            :src="`${$page.props.url}/images/no_found.png`"
-                                                            style="width: 200px"
-                                                        />
-                                                    </td>
-                                                </tr>
-                                            </template>
+                                            <tr v-else>
+                                                <td colspan="6" class="text-center text-primary">No Record Found ...</td>
+                                            </tr>
                                         </tbody>
                                     </table>
                                 </div>
-                            </div>
-                            <div class="row gy-3" v-if="users.length > 0">
-                                <div class="col-md-auto me-auto">
-                                    <div>
+                                <div class="dataTable-bottom" v-if="users.length > 0">
+                                    <div class="dataTable-info">
                                         Showing {{ fields.start_index }} to
                                         {{ fields.end_index }} of
                                         {{ fields.total_record }} Results
                                     </div>
-                                </div>
-                                <div class="col-md-auto ms-auto">
-                                    <div class="dt-paging paging_full_numbers">
-                                        <ul class="pagination">
-                                            <li
-                                                class="page-item"
-                                                @click="prev()"
-                                            >
-                                                <span class="page-link"
-                                                    ><i
-                                                        class="bi bi-chevron-double-left"
-                                                    ></i
-                                                ></span>
+                                    <nav class="dataTable-pagination">
+                                        <ul class="dataTable-pagination-list">
+                                            <li class="pager">
+                                                <button type="button" class="btn btn-outline-primary btn-icon-only rounded-circle" @click="prev()">
+                                                    <span class="btn-inner--icon">
+                                                        <i class="fa fa-angle-double-left"></i>
+                                                    </span>
+                                                </button>
                                             </li>
-                                            <template
-                                                v-for="page_number in fields.total_pages"
-                                                :key="`page_number_${page_number}`"
-                                            >
-                                                <li
-                                                    class="page-item"
-                                                    :class="
-                                                        page_number ===
-                                                        fields.page
-                                                            ? 'active'
-                                                            : ''
-                                                    "
-                                                    @click="
-                                                        setPage(page_number)
-                                                    "
-                                                >
-                                                    <span
-                                                        class="page-link cursor-pointer"
-                                                        >{{ page_number }}</span
+
+                                            <template v-for="page_number in fields.total_pages" :key="`page_number_${page_number}`">
+                                                <li class="paper ms-2">
+                                                    <button
+                                                        type="button"
+                                                        :class="page_number === fields.page ? 'btn-primary' : ''"
+                                                        class="btn btn-icon-only rounded-circle btn"
+                                                        style="border: 1px solid #e91e63;"
+                                                        @click="setPage(page_number)"
                                                     >
+                                                        <span class="btn-inner--icon">{{ page_number }}</span>
+                                                    </button>
                                                 </li>
                                             </template>
 
-                                            <li
-                                                class="page-item"
-                                                @click="next()"
-                                            >
-                                                <span class="page-link"
-                                                    ><i
-                                                        class="bi bi-chevron-double-right"
-                                                    ></i
-                                                ></span>
+                                            <li class="pager ms-2">
+                                                <button type="button" class="btn btn-outline-primary btn-icon-only rounded-circle" @click="next()">
+                                                    <span class="btn-inner--icon">
+                                                        <i class="fa fa-angle-double-right"></i>
+                                                    </span>
+                                                </button>
                                             </li>
                                         </ul>
-                                    </div>
+                                    </nav>
                                 </div>
                             </div>
                         </div>
                     </div>
                 </div>
             </div>
-        </section>
+        </div>
 
         <teleport to="body">
-            <user-form
-                ref="user_form"
-                :roles="roles"
-                @reload="reloadTable()"
-            ></user-form>
+            <user-form ref="user_form" :roles="roles" @reload="reloadTable()"></user-form>
         </teleport>
     </main-page>
 </template>

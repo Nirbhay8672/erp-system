@@ -6,7 +6,7 @@ namespace App\Http\Requests;
 
 use Illuminate\Foundation\Http\FormRequest;
 
-class UserProfileFormRequest extends FormRequest
+class EmployeeProfileFormRequest extends FormRequest
 {
     public function authorize(): bool
     {

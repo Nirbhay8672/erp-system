@@ -1,5 +1,5 @@
 <template>
-    <inertia-head title="Users" />
+    <inertia-head title="Designations" />
     <main-page>
         <div class="row">
             <div class="col-lg-12 position-relative z-index-2">
@@ -17,8 +17,8 @@
                 <div class="card mb-4" v-else>
                     <div class="card-header pb-0 p-4">
                         <div class="d-flex justify-content-between">
-                            <h6 class="mb-0">Users</h6>
-                            <button class="btn btn-primary btn-icon-only" @click="openForm()" v-if="hasPermission('add_user')">
+                            <h6 class="mb-0">Designations</h6>
+                            <button class="btn btn-primary btn-icon-only" @click="openForm()" v-if="hasPermission('add_designation')">
                                 <i class="fa fa-plus"></i>
                             </button>
                         </div>
@@ -50,23 +50,11 @@
                                             <tr>
                                                 <th
                                                     class="text-uppercase text-secondary text-xxs font-weight-bolder opacity-7">
-                                                    Profile
+                                                    Sr No.
                                                 </th>
                                                 <th
                                                     class="text-uppercase text-secondary text-xxs font-weight-bolder opacity-7">
-                                                    Username
-                                                </th>
-                                                <th
-                                                    class="text-uppercase text-secondary text-xxs font-weight-bolder opacity-7">
-                                                    Full Name
-                                                </th>
-                                                <th
-                                                    class="text-uppercase text-secondary text-xxs font-weight-bolder opacity-7">
-                                                    Email
-                                                </th>
-                                                <th
-                                                    class="text-uppercase text-secondary text-xxs font-weight-bolder opacity-7">
-                                                    Role
+                                                    Name
                                                 </th>
                                                 <th
                                                     class="text-center text-uppercase text-secondary text-xxs font-weight-bolder opacity-7">
@@ -75,51 +63,32 @@
                                             </tr>
                                         </thead>
                                         <tbody>
-                                            <template v-if="users.length > 0">
-                                                <tr class="text-sm" v-for="(user, index) in users" :key="`user_${index}`">
-                                                    <td>
-                                                        <img :src="user.profile_path ? `${$page.props.url}/${user.profile_path}` : '' " class="avatar me-3" alt="image" />
-                                                    </td>
+                                            <template v-if="designations.length > 0">
+                                                <tr class="text-sm" v-for="(designation, index) in designations" :key="`designation_${index}`">
                                                     <td>
                                                         <p class="text-sm font-weight-normal mb-0">
-                                                            {{ user.name }}
+                                                            {{ index + 1 }}
                                                         </p>
                                                     </td>
                                                     <td>
                                                         <p class="text-sm font-weight-normal mb-0">
-                                                            {{ user.first_name }} {{ user.last_name }}
-                                                        </p>
-                                                    </td>
-                                                    <td>
-                                                        <p class="text-sm font-weight-normal mb-0">
-                                                            {{ user.email }}
-                                                        </p>
-                                                    </td>
-                                                    <td>
-                                                        <p class="text-sm font-weight-normal mb-0">
-                                                            {{
-                                                                user.roles[0][
-                                                                    "display_name"
-                                                                ]
-                                                            }}
+                                                            {{ designation.name }}
                                                         </p>
                                                     </td>
                                                     <td class="align-middle text-end">
                                                         <div class="d-flex justify-content-center mb-0">
-                                                            
                                                             <button
                                                                 class="btn btn-icon-only btn-primary ms-3"
-                                                                @click="openForm(user)"
-                                                                v-if="hasPermission('update_user')"
+                                                                @click="openForm(designation)"
+                                                                v-if="hasPermission('update_designation')"
                                                             >
                                                                 <i class="fa fa-pencil"></i>
                                                             </button>
 
                                                             <button
                                                                 class="btn btn-icon-only btn-danger ms-3"
-                                                                :class="user.id == 1 ? 'd-none' : ''"
-                                                                @click="deleteUser(user)"
-                                                                v-if="hasPermission('delete_user')"
+                                                                @click="deleteDesignation(designation)"
+                                                                v-if="hasPermission('delete_designation')"
                                                             >
                                                                 <i class="fa fa-trash"></i>
                                                             </button>
@@ -133,7 +102,7 @@
                                         </tbody>
                                     </table>
                                 </div>
-                                <div class="dataTable-bottom" v-if="users.length > 0">
+                                <div class="dataTable-bottom" v-if="designations.length > 0">
                                     <div class="dataTable-info">
                                         Showing {{ fields.start_index }} to
                                         {{ fields.end_index }} of
@@ -179,9 +148,8 @@
                 </div>
             </div>
         </div>
-
         <teleport to="body">
-            <user-form ref="user_form" :roles="roles" @reload="reloadTable()"></user-form>
+            <designation-form ref="designation_form" @reload="reloadTable()"></designation-form>
         </teleport>
     </main-page>
 </template>
@@ -189,25 +157,21 @@
 <script setup>
 import { ref, onMounted, reactive } from "vue";
 import axios from "axios";
-import { userRoutes } from "../../routes/UserRoutes";
 import { toastAlert, confirmAlert } from "../../helpers/alert";
-import UserForm from "./includes/Form.vue";
+import { DesignationRoutes } from "../../routes/DesignationRoutes";
+import DesignationForm from "./includes/Form.vue";
 
 const props = defineProps({
     auth: {
         type: Object,
         required: true,
     },
-    roles: {
-        type: Array,
-        required: true,
-    },
 });
 
-let users = ref([]);
+let designations = ref([]);
 let loader = ref(true);
 
-let user_form = ref(null);
+let designation_form = ref(null);
 
 let fields = reactive({
     search: "",
@@ -252,14 +216,14 @@ function next() {
 }
 
 function openForm(user = null) {
-    user_form.value.openModal(user);
+    designation_form.value.openModal(user);
 }
 
 function reloadTable() {
     axios
-        .post(userRoutes.datatable, fields)
+        .post(DesignationRoutes.datatable, fields)
         .then((response) => {
-            users.value = response.data.users;
+            designations.value = response.data.designations;
             fields.total_record = response.data.total;
             fields.total_pages = response.data.total_pages;
             fields.start_index = response.data.start_index;
@@ -276,21 +240,27 @@ function reloadTable() {
         });
 }
 
-function deleteUser(user) {
+function deleteDesignation(designation) {
     confirmAlert({
         title: "Delete",
         icon: "question",
-        html: `Are you sure, you want to delete <strong> ${user.name} </strong> user ?`,
+        html: `Are you sure, you want to delete <strong> ${designation.name} </strong> designation ?`,
     }).then((result) => {
         if (result.isConfirmed) {
             axios
-                .get(userRoutes.deleteUser(user.id))
+                .get(DesignationRoutes.deleteDesignation(designation.id))
                 .then((response) => {
                     toastAlert({ title: response.data.message });
                     reloadTable();
                 })
                 .catch(function (error) {
                     if (error.response.status === 422) {
+                        toastAlert({
+                            title: error.response.data.message,
+                            icon: "error",
+                        });
+                    }
+                    if (error.response.status === 500) {
                         toastAlert({
                             title: error.response.data.message,
                             icon: "error",

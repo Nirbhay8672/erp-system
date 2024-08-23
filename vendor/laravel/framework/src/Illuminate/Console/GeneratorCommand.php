@@ -502,7 +502,7 @@ abstract class GeneratorCommand extends Command implements PromptsForMissingInpu
                     'Channel' => 'E.g. OrderChannel',
                     'Console command' => 'E.g. SendEmails',
                     'Component' => 'E.g. Alert',
-                    'Controller' => 'E.g. UserController',
+                    'Controller' => 'E.g. EmployeeController',
                     'Event' => 'E.g. PodcastProcessed',
                     'Exception' => 'E.g. InvalidOrderException',
                     'Factory' => 'E.g. PostFactory',

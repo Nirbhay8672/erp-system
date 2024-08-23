@@ -4,9 +4,7 @@ use App\Http\Controllers\Auth\RegisterController;
 use App\Http\Controllers\DashboardController;
 use App\Http\Controllers\Designation\DesignationController;
 use App\Http\Controllers\LoginController;
-use App\Http\Controllers\MemberController;
-use App\Http\Controllers\PluginController;
-use App\Http\Controllers\UserController;
+use App\Http\Controllers\EmployeeController;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Route;
 
@@ -41,24 +39,24 @@ Route::middleware(['2fa', 'auth'])->group(function () {
     })->name('2fa');
 });
 
-// users url
-Route::prefix('users')->as('users.')->middleware(['auth', '2fa'])->group(function () {
+// employees url
+Route::prefix('employees')->as('employees.')->middleware(['auth', '2fa'])->group(function () {
 
-    Route::get('/profile', [UserController::class, 'profile'])->middleware(['permission:view_profile'])->name('profile');
-    Route::post('/update-profile/{user}', [UserController::class, 'updateProfile'])->middleware(['permission:update_profile'])->name('update_profile');
+    Route::get('/profile', [EmployeeController::class, 'profile'])->middleware(['permission:view_profile'])->name('profile');
+    Route::post('/update-profile/{employee}', [EmployeeController::class, 'updateProfile'])->middleware(['permission:update_profile'])->name('update_profile');
 
-    Route::get('/index', [UserController::class, 'index'])->middleware(['permission:view_users'])->name('user_index');
-    Route::post('/datatable', [UserController::class, 'datatable'])->middleware(['permission:view_users'])->name('user_datatable');
-    Route::post('/create-or-update/{user?}', [UserController::class, 'createOrUpdate'])->middleware(['permission:add_user'])->name('create_or_update');
-    Route::get('/delete/{user?}', [UserController::class, 'delete'])->middleware(['permission:delete_user'])->name('user_delete');
+    Route::get('/index', [EmployeeController::class, 'index'])->middleware(['permission:view_employees'])->name('employee_index');
+    Route::post('/datatable', [EmployeeController::class, 'datatable'])->middleware(['permission:view_employees'])->name('employee_datatable');
+    Route::post('/create-or-update/{employee?}', [EmployeeController::class, 'createOrUpdate'])->middleware(['permission:add_employee'])->name('create_or_update');
+    Route::get('/delete/{employee?}', [EmployeeController::class, 'delete'])->middleware(['permission:delete_employee'])->name('employee_delete');
 });
 
 // Designation routes
-Route::prefix('designation')->as('designation.')->middleware(['role_or_permission:Admin|View Designation','auth'])->group(function(){
+Route::prefix('designations')->as('designations.')->middleware(['permission:view_designations','auth'])->group(function(){
     
     Route::get('/index', [DesignationController::class, 'index'])->name('designation');
-    Route::post('/designation', [DesignationController::class, 'fetchRecord'])->name('designation_list');
-    Route::post('/store-or-update/{designation?}', [DesignationController::class, 'storeOrUpdate'])->name('store_or_update');
+    Route::post('/datatable', [DesignationController::class, 'datatable'])->name('designation_list');
+    Route::post('/create-or-update/{designation?}', [DesignationController::class, 'storeOrUpdate'])->name('store_or_update');
     Route::get('/delete/{designation}',[DesignationController::class, 'destroy'])->name('delete');
 });
 

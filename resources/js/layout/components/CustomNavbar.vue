@@ -48,7 +48,7 @@
                 <ul class="navbar-nav  justify-content-end">
                     <li class="nav-item">
                         <a
-                            :href="`${$page.props.url}/users/profile`"
+                            :href="`${$page.props.url}/employees/profile`"
                             class="nav-link text-body p-0 position-relative"
                         >
                         <img :src="$page.props.auth.user.profile_path

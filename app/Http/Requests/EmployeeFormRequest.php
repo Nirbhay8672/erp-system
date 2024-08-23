@@ -6,7 +6,7 @@ namespace App\Http\Requests;
 
 use Illuminate\Foundation\Http\FormRequest;
 
-class UserFormRequest extends FormRequest
+class EmployeeFormRequest extends FormRequest
 {
     public function authorize(): bool
     {
@@ -15,14 +15,19 @@ class UserFormRequest extends FormRequest
 
     public function rules(): array
     {
-        return [
+        $rules = [
             'name' => 'required|string|min:1|max:20|unique:users,name,' . $this->id,
             'first_name' => 'required|string|min:2|max:20',
             'last_name' => 'required|string|min:2|max:20',
             'email' => 'nullable|email|unique:users,email,' . $this->id,
-            'password' => 'required_if:id,null|nullable|min:6',
-            'confirm_password' => 'required_with:password|same:password',
         ];
+
+        if (!empty($this->password)) {
+            $rules['password'] = 'required_if:id,null|nullable|min:6';
+            $rules['confirm_password'] = 'required_with:password|same:password';
+        }
+
+        return $rules;
     }
 
     public function fields(): array

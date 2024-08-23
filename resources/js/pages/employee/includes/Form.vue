@@ -1,10 +1,10 @@
 <template>
-    <Modal ref="profile_form" :id="'profile_form'">
+    <Modal ref="user_form" :id="'user_form'" :size="'large'">
         <template #modal_title>
-            <span>Update Profile</span>
+            <span>{{ title_text }}</span>
         </template>
 
-        <form id="profile_form" class="form">
+        <form>
             <div class="row">
                 <div class="text-center col-lg-12">
                     <div class="card-img-actions d-inline-block">
@@ -20,7 +20,7 @@
                                 :src="
                                     fields.profile_path
                                         ? fields.profile_path
-                                        : '/images/profile.png'
+                                        : `${$page.props.url}/images/profile.png`
                                 "
                                 class="rounded"
                                 style="width: 120px; height: 120px"
@@ -31,7 +31,7 @@
                             @click="trigger"
                             type="button"
                         >
-                            Change Image
+                            Upload Image
                         </button>
                     </div>
                     <input
@@ -67,13 +67,12 @@
                 <div class="col-lg-6 mb-2">
                     <Field
                         v-model="fields.name"
-                        label="Username"
+                        label="Name"
                         label-class="required"
                         type="text"
                         id="name"
                         field="name"
                         :errors="formValidation.errors"
-                        autocomplete="off"
                     ></Field>
                 </div>
                 <div class="col-lg-6 mb-2">
@@ -85,7 +84,6 @@
                         id="email"
                         field="email"
                         :errors="formValidation.errors"
-                        autocomplete="off"
                     ></Field>
                 </div>
                 <div class="col-lg-6 mb-2">
@@ -97,7 +95,6 @@
                         id="first_name"
                         field="first_name"
                         :errors="formValidation.errors"
-                        autocomplete="off"
                     ></Field>
                 </div>
                 <div class="col-lg-6 mb-2">
@@ -109,7 +106,6 @@
                         id="last_name"
                         field="last_name"
                         :errors="formValidation.errors"
-                        autocomplete="off"
                     ></Field>
                 </div>
                 <div class="col-lg-6 mb-2">
@@ -134,16 +130,40 @@
                         :errors="formValidation.errors"
                     ></Field>
                 </div>
+                <div class="col-lg-6 mb-2">
+                    <Field
+                        field="role_id"
+                        id="role_id"
+                        label-class="required"
+                        :errors="formValidation.errors"
+                        no-input
+                        no-label
+                    >
+                        <template #input="{ hasError }">
+                            <select
+                                class="form-control form-control-solid form-select"
+                                id="role_id"
+                                v-model="fields.role_id"
+                                :class="{ 'is-invalid': hasError }"
+                            >
+                                <option value="">-- Select Role --</option>
+                                <template v-for="(role, index) in roles" :key="`role_${index}`">
+                                    <option :value="role.id">{{ role.display_name }}</option>
+                                </template>
+                            </select>
+                        </template>
+                    </Field>
+                </div>
             </div>
         </form>
 
         <template #modal_footer>
             <button
-                class="btn bg-gradient-primary btn-sm"
+                class="btn btn-success btn-sm"
                 type="button"
                 @click="handleSubmit"
             >
-                Update
+                {{ button_text }}
             </button>
         </template>
     </Modal>
@@ -160,11 +180,21 @@ import {
 import { resetObjectKeys } from "../../../helpers/utils";
 import Field from "../../../helpers/Field.vue";
 import axios from "axios";
-import { userRoutes } from "../../../routes/UserRoutes";
+import { EmployeeRoutes } from "../../../routes/EmployeeRoutes";
 import { toastAlert } from "../../../helpers/alert";
 
-let profile_form = ref(null);
+let props = defineProps({
+    roles : {
+        required : true,
+        type : Array,
+        default : []
+    }
+});
+
+let user_form = ref(null);
 let my_profile = ref("");
+let title_text = ref("");
+let button_text = ref("");
 
 const emits = defineEmits(["reload"]);
 
@@ -178,22 +208,56 @@ let fields = reactive({
     last_name: "",
     password: "",
     confirm_password: "",
+    role_id: "",
 });
 
 function openModal(user) {
     clearFormData();
-    profile_form.value.open();
+    user_form.value.open();
+
+    title_text.value = user ? `Update user : ${user.name}` : "Create User";
+    button_text.value = user ? "Update" : "Submit";
 
     if (user) {
-        fields.id = user.id;
+        Object.assign(fields, user);
         fields.profile_path = user.profile_path;
         fields.profile_image = user.profile_path;
-        fields.name = user.name;
-        fields.email = user.email;
-        fields.first_name = user.first_name;
-        fields.last_name = user.last_name;
-        fields.password = "";
-        fields.confirm_password = "";
+        fields.role_id = user.roles[0].id;
+
+        formValidation.addFields(fields, {
+            password: {
+                requiredIf: withParamsAndMessage(
+                    withParams([fields, "confirm_password"]),
+                    "Password field is required."
+                ),
+            },  
+            confirm_password: {
+                requiredIf: withParamsAndMessage(
+                    withParams([fields, "password"]),
+                    "Confirm password field is required."
+                ),
+                same: withParamsAndMessage(
+                    withParams([fields, "password"]),
+                    "Confirm password dose not match."
+                ),
+            },
+        });
+    } else {
+        formValidation.addFields(fields, {
+            password: {
+                required: "Password field is required.",
+            },
+            confirm_password: {
+                required: "Confirm password field is required.",
+                same: withParamsAndMessage(
+                    withParams([fields, "password"]),
+                    "Confirm password dose not match."
+                ),
+            },
+            profile_image: {
+                required: "Profile picture is required.",
+            },
+        });
     }
 }
 
@@ -210,6 +274,11 @@ function previewFiles(event) {
 
 function clearFormData() {
     formValidation.reset();
+    title_text.value = "";
+    button_text.value = "";
+    formValidation.reset();
+    formValidation.removeFields("password");
+    formValidation.removeFields("confirm_password");
     resetObjectKeys(fields);
 }
 
@@ -224,22 +293,23 @@ function handleSubmit() {
         form_data.set("profile_image", file, file.name);
     }
 
-    form_data.set("user_id", fields.id);
+    form_data.set("id", fields.id);
     form_data.set("name", fields.name);
     form_data.set("first_name", fields.first_name);
     form_data.set("last_name", fields.last_name);
     form_data.set("email", fields.email);
     form_data.set("password", fields.password);
     form_data.set("confirm_password", fields.confirm_password);
+    form_data.set("role_id", fields.role_id);
 
     let settings = { headers: { "content-type": "multipart/form-data" } };
 
     if (formValidation.isValid()) {
         axios
-            .post(userRoutes.updateProfile(fields.id), form_data, settings)
+            .post(EmployeeRoutes.createOrUpdate(fields.id), form_data, settings)
             .then((response) => {
-                profile_form.value.close();
-                emits("reload", response.data.user_details);
+                user_form.value.close();
+                emits("reload");
                 toastAlert({ title: response.data.message });
                 clearFormData();
             })
@@ -263,7 +333,7 @@ let formValidation = reactive(
             required: "Profile picture is required.",
         },
         name: {
-            required: "Username field is required.",
+            required: "Name field is required.",
         },
         email: {
             required: "Email field is required.",
@@ -274,21 +344,8 @@ let formValidation = reactive(
         last_name: {
             required: "Last name field is required.",
         },
-        password: {
-            requiredIf: withParamsAndMessage(
-                withParams([fields, "confirm_password"]),
-                "Password field is required."
-            ),
-        },
-        confirm_password: {
-            requiredIf: withParamsAndMessage(
-                withParams([fields, "password"]),
-                "Confirm password field is required."
-            ),
-            same: withParamsAndMessage(
-                withParams([fields, "password"]),
-                "Confirm password dose not match."
-            ),
+        role_id: {
+            required: "Role field is required.",
         },
     })
 );

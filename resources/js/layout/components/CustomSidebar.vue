@@ -21,8 +21,8 @@
                         class="nav-link text-white"
                         aria-controls="ProfileNav"
                         role="button"
-                        :aria-expanded="current_url == `${$page.props.url}/users/profile` ? true : false"
-                        :class="current_url == `${$page.props.url}/users/profile` ? '' : 'collapsed'"
+                        :aria-expanded="current_url == `${$page.props.url}/employees/profile` ? true : false"
+                        :class="current_url == `${$page.props.url}/employees/profile` ? '' : 'collapsed'"
                     >
                         <img :src="$page.props.auth.user.profile_path
                                 ? $page.props.auth.user.profile_path
@@ -31,13 +31,13 @@
                         <span class="nav-link-text ms-2 ps-1">{{ $page.props.auth.user.first_name }} {{
                             $page.props.auth.user.last_name }}</span>
                     </a>
-                    <div class="collapse" id="ProfileNav" :class="current_url == `${$page.props.url}/users/profile` ? 'show' : ''" >
+                    <div class="collapse" id="ProfileNav" :class="current_url == `${$page.props.url}/employees/profile` ? 'show' : ''" >
                         <ul class="nav">
                             <li class="nav-item">
                                 <a
                                     class="nav-link text-white"
-                                    :href="`${$page.props.url}/users/profile`"
-                                    :class="current_url == `${$page.props.url}/users/profile` ? 'bg-gradient-primary active' : ''"
+                                    :href="`${$page.props.url}/employees/profile`"
+                                    :class="current_url == `${$page.props.url}/employees/profile` ? 'bg-gradient-primary active' : ''"
                                     id="my_profile_nav_link"
                                 >
                                     <div class="text-white text-center me-2 d-flex align-items-center justify-content-center" style="margin-left: 9px;">
@@ -104,10 +104,16 @@ let menuItems = reactive([
         has_permission: hasPermission('view_dashboard'),
     },
     {
-        name: "Users",
+        name: "Employees",
         icon: "fa fa-users",
-        url: "users/index",
-        has_permission: hasPermission('view_users'),
+        url: "employees/index",
+        has_permission: hasPermission('view_employees'),
+    },
+    {
+        name: "Designations",
+        icon: "fa fa-list",
+        url: "designations/index",
+        has_permission: hasPermission('view_designations'),
     },
 ]);
 

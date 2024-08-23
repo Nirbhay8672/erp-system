@@ -9,7 +9,7 @@ use Illuminate\Support\Facades\File;
 use Spatie\Permission\Models\Permission;
 use Spatie\Permission\Models\Role;
 
-class UserSeeder extends Seeder
+class EmployeeSeeder extends Seeder
 {
     public function run(): void
     {
@@ -28,12 +28,17 @@ class UserSeeder extends Seeder
             ['display_name' => 'View Profile', 'name' => 'view_profile', 'category' => 'Profile', 'guard_name' => 'web'],
             ['display_name' => 'Update Profile', 'name' => 'update_profile', 'category' => 'Profile', 'guard_name' => 'web'],
 
-
             // profile
-            ['display_name' => 'View Users', 'name' => 'view_users', 'category' => 'User', 'guard_name' => 'web'],
-            ['display_name' => 'Add User', 'name' => 'add_user', 'category' => 'User', 'guard_name' => 'web'],
-            ['display_name' => 'Update User', 'name' => 'update_user', 'category' => 'User', 'guard_name' => 'web'],
-            ['display_name' => 'Delete User', 'name' => 'delete_user', 'category' => 'User', 'guard_name' => 'web'],
+            ['display_name' => 'View Employees', 'name' => 'view_employees', 'category' => 'Employee', 'guard_name' => 'web'],
+            ['display_name' => 'Add Employee', 'name' => 'add_employee', 'category' => 'Employee', 'guard_name' => 'web'],
+            ['display_name' => 'Update Employee', 'name' => 'update_employee', 'category' => 'Employee', 'guard_name' => 'web'],
+            ['display_name' => 'Delete Employee', 'name' => 'delete_employee', 'category' => 'Employee', 'guard_name' => 'web'],
+
+            // designations
+            ['display_name' => 'View Designations', 'name' => 'view_designations', 'category' => 'Designation', 'guard_name' => 'web'],
+            ['display_name' => 'Add Designation', 'name' => 'add_designation', 'category' => 'Designation', 'guard_name' => 'web'],
+            ['display_name' => 'Update Designation', 'name' => 'update_designation', 'category' => 'Designation', 'guard_name' => 'web'],
+            ['display_name' => 'Delete Designation', 'name' => 'delete_designation', 'category' => 'Designation', 'guard_name' => 'web'],
         ];
 
         DB::table('permissions')->insert($permissions_array);
@@ -65,7 +70,7 @@ class UserSeeder extends Seeder
     public function storeProfileImage($admin)
     {
         $sourceFilePath = public_path('/images/profile.png');
-        $destinationPath = public_path('/uploads/users/' . $admin->id);
+        $destinationPath = public_path('/uploads/employees/' . $admin->id);
         $fileName = time() . '.jpg';
 
         if (File::exists($destinationPath . '/' . $fileName)) {
@@ -79,7 +84,7 @@ class UserSeeder extends Seeder
         File::copy($sourceFilePath, $destinationPath . '/' . $fileName);
 
         $admin->fill([
-            'profile_path' => '/uploads/users/' . $admin->id . '/' . $fileName,
+            'profile_path' => '/uploads/employees/' . $admin->id . '/' . $fileName,
         ])->save();
     }
 }

@@ -9,7 +9,7 @@
     <link rel="apple-touch-icon" sizes="76x76" href="{{ asset('/images/favicon.png') }}">
     <link rel="icon" type="image/png" href="{{ asset('/images/favicon.png') }}">
 
-    <meta name="description" content="ERP System">
+    <meta name="description" content="ERP System">  
     <meta name="author" content="ERP">
     <meta name="csrf-token" content="{{ csrf_token() }}" />
     <meta name="url" content="{{ url('/') }}" />

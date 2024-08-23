@@ -15,18 +15,18 @@ class UserService
     {
         $user = User::find((int) $usersDetails['user_id']);
 
-        $user->fill([
-            'name' => $usersDetails['name'],
-            'first_name' => $usersDetails['first_name'],
-            'last_name' => $usersDetails['last_name'],
-            'email' => $usersDetails['email'],
-        ]);
+        // $user->fill([
+        //     'name' => $usersDetails['name'],
+        //     'first_name' => $usersDetails['first_name'],
+        //     'last_name' => $usersDetails['last_name'],
+        //     'email' => $usersDetails['email'],
+        // ]);
 
-        if (!empty($usersDetails['password'])) {
-            $user->password = bcrypt($usersDetails['password']);
-        }
+        // if (!empty($usersDetails['password'])) {
+        //     $user->password = bcrypt($usersDetails['password']);
+        // }
 
-        $user->save();
+        // $user->save();
 
         if ($usersDetails['profile_image'] ?? false) {
             $this->storeProfileImage($usersDetails['profile_image'], $user);

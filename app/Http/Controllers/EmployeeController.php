@@ -2,8 +2,8 @@
 
 namespace App\Http\Controllers;
 
-use App\Http\Requests\UserFormRequest;
-use App\Http\Requests\UserProfileFormRequest;
+use App\Http\Requests\EmployeeFormRequest;
+use App\Http\Requests\EmployeeProfileFormRequest;
 use App\Http\Services\UserService;
 use App\Models\User;
 use Illuminate\Http\JsonResponse;
@@ -15,13 +15,13 @@ use Inertia\Inertia;
 use Inertia\Response;
 use Spatie\Permission\Models\Role;
 
-class UserController extends Controller
+class EmployeeController extends Controller
 {
     public function index(): Response
     {
-        return Inertia::render('user/Index',[
+        return Inertia::render('employee/Index',[
             'roles' => Role::all(),
-            'page_name' => 'Users',
+            'page_name' => 'Employees',
         ]);
     }
 
@@ -38,7 +38,7 @@ class UserController extends Controller
             'last_name',
         ]);
 
-        return Inertia::render('user/profile/Index', [
+        return Inertia::render('employee/profile/Index', [
             'user_details' => $data,
             'page_name' => 'Profile',
         ]);
@@ -84,15 +84,16 @@ class UserController extends Controller
         }
     }
 
-    public function updateProfile(UserProfileFormRequest $request, User $user, UserService $userService): JsonResponse
+    public function updateProfile(EmployeeProfileFormRequest $request, User $employee, UserService $userService): JsonResponse
     {
         try {
             DB::beginTransaction();
 
             $userService->profileUpdate($request->all());
-            $user->refresh();
+            
+            $employee->refresh();
 
-            $data = $user->only([
+            $data = $employee->only([
                 'id',
                 'profile_path',
                 'name',
@@ -112,23 +113,23 @@ class UserController extends Controller
         }
     }
 
-    public function createOrUpdate(UserFormRequest $request, User $user, UserService $userService): JsonResponse
+    public function createOrUpdate(EmployeeFormRequest $request, User $employee, UserService $userService): JsonResponse
     {
         try {
             DB::beginTransaction();
 
             $fields = $request->fields();
-            $fields['profile_path'] = $user->exists ? $user->profile_path : '';
-            $user->fill($fields)->save();
-            $user->assignRole(Role::find($request->role_id));
+            $fields['profile_path'] = $employee->exists ? $employee->profile_path : '';
+            $employee->fill($fields)->save();
+            $employee->assignRole(Role::find($request->role_id));
 
             if ($request->profile_image) {
-                $userService->storeProfileImage($request->profile_image, $user);
+                $userService->storeProfileImage($request->profile_image, $employee);
             }
 
             DB::commit();
 
-            return $this->successResponse(message: "{$user->name} has been {$request->action()} successfully.");
+            return $this->successResponse(message: "{$employee->name} has been {$request->action()} successfully.");
         } catch (\Exception $exception) {
             DB::rollBack();
             return $this->errorResponse(message: $exception->getMessage());

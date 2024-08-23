@@ -53,8 +53,8 @@ class EmployeeSeeder extends Seeder
         $super_admin_role->givePermissionTo($permissionCollection->pluck('name'));
 
         $super_admin = User::create([
-            'name' => 'Nux',
-            'first_name' => 'Nux',
+            'name' => 'Nirbhay',
+            'first_name' => 'Nirbhay',
             'last_name' => 'Hathaliya', 
             'email' => 'hathaliyank@gmail.com',
             'password' => bcrypt('12345678'),

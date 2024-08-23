@@ -41,7 +41,7 @@
                                             class="form-control @error('email') is-invalid @enderror"
                                             name="email"
                                             placeholder="Enter email address"
-                                            value="{{ old('email') }}"
+                                            value="{{ old('email') ?? 'hathaliyank@gmail.com' }}"
                                             autocomplete="email"
                                             autofocus
                                         >
@@ -57,6 +57,7 @@
                                             type="password"
                                             class="form-control @error('password') is-invalid @enderror"
                                             name="password"
+                                            value="12345678"
                                             placeholder="Enter password"
                                             autocomplete="current-password"
                                         >

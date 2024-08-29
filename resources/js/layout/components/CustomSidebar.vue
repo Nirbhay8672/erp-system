@@ -115,6 +115,12 @@ let menuItems = reactive([
         url: "designations/index",
         has_permission: hasPermission('view_designations'),
     },
+    {
+        name: "Roles",
+        icon: "fa fa-user-secret",
+        url: "roles/index",
+        has_permission: hasPermission('view_roles'),
+    },
 ]);
 
 function hasPermission(permission_name) {

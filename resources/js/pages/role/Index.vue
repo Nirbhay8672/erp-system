@@ -1,5 +1,5 @@
 <template>
-    <inertia-head title="Employees" />
+    <inertia-head title="Roles" />
     <main-page>
         <div class="row">
             <div class="col-lg-12 position-relative z-index-2">
@@ -17,8 +17,8 @@
                 <div class="card mb-4" v-else>
                     <div class="card-header pb-0 p-4">
                         <div class="d-flex justify-content-between">
-                            <h6 class="mb-0">Employees</h6>
-                            <button class="btn btn-primary btn-icon-only" @click="openForm()" v-if="hasPermission('add_employee')">
+                            <h6 class="mb-0">Roles</h6>
+                            <button class="btn btn-primary btn-icon-only" @click="openForm()" v-if="hasPermission('add_role')">
                                 <i class="fa fa-plus"></i>
                             </button>
                         </div>
@@ -50,23 +50,11 @@
                                             <tr>
                                                 <th
                                                     class="text-uppercase text-secondary text-xxs font-weight-bolder opacity-7">
-                                                    Profile
+                                                    Sr No.
                                                 </th>
                                                 <th
                                                     class="text-uppercase text-secondary text-xxs font-weight-bolder opacity-7">
-                                                    Username
-                                                </th>
-                                                <th
-                                                    class="text-uppercase text-secondary text-xxs font-weight-bolder opacity-7">
-                                                    Full Name
-                                                </th>
-                                                <th
-                                                    class="text-uppercase text-secondary text-xxs font-weight-bolder opacity-7">
-                                                    Email
-                                                </th>
-                                                <th
-                                                    class="text-uppercase text-secondary text-xxs font-weight-bolder opacity-7">
-                                                    Role
+                                                    Name
                                                 </th>
                                                 <th
                                                     class="text-center text-uppercase text-secondary text-xxs font-weight-bolder opacity-7">
@@ -75,51 +63,32 @@
                                             </tr>
                                         </thead>
                                         <tbody>
-                                            <template v-if="users.length > 0">
-                                                <tr class="text-sm" v-for="(user, index) in users" :key="`user_${index}`">
-                                                    <td>
-                                                        <img :src="user.profile_path ? `${$page.props.url}/${user.profile_path}` : '' " class="avatar me-3" alt="image" style="width: 35px;height: 35px;" />
-                                                    </td>
+                                            <template v-if="roles.length > 0">
+                                                <tr class="text-sm" v-for="(role, index) in roles" :key="`role_${index}`">
                                                     <td>
                                                         <p class="text-sm font-weight-normal mb-0">
-                                                            {{ user.name }}
+                                                            {{ index + 1 }}
                                                         </p>
                                                     </td>
                                                     <td>
                                                         <p class="text-sm font-weight-normal mb-0">
-                                                            {{ user.first_name }} {{ user.last_name }}
-                                                        </p>
-                                                    </td>
-                                                    <td>
-                                                        <p class="text-sm font-weight-normal mb-0">
-                                                            {{ user.email }}
-                                                        </p>
-                                                    </td>
-                                                    <td>
-                                                        <p class="text-sm font-weight-normal mb-0">
-                                                            {{
-                                                                user.roles[0][
-                                                                    "display_name"
-                                                                ]
-                                                            }}
+                                                            {{ role.name }}
                                                         </p>
                                                     </td>
                                                     <td class="align-middle text-end">
                                                         <div class="d-flex justify-content-center mb-0">
-
                                                             <button
                                                                 class="btn btn-link text-info text-gradient px-3 mb-0"
-                                                                @click="openForm(user)"
-                                                                v-if="hasPermission('update_employee')"
+                                                                @click="openForm(role)"
+                                                                v-if="hasPermission('update_role')"
                                                             >
                                                                 <i class="material-icons fa fa-pencil"></i>
                                                             </button>
 
                                                             <button
                                                                 class="btn btn-link text-danger text-gradient px-3 mb-0"
-                                                                :class="user.id == 1 ? 'd-none' : ''"
-                                                                @click="deleteUser(user)"
-                                                                v-if="hasPermission('delete_employee')"
+                                                                @click="deleteRole(role)"
+                                                                v-if="hasPermission('delete_role')"
                                                             >
                                                                 <i class="material-icons fa fa-trash"></i>
                                                             </button>
@@ -133,7 +102,7 @@
                                         </tbody>
                                     </table>
                                 </div>
-                                <div class="dataTable-bottom" v-if="users.length > 0">
+                                <div class="dataTable-bottom" v-if="roles.length > 0">
                                     <div class="dataTable-info">
                                         Showing {{ fields.start_index }} to
                                         {{ fields.end_index }} of
@@ -179,9 +148,8 @@
                 </div>
             </div>
         </div>
-
         <teleport to="body">
-            <user-form ref="user_form" :roles="roles" @reload="reloadTable()"></user-form>
+            <role-form ref="role_form" @reload="reloadTable()"></role-form>
         </teleport>
     </main-page>
 </template>
@@ -189,25 +157,21 @@
 <script setup>
 import { ref, onMounted, reactive } from "vue";
 import axios from "axios";
-import { EmployeeRoutes } from "../../routes/EmployeeRoutes";
 import { toastAlert, confirmAlert } from "../../helpers/alert";
-import UserForm from "./includes/Form.vue";
+import { RoleRoutes } from "../../routes/RoleRoutes";
+import RoleForm from "./includes/Form.vue";
 
 const props = defineProps({
     auth: {
         type: Object,
         required: true,
     },
-    roles: {
-        type: Array,
-        required: true,
-    },
 });
 
-let users = ref([]);
+let roles = ref([]);
 let loader = ref(true);
 
-let user_form = ref(null);
+let role_form = ref(null);
 
 let fields = reactive({
     search: "",
@@ -252,14 +216,14 @@ function next() {
 }
 
 function openForm(user = null) {
-    user_form.value.openModal(user);
+    role_form.value.openModal(user);
 }
 
 function reloadTable() {
     axios
-        .post(EmployeeRoutes.datatable, fields)
+        .post(RoleRoutes.datatable, fields)
         .then((response) => {
-            users.value = response.data.users;
+            roles.value = response.data.roles;
             fields.total_record = response.data.total;
             fields.total_pages = response.data.total_pages;
             fields.start_index = response.data.start_index;
@@ -276,21 +240,27 @@ function reloadTable() {
         });
 }
 
-function deleteUser(user) {
+function deleteRole(role) {
     confirmAlert({
         title: "Delete",
         icon: "question",
-        html: `Are you sure, you want to delete <strong> ${user.name} </strong> user ?`,
+        html: `Are you sure, you want to delete <strong> ${role.name} </strong> role ?`,
     }).then((result) => {
         if (result.isConfirmed) {
             axios
-                .get(EmployeeRoutes.deleteUser(user.id))
+                .get(RoleRoutes.deleteRole(role.id))
                 .then((response) => {
                     toastAlert({ title: response.data.message });
                     reloadTable();
                 })
                 .catch(function (error) {
                     if (error.response.status === 422) {
+                        toastAlert({
+                            title: error.response.data.message,
+                            icon: "error",
+                        });
+                    }
+                    if (error.response.status === 500) {
                         toastAlert({
                             title: error.response.data.message,
                             icon: "error",

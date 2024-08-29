@@ -5,6 +5,7 @@ use App\Http\Controllers\DashboardController;
 use App\Http\Controllers\Designation\DesignationController;
 use App\Http\Controllers\LoginController;
 use App\Http\Controllers\EmployeeController;
+use App\Http\Controllers\RolePermission\RoleController;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Route;
 
@@ -52,12 +53,19 @@ Route::prefix('employees')->as('employees.')->middleware(['auth', '2fa'])->group
 });
 
 // Designation routes
-Route::prefix('designations')->as('designations.')->middleware(['permission:view_designations','auth'])->group(function(){
-    
+Route::prefix('designations')->as('designations.')->middleware(['permission:view_designations','auth'])->group(function(){ 
     Route::get('/index', [DesignationController::class, 'index'])->name('designation');
     Route::post('/datatable', [DesignationController::class, 'datatable'])->name('designation_list');
     Route::post('/create-or-update/{designation?}', [DesignationController::class, 'storeOrUpdate'])->name('store_or_update');
     Route::get('/delete/{designation}',[DesignationController::class, 'destroy'])->name('delete');
+});
+
+// Role routes
+Route::prefix('roles')->as('roles.')->middleware(['permission:view_roles','auth'])->group(function(){ 
+    Route::get('/index', [RoleController::class, 'index'])->name('designation');
+    Route::post('/datatable', [RoleController::class, 'datatable'])->name('designation_list');
+    Route::post('/create-or-update/{role?}', [RoleController::class, 'storeOrUpdate'])->name('store_or_update');
+    Route::get('/delete/{role}',[RoleController::class, 'destroy'])->name('delete');
 });
 
 Route::get('/send-msg', [DashboardController::class, 'generateInvoice']);

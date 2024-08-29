@@ -39,6 +39,12 @@ class EmployeeSeeder extends Seeder
             ['display_name' => 'Add Designation', 'name' => 'add_designation', 'category' => 'Designation', 'guard_name' => 'web'],
             ['display_name' => 'Update Designation', 'name' => 'update_designation', 'category' => 'Designation', 'guard_name' => 'web'],
             ['display_name' => 'Delete Designation', 'name' => 'delete_designation', 'category' => 'Designation', 'guard_name' => 'web'],
+
+            // roles
+            ['display_name' => 'View Roles', 'name' => 'view_roles', 'category' => 'Role', 'guard_name' => 'web'],
+            ['display_name' => 'Add Role', 'name' => 'add_role', 'category' => 'Role', 'guard_name' => 'web'],
+            ['display_name' => 'Update Role', 'name' => 'update_role', 'category' => 'Role', 'guard_name' => 'web'],
+            ['display_name' => 'Delete Role', 'name' => 'delete_role', 'category' => 'Role', 'guard_name' => 'web'],
         ];
 
         DB::table('permissions')->insert($permissions_array);

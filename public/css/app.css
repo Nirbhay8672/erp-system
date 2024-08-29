@@ -656,7 +656,9 @@ progress {
     padding-right: calc(var(--bs-gutter-x) * .5);
     padding-left: calc(var(--bs-gutter-x) * .5);
     margin-right: auto;
-    margin-left: auto
+    margin-left: auto;
+    padding-left: 24px;
+    padding-right: 24px;
 }
 
 @media (min-width:576px) {
@@ -22623,7 +22625,6 @@ html {
     box-shadow: inset 0 0 2px #fefefed1;
     -webkit-backdrop-filter: saturate(200%) blur(30px);
     backdrop-filter: saturate(200%) blur(30px);
-    background-color: hsla(0, 0%, 100%, .8) !important
 }
 
 .blur.saturation-less {

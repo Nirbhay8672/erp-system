@@ -78,19 +78,19 @@
                                                     <td class="align-middle text-end">
                                                         <div class="d-flex justify-content-center mb-0">
                                                             <button
-                                                                class="btn btn-icon-only btn-primary ms-3"
+                                                                class="btn btn-link text-info text-gradient px-3 mb-0"
                                                                 @click="openForm(designation)"
                                                                 v-if="hasPermission('update_designation')"
                                                             >
-                                                                <i class="fa fa-pencil"></i>
+                                                                <i class="material-icons fa fa-pencil"></i>
                                                             </button>
 
                                                             <button
-                                                                class="btn btn-icon-only btn-danger ms-3"
+                                                                class="btn btn-link text-danger text-gradient px-3 mb-0"
                                                                 @click="deleteDesignation(designation)"
                                                                 v-if="hasPermission('delete_designation')"
                                                             >
-                                                                <i class="fa fa-trash"></i>
+                                                                <i class="material-icons fa fa-trash"></i>
                                                             </button>
                                                         </div>
                                                     </td>

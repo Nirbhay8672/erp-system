@@ -1,7 +1,7 @@
 <template>
     <inertia-head title="Dashboard" />
     <main-page>
-        <div class="row">
+        <div class="row mt-4">
             <div class="col-lg-12 position-relative z-index-2">
                 <div class="row">
                     <div class="col-lg-3 col-md-6 col-sm-6 mt-sm-0 mt-4">

@@ -1,10 +1,10 @@
 <template>
-    <Modal ref="designation_form" :id="'designation_form'">
+    <Modal ref="role_form" :id="'role_form'">
         <template #modal_title>
             <span>{{ title_text }}</span>
         </template>
 
-        <div class="row mt-3">
+        <div class="row">
             <div class="col-12 mb-2">
                 <Field
                     v-model="fields.name"
@@ -37,10 +37,10 @@ import { FormValidation } from "../../../helpers/Validation";
 import { resetObjectKeys } from "../../../helpers/utils";
 import Field from "../../../helpers/Field.vue";
 import axios from "axios";
-import { DesignationRoutes } from "../../../routes/DesignationRoutes";
+import { RoleRoutes } from "../../../routes/RoleRoutes";
 import { toastAlert } from "../../../helpers/alert";
 
-let designation_form = ref(null);
+let role_form = ref(null);
 let title_text = ref("");
 let button_text = ref("");
 
@@ -51,15 +51,16 @@ let fields = reactive({
     name: "",
 });
 
-function openModal(designation) {
+function openModal(role) {
     clearFormData();
-    designation_form.value.open();
+    role_form.value.open();
 
-    title_text.value = designation ? `Update Designation : ${designation.name}` : "Create Designation";
-    button_text.value = designation ? "Update" : "Submit";
+    title_text.value = role ? `Update Role : ${role.display_name}` : "Create Role";
+    button_text.value = role ? "Update" : "Submit";
 
-    if (designation) {
-        Object.assign(fields, designation);
+    if (role) {
+        fields.id = role.id;
+        fields.name = role.display_name;
     }
 }
 
@@ -75,9 +76,9 @@ function handleSubmit() {
 
     if (formValidation.isValid()) {
         axios
-            .post(DesignationRoutes.createOrUpdate(fields.id), fields)
+            .post(RoleRoutes.createOrUpdate(fields.id), fields)
             .then((response) => {
-                designation_form.value.close();
+                role_form.value.close();
                 emits("reload");
                 toastAlert({ title: response.data.message });
                 clearFormData();

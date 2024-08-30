@@ -72,7 +72,7 @@
                                                     </td>
                                                     <td>
                                                         <p class="text-sm font-weight-normal mb-0">
-                                                            {{ role.name }}
+                                                            {{ role.display_name }}
                                                         </p>
                                                     </td>
                                                     <td class="align-middle text-end">
@@ -244,11 +244,11 @@ function deleteRole(role) {
     confirmAlert({
         title: "Delete",
         icon: "question",
-        html: `Are you sure, you want to delete <strong> ${role.name} </strong> role ?`,
+        html: `Are you sure, you want to delete <strong> ${role.display_name} </strong> role ?`,
     }).then((result) => {
         if (result.isConfirmed) {
             axios
-                .get(RoleRoutes.deleteRole(role.id))
+                .get(RoleRoutes.delete(role.id))
                 .then((response) => {
                     toastAlert({ title: response.data.message });
                     reloadTable();

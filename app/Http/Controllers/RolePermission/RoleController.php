@@ -65,9 +65,9 @@ class RoleController extends Controller
         $message = '';
 
         if($request->id > 0 ) {
-            $message = $role->name . ' Role update successfully.';
+            $message = $role->display_name . ' Role update successfully.';
         } else {
-            $message = $role->name . ' Role created successfully.';
+            $message = $role->display_name . ' Role created successfully.';
         }
 
         return response()->json([
@@ -77,10 +77,18 @@ class RoleController extends Controller
     
     public function destroy(Role $role) : JsonResponse
     {
+        $exist = DB::table('model_has_roles')->where('role_id',$role->id)->get();
+        
+        if(count($exist) > 0 ) {
+            return response()->json([
+                'message' => $role->display_name . " role in used.",
+            ] , 500 );
+        }
+
         $role->delete();
 
         return response()->json([
-            'message' => 'Record delete successfully.'
+            'message' => $role->display_name . " role delete successfully.",
         ] , 200 );
     }
 }

@@ -5,6 +5,7 @@ use App\Http\Controllers\DashboardController;
 use App\Http\Controllers\Designation\DesignationController;
 use App\Http\Controllers\LoginController;
 use App\Http\Controllers\EmployeeController;
+use App\Http\Controllers\RolePermission\PermissionController;
 use App\Http\Controllers\RolePermission\RoleController;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Route;
@@ -62,10 +63,18 @@ Route::prefix('designations')->as('designations.')->middleware(['permission:view
 
 // Role routes
 Route::prefix('roles')->as('roles.')->middleware(['permission:view_roles','auth'])->group(function(){ 
-    Route::get('/index', [RoleController::class, 'index'])->name('designation');
-    Route::post('/datatable', [RoleController::class, 'datatable'])->name('designation_list');
+    Route::get('/index', [RoleController::class, 'index'])->name('role');
+    Route::post('/datatable', [RoleController::class, 'datatable'])->name('role_list');
     Route::post('/create-or-update/{role?}', [RoleController::class, 'storeOrUpdate'])->name('store_or_update');
     Route::get('/delete/{role}',[RoleController::class, 'destroy'])->name('delete');
 });
+
+// permission
+Route::prefix('permissions')->as('permissions.')->middleware(['auth'])->group(function () {
+    Route::get('/index', [PermissionController::class, 'index'])->name('permissions');
+    Route::get('/details', [PermissionController::class, 'details'])->name('details');
+    Route::post('/save-changes', [PermissionController::class, 'assignPermission'])->name('role_permission_save_changes');
+});
+
 
 Route::get('/send-msg', [DashboardController::class, 'generateInvoice']);

@@ -16,10 +16,12 @@ return new class extends Migration {
             $table->string('first_name');
             $table->string('last_name');
             $table->string('email')->nullable();
+            $table->unsignedBigInteger('designation_id');
             $table->timestamp('email_verified_at')->nullable();
             $table->string('password');
             $table->string('profile_path');
             $table->text('google2fa_secret')->nullable();
+            $table->foreign('designation_id')->references('id')->on('designation_details');
             $table->softDeletes();
             $table->rememberToken();
             $table->timestamps();

@@ -7,6 +7,7 @@ use Illuminate\Foundation\Auth\User as Authenticatable;
 use Illuminate\Notifications\Notifiable;
 use Laravel\Sanctum\HasApiTokens;
 use Illuminate\Database\Eloquent\Casts\Attribute;
+use Illuminate\Database\Eloquent\Relations\BelongsTo;
 use Spatie\Permission\Traits\HasPermissions;
 use Spatie\Permission\Traits\HasRoles;
 
@@ -47,5 +48,10 @@ class User extends Authenticatable
             get: fn($value) => $value,
             set: fn($value) => $value,
         );
+    }
+
+    public function designation() : BelongsTo
+    {
+        return $this->belongsTo(DesignationDetails::class , 'designation_id' , 'id');
     }
 }

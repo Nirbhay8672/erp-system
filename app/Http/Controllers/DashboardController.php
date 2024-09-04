@@ -6,6 +6,7 @@ use App\Models\DesignationDetails;
 use App\Models\User;
 use Inertia\Inertia;
 use Inertia\Response;
+use Spatie\Permission\Models\Role;
 
 class DashboardController extends Controller
 {
@@ -25,6 +26,7 @@ class DashboardController extends Controller
             'page_name' => 'Dashboard',
             'total_users' => User::all()->count(),
             'total_designations' => DesignationDetails::all()->count(),
+            'total_roles' => Role::all()->count(),
         ]);
     }
 }

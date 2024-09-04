@@ -4,7 +4,6 @@ declare(strict_types=1);
 
 namespace App\Http\Services;
 
-use App\Models\ProfileImage;
 use App\Models\User;
 use Illuminate\Http\UploadedFile;
 use Illuminate\Support\Facades\Storage;

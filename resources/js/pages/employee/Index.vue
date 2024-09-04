@@ -69,6 +69,10 @@
                                                     Role
                                                 </th>
                                                 <th
+                                                    class="text-uppercase text-secondary text-xxs font-weight-bolder opacity-7">
+                                                    Designation
+                                                </th>
+                                                <th
                                                     class="text-center text-uppercase text-secondary text-xxs font-weight-bolder opacity-7">
                                                     Action
                                                 </th>
@@ -104,6 +108,13 @@
                                                             }}
                                                         </p>
                                                     </td>
+                                                    <td>
+                                                        <p class="text-sm font-weight-normal mb-0">
+                                                            {{
+                                                                user.designation.name
+                                                            }}
+                                                        </p>
+                                                    </td>
                                                     <td class="align-middle text-end">
                                                         <div class="d-flex justify-content-center mb-0">
 
@@ -128,7 +139,7 @@
                                                 </tr>
                                             </template>
                                             <tr v-else>
-                                                <td colspan="6" class="text-center text-primary">No Record Found ...</td>
+                                                <td colspan="7" class="text-center text-primary">No Record Found ...</td>
                                             </tr>
                                         </tbody>
                                     </table>

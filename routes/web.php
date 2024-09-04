@@ -3,8 +3,9 @@
 use App\Http\Controllers\Auth\RegisterController;
 use App\Http\Controllers\DashboardController;
 use App\Http\Controllers\Designation\DesignationController;
+use App\Http\Controllers\Employee\AttendanceController;
+use App\Http\Controllers\Employee\EmployeeController;
 use App\Http\Controllers\LoginController;
-use App\Http\Controllers\EmployeeController;
 use App\Http\Controllers\RolePermission\PermissionController;
 use App\Http\Controllers\RolePermission\RoleController;
 use Illuminate\Support\Facades\Auth;
@@ -51,6 +52,15 @@ Route::prefix('employees')->as('employees.')->middleware(['auth', '2fa'])->group
     Route::post('/datatable', [EmployeeController::class, 'datatable'])->middleware(['permission:view_employees'])->name('employee_datatable');
     Route::post('/create-or-update/{employee?}', [EmployeeController::class, 'createOrUpdate'])->middleware(['permission:add_employee'])->name('create_or_update');
     Route::get('/delete/{employee?}', [EmployeeController::class, 'delete'])->middleware(['permission:delete_employee'])->name('employee_delete');
+});
+
+// employee attendance
+Route::prefix('attendance')->as('attendance.')->middleware(['auth'])->group(function () {
+    Route::post('/data-table', [AttendanceController::class, 'dataTable'])->name('data_table');
+    Route::post('/summary', [AttendanceController::class, 'summary'])->name('attendance_summary');
+    Route::post('/details', [AttendanceController::class, 'details'])->name('attendance_details');
+    Route::get('/punch-in', [AttendanceController::class, 'punchIn'])->name('punch_in');
+    Route::get('/punch-out', [AttendanceController::class, 'punchOut'])->name('punch_out');
 });
 
 // Designation routes

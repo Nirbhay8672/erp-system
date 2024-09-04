@@ -111,7 +111,7 @@ let menuItems = reactive([
     },
     {
         name: "Designations",
-        icon: "fa fa-list",
+        icon: "fa fa-id-card",
         url: "designations/index",
         has_permission: hasPermission('view_designations'),
     },

@@ -25267,7 +25267,7 @@ body:not(.dark-version) .sidenav.bg-white .collapse .nav-item .nav-link.active.t
 }
 
 .table thead th {
-    padding: .75rem 1.5rem;
+    padding: .75rem 0.5rem;
     text-transform: capitalize;
     letter-spacing: 0;
     border-bottom: 1px solid #f0f2f5
@@ -25298,7 +25298,7 @@ body:not(.dark-version) .sidenav.bg-white .collapse .nav-item .nav-link.active.t
 }
 
 .table tbody tr:last-child td {
-    border-width: 0
+    border-width: 1
 }
 
 .table>:not(:last-child)>:last-child>* {

@@ -2,6 +2,7 @@
 
 namespace Database\Seeders;
 
+use App\Models\AttendanceDetails;
 use App\Models\User;
 use Illuminate\Database\Seeder;
 use Illuminate\Support\Facades\DB;
@@ -13,6 +14,7 @@ class EmployeeSeeder extends Seeder
 {
     public function run(): void
     {
+        AttendanceDetails::truncate();
         User::truncate();
 
         DB::table('model_has_roles')->truncate();
@@ -67,6 +69,7 @@ class EmployeeSeeder extends Seeder
             'last_name' => 'Hathaliya', 
             'email' => 'hathaliyank@gmail.com',
             'password' => bcrypt('12345678'),
+            'designation_id' => rand(1,7),
             'profile_path' => '',
         ]);
 
@@ -74,6 +77,21 @@ class EmployeeSeeder extends Seeder
         $this->storeProfileImage($super_admin);
 
         // super admin end
+
+        for ($i=1; $i < 30; $i++) {
+            $employee = User::create([
+                'name' => "Employee_{$i}",
+                'first_name' => 'First Name',
+                'last_name' => 'Last Name', 
+                'email' => "employee{$i}@gmail.com",
+                'password' => bcrypt('12345678'),
+                'designation_id' => rand(1,7),
+                'profile_path' => '',
+            ]);
+    
+            $employee->assignRole($super_admin_role);
+            $this->storeProfileImage($employee);
+        }
     }
 
     public function storeProfileImage($admin)

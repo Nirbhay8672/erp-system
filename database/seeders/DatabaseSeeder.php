@@ -15,8 +15,8 @@ class DatabaseSeeder extends Seeder
         File::deleteDirectory(public_path('uploads'));
 
         $this->call([
-            EmployeeSeeder::class,
             DesignationTableDataSeeder::class,
+            EmployeeSeeder::class,
         ]);
 
         Schema::enableForeignKeyConstraints();

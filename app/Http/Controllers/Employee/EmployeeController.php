@@ -1,6 +1,6 @@
 <?php
 
-namespace App\Http\Controllers;
+namespace App\Http\Controllers\Employee;
 
 use App\Http\Requests\EmployeeFormRequest;
 use App\Http\Requests\EmployeeProfileFormRequest;
@@ -14,6 +14,7 @@ use Illuminate\Support\Facades\Storage;
 use Inertia\Inertia;
 use Inertia\Response;
 use Spatie\Permission\Models\Role;
+use App\Http\Controllers\Controller;
 
 class EmployeeController extends Controller
 {
@@ -51,7 +52,7 @@ class EmployeeController extends Controller
             $perPage = $request->per_page ?? 10;
             $page = $request->page ?? 1;
 
-            $query = User::with(['roles']);
+            $query = User::with(['roles','designation']);
 
             if ($search) {
                 $query->where('first_name', 'like', '%' . $search . '%');

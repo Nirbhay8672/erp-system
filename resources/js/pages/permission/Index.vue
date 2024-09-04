@@ -1,132 +1,106 @@
 <template>
     <inertia-head title="Permissions" />
-    <main-page
-        :breadcrumb-links="[
-            { title: 'User Management', url: '#' },
-            { title: 'Permissions', url: '#' },
-        ]"
-    >
-        <card>
-            <template #left>
-                <h5 class="mb-0">Permissions</h5>
-            </template>
-
-            <template #right v-if="!allow_update">
-                <button
-                    v-if="hasPermissions(['update_permission'])"
-                    @click="allowUpdate()"
-                    class="btn btn-primary btn-sm"
-                >
-                    Update Permission
-                </button>
-            </template>
-
-            <div class="row">
-                <div class="accordion" id="accordionExample">
-                    <div
-                        class="accordion-item"
-                        v-for="(
+    <main-page>
+        <div class="row">
+            <div class="col-lg-12 position-relative z-index-2">
+                <div class="card mb-4" v-if="loader" style="height: 200px">
+                    <div class="card-body p-4">
+                        <div class="overflow dark" id="preload">
+                            <div class="circle-line">
+                                <div class="circle-red"></div>
+                                <div class="circle-blue"></div>
+                                <div class="circle-red"></div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div class="card mb-4" v-else>
+                    <div class="card-header pb-0 p-4">
+                        <div class="d-flex justify-content-between">
+                            <h6 class="mb-0">Permissions</h6>
+                            <template v-if="!allow_update">
+                                <button v-if="hasPermission(['update_permission'])" @click="allowUpdate()"
+                                    class="btn btn-primary btn-sm">
+                                    Update Permission
+                                </button>
+                            </template>
+                        </div>
+                        <hr class="horizontal dark" />
+                    </div>
+                    <div class="card-body px-0 pt-0 pb-2">
+                        <div class="accordion p-3" id="accordionExample">
+                            <div class="accordion-item" v-for="(
                             permissions, category, category_index
-                        ) in all_permissions"
-                        :key="category"
-                    >
-                        <h2
-                            class="accordion-header bg-light"
-                            :id="`heading_${category_index}`"
-                        >
-                            <button
-                                class="accordion-button text-dark"
-                                type="button"
-                                :id="`heading_${category_index}_button`"
-                                data-bs-toggle="collapse"
-                                :data-bs-target="`#target_area_${category_index}`"
-                                aria-expanded="false"
-                                :aria-controls="`target_area_${category_index}`"
-                            >
-                                {{ category }}
-                            </button>
-                        </h2>
-                        <div
-                            :id="`target_area_${category_index}`"
-                            class="accordion-collapse collapse"
-                            :aria-labelledby="`heading_${category_index}`"
-                            data-bs-parent="#accordionExample"
-                        >
-                            <div class="table-responsive">
-                                <table class="table table-bordered">
-                                    <thead>
-                                        <tr>
-                                            <th>Permissions</th>
-                                            <th v-for="role in roles">
-                                                {{ role.name }}
-                                            </th>
-                                        </tr>
-                                    </thead>
-                                    <tbody>
-                                        <tr v-for="permission in permissions">
-                                            <td>
-                                                {{ permission.display_name }}
-                                            </td>
-                                            <td
-                                                v-for="(role, index) in roles"
-                                                :key="index"
-                                            >
-                                                <template v-if="allow_update">
-                                                    <input
-                                                        type="checkbox"
-                                                        :data-role="role.id"
-                                                        :data-permission="
-                                                            permission.id
-                                                        "
-                                                        class="permissions"
-                                                        :value="permission.id"
-                                                        :id="`permission[${role.id}][${permission.id}]`"
-                                                        :name="`permission[${role.id}][${permission.id}]`"
-                                                        :checked="
-                                                            has_permission(
+                        ) in all_permissions" :key="category">
+                                <h5 class="accordion-header bg-light mb-3" :id="`heading_${category_index}`">
+                                    <button class="accordion-button text-dark" type="button"
+                                        :id="`heading_${category_index}_button`" data-bs-toggle="collapse"
+                                        :data-bs-target="`#target_area_${category_index}`" aria-expanded="false"
+                                        :aria-controls="`target_area_${category_index}`">
+                                        <span class="ms-3"><i class="fa fa-shield fs-6 text-primary me-3"></i>{{ category }}</span>
+                                    </button>
+                                </h5>
+                                <div :id="`target_area_${category_index}`" class="accordion-collapse collapse"
+                                    :aria-labelledby="`heading_${category_index}`" data-bs-parent="#accordionExample">
+                                    <div class="table-responsive">
+                                        <table class="table table-bordered">
+                                            <thead>
+                                                <tr>
+                                                    <th>Permissions</th>
+                                                    <th v-for="role in roles">
+                                                        {{ role.name }}
+                                                    </th>
+                                                </tr>
+                                            </thead>
+                                            <tbody>
+                                                <tr v-for="permission in permissions">
+                                                    <td style="width: 400px;">
+                                                        {{ permission.display_name }}
+                                                    </td>
+                                                    <td v-for="(role, index) in roles" :key="index">
+                                                        <template v-if="allow_update">
+                                                            <div class="form-check">
+                                                                <input
+                                                                    type="checkbox"
+                                                                    :data-role="role.id"
+                                                                    :data-permission="permission.id"
+                                                                    class="permissions form-check-input"
+                                                                    :value="permission.id"
+                                                                    :id="`permission[${role.id}][${permission.id}]`"
+                                                                    :name="`permission[${role.id}][${permission.id}]`"
+                                                                    :checked="has_permission(role.id,permission.id)"
+                                                                />
+                                                            </div>
+                                                        </template>
+                                                        <template v-if="!allow_update">
+                                                            <b><i :class="has_permission(
                                                                 role.id,
                                                                 permission.id
                                                             )
-                                                        "
-                                                    />
-                                                </template>
-                                                <template v-if="!allow_update">
-                                                    <i
-                                                        :class="
-                                                            has_permission(
-                                                                role.id,
-                                                                permission.id
-                                                            )
-                                                                ? 'ph-check text-success fw-bold'
-                                                                : 'ph-x text-danger fw-bold'
-                                                        "
-                                                    ></i>
-                                                </template>
-                                            </td>
-                                        </tr>
-                                    </tbody>
-                                </table>
+                                                                ? 'fa fa-check text-success fw-bold'
+                                                                : 'fa fa-times text-danger fw-bold'
+                                                                "></i>
+                                                            </b>
+                                                        </template>
+                                                    </td>
+                                                </tr>
+                                            </tbody>
+                                        </table>
+                                    </div>
+                                </div>
                             </div>
                         </div>
                     </div>
                 </div>
             </div>
-
-            <div
-                class="row"
-                v-if="allow_update && hasPermissions(['update_permission'])"
-            >
-                <div class="form-group col-md-12 text-center mt-4">
-                    <button
-                        type="button"
-                        class="btn btn-primary"
-                        @click="submitForm"
-                    >
-                        Save Changes
-                    </button>
-                </div>
+        </div>
+        <div class="row" v-if="allow_update && hasPermission(['update_permission'])">
+            <div class="form-group col-md-12 text-center mt-4">
+                <button type="button" class="btn btn-primary" @click="submitForm">
+                    Save Changes
+                </button>
             </div>
-        </card>
+        </div>
     </main-page>
 </template>
 
@@ -139,6 +113,14 @@ import { toastAlert } from "../../helpers/alert";
 let roles = ref([]);
 let all_permissions = ref([]);
 let allow_update = ref(false);
+let loader = ref(true);
+
+const props = defineProps({
+    auth: {
+        type: Object,
+        required: true,
+    },
+});
 
 onMounted(() => {
     reload();
@@ -148,6 +130,7 @@ function reload() {
     axios.get(PermissionRoutes.details).then((response) => {
         roles.value = response.data.roles;
         all_permissions.value = response.data.all_permissions;
+        loader.value = false;
 
         nextTick(() => {
             document.getElementById("heading_0_button").click();
@@ -185,7 +168,7 @@ function submitForm() {
     });
 
     axios
-        .post(permissionRoutes.update, {
+        .post(PermissionRoutes.update, {
             role_id: role_ids,
             permission: permission_array,
         })
@@ -195,4 +178,13 @@ function submitForm() {
             toastAlert({ title: response.data.message });
         });
 }
+
+function hasPermission(permission_name) {
+    let permission_obj = props.auth.user.roles[0].permissions.find(
+        (permission) => permission.name == permission_name
+    );
+
+    return permission_obj ? true : false;
+}
+
 </script>

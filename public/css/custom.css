@@ -130,7 +130,6 @@
     border-radius: 10px !important;
 }
 
-
 .punch-button-circle {
     width: 100px;
     height: 100px;
@@ -142,4 +141,70 @@
     align-items: center;
     font-size: 18px;
     font-weight: bold;
-  }
+}
+
+.custom-textarea {
+    padding: 10px;
+    width: 100%;
+    border-radius: 5px;
+    border: 1px solid #d2d6da;
+    transition: all 0.3s ease;
+}
+
+textarea:focus {
+    border: 1px solid #d2d6da;
+    outline: none;
+}
+
+
+.form-check {
+    padding-left: 0px !important;
+}
+
+input[type="date"] {
+    user-select: none;          /* For most modern browsers */
+    -webkit-user-select: none;   /* For Safari and Chrome */
+    -moz-user-select: none;      /* For Firefox */
+    -ms-user-select: none;       /* For older IE/Edge */
+    background-color: transparent;
+}
+
+input[type="date"]::-webkit-datetime-edit-text,
+input[type="date"]::-webkit-datetime-edit-month-field,
+input[type="date"]::-webkit-datetime-edit-day-field,
+input[type="date"]::-webkit-datetime-edit-year-field {
+    display: none;
+}
+
+input[type="date"].has-value::-webkit-datetime-edit-text,
+input[type="date"].has-value::-webkit-datetime-edit-month-field,
+input[type="date"].has-value::-webkit-datetime-edit-day-field,
+input[type="date"].has-value::-webkit-datetime-edit-year-field {
+    color: initial;
+    display: contents;
+}
+
+.link-icon {
+    margin-top: 13px;
+}
+
+
+.custom-file-upload {
+    display: inline-block;
+    padding: 10px 20px;
+    width: 200px;
+    cursor: pointer;
+    background-image: linear-gradient(195deg, #ec407a, #d81b60);
+    color: #fff;
+    border-radius: 5px;
+}
+
+.custom-file-upload:hover {
+    background-image: linear-gradient(195deg, #ec407a, #ff005d);
+}
+
+.custom-file {
+    border: 1px solid #c9c9c9;
+    padding: 6px;
+    border-radius: 14px;
+}

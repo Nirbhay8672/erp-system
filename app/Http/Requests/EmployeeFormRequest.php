@@ -19,7 +19,9 @@ class EmployeeFormRequest extends FormRequest
             'name' => 'required|string|min:1|max:20|unique:users,name,' . $this->id,
             'first_name' => 'required|string|min:2|max:20',
             'last_name' => 'required|string|min:2|max:20',
-            'email' => 'nullable|email|unique:users,email,' . $this->id,
+            'email' => 'required|email|unique:users,email,' . $this->id,
+            'mobile' => 'required|numeric',
+            'gender' => 'required|string',
         ];
 
         if (!empty($this->password)) {
@@ -30,18 +32,34 @@ class EmployeeFormRequest extends FormRequest
         return $rules;
     }
 
-    public function fields(): array
+    public function basic_details(): array
     {
         $fields = [
             'name' => $this->name,
             'first_name' => $this->first_name,
             'last_name' => $this->last_name,
             'email' => $this->email,
+            'mobile' => $this->mobile,
+            'gender' => $this->gender,
+            'designation_id' => $this->designation_id,
         ];
 
         if (!empty($this->password)) {
             $fields['password'] = bcrypt($this->password);
         }
+
+        return $fields;
+    }
+
+    public function address_details(): array
+    {
+        $fields = [
+            'state' => $this->state,
+            'city' => $this->city,
+            'pincode' => $this->pincode,
+            'address_line_1' => $this->address_line_1,
+            'address_line_2' => $this->address_line_2,
+        ];
 
         return $fields;
     }

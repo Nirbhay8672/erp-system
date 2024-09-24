@@ -52,6 +52,8 @@ Route::prefix('employees')->as('employees.')->middleware(['auth', '2fa'])->group
     Route::post('/datatable', [EmployeeController::class, 'datatable'])->middleware(['permission:view_employees'])->name('employee_datatable');
     Route::post('/create-or-update/{employee?}', [EmployeeController::class, 'createOrUpdate'])->middleware(['permission:add_employee'])->name('create_or_update');
     Route::get('/delete/{employee?}', [EmployeeController::class, 'delete'])->middleware(['permission:delete_employee'])->name('employee_delete');
+
+    Route::get('/form/{employee?}', [EmployeeController::class, 'form'])->name('employee_form');
 });
 
 // employee attendance

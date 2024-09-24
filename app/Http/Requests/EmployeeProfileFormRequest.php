@@ -16,10 +16,10 @@ class EmployeeProfileFormRequest extends FormRequest
     public function rules(): array
     {
         $rules = [
-            'name' => 'required|unique:users,name,' . $this->user_id,
+            'name' => 'required|unique:users,name,' . $this->id,
             'first_name' => 'required|string|max:20',
             'last_name' => 'required|string|max:20',
-            'email' => 'nullable|email|unique:users,email,' . $this->user_id,
+            'email' => 'nullable|email|unique:users,email,' . $this->id,
             'profile_image' => 'file|mimes:jpeg,png|max:2000',
         ];
 

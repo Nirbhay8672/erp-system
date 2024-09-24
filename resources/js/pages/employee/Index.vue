@@ -18,9 +18,7 @@
                     <div class="card-header pb-0 p-4">
                         <div class="d-flex justify-content-between">
                             <h6 class="mb-0">Employees</h6>
-                            <button class="btn btn-primary btn-icon-only" @click="openForm()" v-if="hasPermission('add_employee')">
-                                <i class="fa fa-plus"></i>
-                            </button>
+                            <a :href="`${$page.props.url}/employees/form`" v-if="hasPermission('update_employee')" class="btn btn-primary btn-icon-only" role="button" aria-pressed="true"><i class="fa fa-plus link-icon"></i></a>
                         </div>
                         <hr class="horizontal dark" />
                     </div>
@@ -118,13 +116,13 @@
                                                     <td class="align-middle text-end">
                                                         <div class="d-flex justify-content-center mb-0">
 
-                                                            <button
-                                                                class="btn btn-link text-info text-gradient px-3 mb-0"
-                                                                @click="openForm(user)"
+                                                            <a
+                                                                :href="`${$page.props.url}/employees/form/${user.id}`"
                                                                 v-if="hasPermission('update_employee')"
-                                                            >
-                                                                <i class="material-icons fa fa-pencil"></i>
-                                                            </button>
+                                                                class="btn btn-link text-info text-gradient px-3 mb-0"
+                                                                role="button"
+                                                                aria-pressed="true"
+                                                            ><i class="fa fa-pencil"></i></a>
 
                                                             <button
                                                                 class="btn btn-link text-danger text-gradient px-3 mb-0"
@@ -190,10 +188,6 @@
                 </div>
             </div>
         </div>
-
-        <teleport to="body">
-            <user-form ref="user_form" :roles="roles" @reload="reloadTable()"></user-form>
-        </teleport>
     </main-page>
 </template>
 
@@ -202,7 +196,6 @@ import { ref, onMounted, reactive } from "vue";
 import axios from "axios";
 import { EmployeeRoutes } from "../../routes/EmployeeRoutes";
 import { toastAlert, confirmAlert } from "../../helpers/alert";
-import UserForm from "./includes/Form.vue";
 
 const props = defineProps({
     auth: {
@@ -217,8 +210,6 @@ const props = defineProps({
 
 let users = ref([]);
 let loader = ref(true);
-
-let user_form = ref(null);
 
 let fields = reactive({
     search: "",
@@ -260,10 +251,6 @@ function next() {
     }
     fields.page++;
     reloadTable();
-}
-
-function openForm(user = null) {
-    user_form.value.openModal(user);
 }
 
 function reloadTable() {

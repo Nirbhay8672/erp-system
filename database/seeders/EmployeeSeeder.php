@@ -68,6 +68,8 @@ class EmployeeSeeder extends Seeder
             'first_name' => 'Nirbhay',
             'last_name' => 'Hathaliya', 
             'email' => 'hathaliyank@gmail.com',
+            'mobile' => 8200186326,
+            'gender' => 'male',
             'password' => bcrypt('12345678'),
             'designation_id' => rand(1,7),
             'profile_path' => '',
@@ -75,23 +77,6 @@ class EmployeeSeeder extends Seeder
 
         $super_admin->assignRole($super_admin_role);
         $this->storeProfileImage($super_admin);
-
-        // super admin end
-
-        for ($i=1; $i < 30; $i++) {
-            $employee = User::create([
-                'name' => "Employee_{$i}",
-                'first_name' => 'First Name',
-                'last_name' => 'Last Name', 
-                'email' => "employee{$i}@gmail.com",
-                'password' => bcrypt('12345678'),
-                'designation_id' => rand(1,7),
-                'profile_path' => '',
-            ]);
-    
-            $employee->assignRole($super_admin_role);
-            $this->storeProfileImage($employee);
-        }
     }
 
     public function storeProfileImage($admin)

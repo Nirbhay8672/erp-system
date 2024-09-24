@@ -8,6 +8,8 @@ use Illuminate\Notifications\Notifiable;
 use Laravel\Sanctum\HasApiTokens;
 use Illuminate\Database\Eloquent\Casts\Attribute;
 use Illuminate\Database\Eloquent\Relations\BelongsTo;
+use Illuminate\Database\Eloquent\Relations\HasMany;
+use Illuminate\Database\Eloquent\Relations\HasOne;
 use Spatie\Permission\Traits\HasPermissions;
 use Spatie\Permission\Traits\HasRoles;
 
@@ -53,5 +55,25 @@ class User extends Authenticatable
     public function designation() : BelongsTo
     {
         return $this->belongsTo(DesignationDetails::class , 'designation_id' , 'id');
+    }
+
+    public function address() : HasOne
+    {
+        return $this->hasOne(EmployeeAddressDetails::class , 'employee_id' , 'id');
+    }
+
+    public function educations() : HasMany
+    {
+        return $this->hasMany(EmployeeEducationDetails::class , 'employee_id' , 'id');
+    }
+
+    public function experiences() : HasMany
+    {
+        return $this->hasMany(EmployeeExperienceDetails::class , 'employee_id' , 'id');
+    }
+
+    public function documents() : HasMany
+    {
+        return $this->hasMany(EmployeeDocumentsDetails::class , 'employee_id' , 'id');
     }
 }

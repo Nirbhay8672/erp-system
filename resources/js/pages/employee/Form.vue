@@ -517,7 +517,7 @@
                         <div class="row mt-5">
                             <div class="col text-center">
                                 <button class="btn btn-secondary btn-sm me-2" type="button" @click="tabChange('experience_tab')">Previous</button>
-                                <button class="btn btn-success btn-sm" type="button" @click="submitForm()">Save</button>
+                                <button class="btn btn-success btn-sm" id="save_button" type="button" @click="submitForm()">Save</button>
                             </div>
                         </div>
                     </div>
@@ -642,7 +642,9 @@ function fetchEmployeeDetails() {
         basic_details.profile_image = props.employee.profile_path;
         basic_details.role_id = props.employee.roles[0].id;
 
-        address_details = props.employee.address;
+        if(props.employee.address) {
+            address_details = props.employee.address;
+        }
 
         props.employee.educations.forEach(education => {
 
@@ -754,6 +756,9 @@ function addExperiance() {
 
 function submitForm() {
 
+    basic_details_validation.reset();
+    address_details_validation.reset();
+
     let form_data = new FormData();
     let profile_image = document.getElementById("profile_image");
 
@@ -823,10 +828,14 @@ function submitForm() {
 
     let settings = { headers: { "content-type": "multipart/form-data" } };
 
+    document.getElementById('save_button').disabled = true;
+
     axios
         .post(EmployeeRoutes.createOrUpdate(basic_details.id ?? null), form_data, settings)
         .then((response) => {
-            toastAlert({ title: response.data.message });
+            toastAlert({ title: response.data.message ,  didClose: () => {
+                location.reload(true);
+            }});
         })
         .catch(function (error) {
             if (error.response.status === 422) {
@@ -838,6 +847,8 @@ function submitForm() {
                     error.response.data.errors
                 );
             }
+
+            document.getElementById('save_button').disabled = false;
         });
 }
 

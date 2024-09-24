@@ -16,6 +16,7 @@ use Spatie\Permission\Models\Role;
 use App\Http\Controllers\Controller;
 use App\Models\DesignationDetails;
 use App\Models\EmployeeAddressDetails;
+use App\Models\EmployeeDocumentsDetails;
 use App\Models\EmployeeEducationDetails;
 use App\Models\EmployeeExperienceDetails;
 
@@ -118,11 +119,20 @@ class EmployeeController extends Controller
             DB::beginTransaction();
 
             if($request->deleted_education_ids) {
-                EmployeeEducationDetails::whereIn('id', explode(', ', $request->deleted_education_ids))->delete();
+                EmployeeEducationDetails::whereIn('id', explode(',', $request->deleted_education_ids))->delete();
             }
 
             if($request->deleted_experience_ids) {
-                EmployeeExperienceDetails::whereIn('id', explode(', ', $request->deleted_experience_ids))->delete();
+                EmployeeExperienceDetails::whereIn('id', explode(',', $request->deleted_experience_ids))->delete();
+            }
+
+            if($request->deleted_document_ids) {
+
+                foreach (explode(',', $request->deleted_document_ids) as $document_id) {
+                    $document_obj = EmployeeDocumentsDetails::find($document_id);
+                    Storage::disk('public')->delete($document_obj->document_file_path);
+                    $document_obj->delete();
+                }
             }
 
             $basic_details_fields = $request->basic_details();
@@ -158,7 +168,7 @@ class EmployeeController extends Controller
 
             foreach ($request->experiences ?? [] as $experience) {
 
-                $experience_detail = EmployeeExperienceDetails::where('id', $education['id'])->first() ?? new EmployeeExperienceDetails();
+                $experience_detail = EmployeeExperienceDetails::where('id', $experience['id'])->first() ?? new EmployeeExperienceDetails();
 
                 $experience_detail->fill([
                     'employee_id' => $employee->id,
@@ -187,7 +197,7 @@ class EmployeeController extends Controller
         try {
             DB::beginTransaction();
             
-            Storage::disk('public')->delete("/uploads/users/{$user->id}");
+            Storage::disk('public')->delete("/uploads/employees/{$user->id}");
 
             $user->delete();
 

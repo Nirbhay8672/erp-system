@@ -18,7 +18,7 @@ return new class extends Migration
             $table->string('city');
             $table->double('pincode');
             $table->string('address_line_1');
-            $table->string('address_line_2');
+            $table->string('address_line_2')->nullable();
             $table->foreign('employee_id')->references('id')->on('users');
             $table->timestamps();
         });

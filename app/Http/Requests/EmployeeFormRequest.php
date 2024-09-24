@@ -22,6 +22,12 @@ class EmployeeFormRequest extends FormRequest
             'email' => 'required|email|unique:users,email,' . $this->id,
             'mobile' => 'required|numeric',
             'gender' => 'required|string',
+            'role_id' => 'required',
+            'designation_id' => 'required',
+            'state' => 'required',
+            'city' => 'required',
+            'pincode' => 'required',
+            'address_line_1' => 'required',
         ];
 
         if (!empty($this->password)) {

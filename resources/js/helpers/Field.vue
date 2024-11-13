@@ -17,6 +17,7 @@
                     class="form-control"
                     :value="modelValue"
                     v-bind:id="$attrs['id'] || id"
+                    autocomplete="off"
                     @input="$emit('update:modelValue', $event.target.value)"
                 />
             </slot>

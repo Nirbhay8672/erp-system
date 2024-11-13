@@ -10,6 +10,7 @@ use Illuminate\Database\Eloquent\Casts\Attribute;
 use Illuminate\Database\Eloquent\Relations\BelongsTo;
 use Illuminate\Database\Eloquent\Relations\HasMany;
 use Illuminate\Database\Eloquent\Relations\HasOne;
+use Spatie\Permission\Models\Role;
 use Spatie\Permission\Traits\HasPermissions;
 use Spatie\Permission\Traits\HasRoles;
 
@@ -50,6 +51,11 @@ class User extends Authenticatable
             get: fn($value) => $value,
             set: fn($value) => $value,
         );
+    }
+
+    public function role() : BelongsTo
+    {
+        return $this->belongsTo(Role::class);
     }
 
     public function designation() : BelongsTo

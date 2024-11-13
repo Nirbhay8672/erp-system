@@ -92,16 +92,16 @@
                                     <span :class="{
                                         'is-invalid':
                                             basic_details_validation.hasError(
-                                                'profile_image'
+                                                'basic_details.profile_image'
                                             ),
                                     }"></span>
                                     <div class="invalid-feedback" v-if="basic_details_validation.hasError(
-                                        'profile_image'
+                                        'basic_details.profile_image'
                                     )
                                         ">
                                         <span>{{
                                             basic_details_validation.getError(
-                                                "profile_image"
+                                                "basic_details.profile_image"
                                             )[0]
                                         }}</span>
                                     </div>
@@ -115,8 +115,8 @@
                                         label="Name"
                                         label-class="required"
                                         type="text"
-                                        id="name"
-                                        field="name"
+                                        id="basic_details.name"
+                                        field="basic_details.name"
                                         :errors="basic_details_validation.errors"
                                     ></Field>
                                 </div>
@@ -126,8 +126,8 @@
                                         label="First Name"
                                         label-class="required"
                                         type="text"
-                                        id="first_name"
-                                        field="first_name"
+                                        id="basic_details.first_name"
+                                        field="basic_details.first_name"
                                         :errors="basic_details_validation.errors"
                                     ></Field>
                                 </div>
@@ -137,8 +137,8 @@
                                         label="Last Name"
                                         label-class="required"
                                         type="text"
-                                        id="last_name"
-                                        field="last_name"
+                                        id="basic_details.last_name"
+                                        field="basic_details.last_name"
                                         :errors="basic_details_validation.errors">
                                     </Field>
                                 </div>
@@ -148,8 +148,8 @@
                                         label="Email"
                                         label-class="required"
                                         type="text"
-                                        id="email"
-                                        field="email"
+                                        id="basic_details.email"
+                                        field="basic_details.email"
                                         :errors="basic_details_validation.errors"
                                     ></Field>
                                 </div>
@@ -159,15 +159,15 @@
                                         label="Mobile"
                                         label-class="required"
                                         type="text"
-                                        id="mobile"
-                                        field="mobile"
+                                        id="basic_details.mobile"
+                                        field="basic_details.mobile"
                                         :errors="basic_details_validation.errors"
                                     ></Field>
                                 </div>
                                 <div class="col-12 col-lg-3 col-md-3 mb-1">
                                     <Field
-                                        field="gender"
-                                        id="gender"
+                                        field="basic_details.gender"
+                                        id="basic_details.gender"
                                         label-class="required"
                                         :errors="basic_details_validation.errors"
                                         no-input
@@ -189,8 +189,8 @@
                                 </div>
                                 <div class="col-12 col-lg-3 col-md-3 mb-1">
                                     <Field
-                                        field="role_id"
-                                        id="role_id"
+                                        field="basic_details.role_id"
+                                        id="basic_details.role_id"
                                         label-class="required"
                                         :errors="basic_details_validation.errors"
                                         no-input
@@ -213,8 +213,8 @@
                                 </div>
                                 <div class="col-12 col-lg-3 col-md-3 mb-1">
                                     <Field
-                                        field="designation_id"
-                                        id="designation_id"
+                                        field="basic_details.designation_id"
+                                        id="basic_details.designation_id"
                                         label-class="required"
                                         :errors="basic_details_validation.errors"
                                         no-input
@@ -240,8 +240,8 @@
                                         v-model="basic_details.password"
                                         label="Password"
                                         type="password"
-                                        id="password"
-                                        field="password"
+                                        id="basic_details.password"
+                                        field="basic_details.password"
                                         autocomplete="off"
                                         :errors="basic_details_validation.errors"
                                     ></Field>
@@ -251,8 +251,8 @@
                                         v-model="basic_details.confirm_password"
                                         label="Confirm Password"
                                         type="password"
-                                        id="confirm_password"
-                                        field="confirm_password"
+                                        id="basic_details.confirm_password"
+                                        field="basic_details.confirm_password"
                                         autocomplete="off"
                                         :errors="basic_details_validation.errors"
                                     ></Field>
@@ -274,8 +274,8 @@
                                     label="State"
                                     label-class="required"
                                     type="text"
-                                    id="state"
-                                    field="state"
+                                    id="address_details.state"
+                                    field="address_details.state"
                                     :errors="address_details_validation.errors"
                                 ></Field>
                             </div>
@@ -285,8 +285,8 @@
                                     label="City"
                                     label-class="required"
                                     type="text"
-                                    id="city"
-                                    field="city"
+                                    id="address_details.city"
+                                    field="address_details.city"
                                     :errors="address_details_validation.errors"
                                 ></Field>
                             </div>
@@ -296,16 +296,16 @@
                                     label="Pincode"
                                     label-class="required"
                                     type="text"
-                                    id="pincode"
-                                    field="pincode"
+                                    id="address_details.pincode"
+                                    field="address_details.pincode"
                                     max-length="6"
                                     :errors="address_details_validation.errors"
                                 ></Field>
                             </div>
                             <div class="col-lg-6 mb-2">
                                 <Field
-                                    field="address_line_1"
-                                    id="address_line_1"
+                                    field="address_details.address_line_1"
+                                    id="address_details.address_line_1"
                                     :errors="address_details_validation.errors"
                                 >
                                     <template #input="{ hasError }">
@@ -358,8 +358,8 @@
                                                         label="Degree Name"
                                                         label-class="required"
                                                         type="text"
-                                                        :id="`degree_name_${index}`"
-                                                        field="degree_name"
+                                                        :id="`educations.${index}.degree_name`"
+                                                        :field="`educations.${index}.degree_name`"
                                                         :errors="education_details_validation.errors"
                                                     ></Field>
                                                 </div>
@@ -369,8 +369,8 @@
                                                         label="University Name"
                                                         label-class="required"
                                                         type="text"
-                                                        :id="`university_name_${index}`"
-                                                        field="university_name"
+                                                        :id="`educations.${index}.university_name`"
+                                                        :field="`educations.${index}.university_name`"
                                                         :errors="education_details_validation.errors"
                                                     ></Field>
                                                 </div>
@@ -380,8 +380,8 @@
                                                         label="Starting Year"
                                                         label-class="required"
                                                         type="text"
-                                                        :id="`starting_year_${index}`"
-                                                        field="starting_year"
+                                                        :id="`educations.${index}.starting_year`"
+                                                        :field="`educations.${index}.starting_year`"
                                                         :errors="education_details_validation.errors"
                                                     ></Field>
                                                 </div>
@@ -391,8 +391,8 @@
                                                         label="Ending Year"
                                                         label-class="required"
                                                         type="text"
-                                                        :id="`ending_year_${index}`"
-                                                        field="ending_year"
+                                                        :id="`educations.${index}.ending_year`"
+                                                        :field="`educations.${index}.ending_year`"
                                                         :errors="education_details_validation.errors"
                                                     ></Field>
                                                 </div>
@@ -440,8 +440,8 @@
                                                         label="Job Title"
                                                         label-class="required"
                                                         type="text"
-                                                        :id="`job_title_${index}`"
-                                                        field="job_title"
+                                                        :id="`experiences.${index}.job_title`"
+                                                        :field="`experiences.${index}.job_title`"
                                                         :errors="experiance_details_validation.errors"
                                                     ></Field>
                                                 </div>
@@ -451,8 +451,8 @@
                                                         label="Joining Date"
                                                         label-class="required"
                                                         type="date"
-                                                        :id="`joining_date_${index}`"
-                                                        field="joining_date"
+                                                        :id="`experiences.${index}.joining_date`"
+                                                        :field="`experiences.${index}.joining_date`"
                                                         :class="experience.joining_date ? 'has-value' : ''"
                                                         :errors="experiance_details_validation.errors"
                                                     ></Field>
@@ -463,8 +463,8 @@
                                                         label="Leaving Date"
                                                         label-class="required"
                                                         type="date"
-                                                        :id="`leaving_date_${index}`"
-                                                        field="leaving_date"
+                                                        :id="`experiences.${index}.leaving_date`"
+                                                        :field="`experiences.${index}.leaving_date`"
                                                         :class="experience.leaving_date ? 'has-value' : ''"
                                                         :errors="experiance_details_validation.errors"
                                                     ></Field>
@@ -499,16 +499,35 @@
                     </div>
 
                     <div class="card-body" v-show="active_tab == 'document_tab'">
-
                         <template v-for="(document , key) in document_details" :key="key">
                             <div class="row">
                                 <div class="col-12">
-                                    <label :for="`${key}_file`" class="custom-file-upload" v-if="document.id == ''">
-                                        <i class="fa fa-upload me-2"></i> {{ document.name }}
-                                    </label>
-                                    <button class="btn btn-danger btn-sm btn-icon-only mt-2" v-if="document.id > 0" @click="deletedDocument(document)"><i class="fa fa-trash"></i></button>
-                                    <span style="margin-left: 10px;">{{ document.selected_file_name }}</span>
-                                    <input :id="`${key}_file`" type="file" class="d-none" @change="showFileName(document)">
+                                    <div class="row">
+                                        <div class="col-12 col-md-6 col-lg-6">
+                                            <label :for="`${key}_file`" class="custom-file-upload" v-if="document.id == ''">
+                                                <i class="fa fa-upload me-2"></i> {{ document.name }}
+                                            </label>
+                                            <input :id="`${key}_file`" type="file" class="d-none" @change="showFileName(document)">
+                                            <span style="margin-left: 10px;">{{ document.selected_file_name }}</span>
+                                            <span class="text-danger" style="margin-left: 10px;" v-if="document_details_validation.hasError(`documents.${key}`)">
+                                                {{ document_details_validation.getError(`documents.${key}`)[0] }}
+                                            </span>
+                                        </div>
+                                        <div class="col-12 col-md-6 col-lg-6">
+                                            <a
+                                                :href="`/uploads/employees/${basic_details.id}/${document.selected_file_name}`"
+                                                v-if="document.id > 0"
+                                                class="btn btn-info btn-icon-only"
+                                                role="button"
+                                                aria-pressed="true"
+                                                target="_blank"
+                                            ><i class="fa fa-eye link-icon"></i></a>
+
+                                            <button class="btn btn-primary btn-icon-only ms-3" v-if="document.id > 0" @click="deletedDocument(document)">
+                                                <i class="fa fa-trash"></i>
+                                            </button>
+                                        </div>
+                                    </div>
                                     <hr class="dark horizontal mt-3">
                                 </div>
                             </div>
@@ -613,7 +632,7 @@ let document_details = reactive({
         id : '',
         name : 'Address Proof',
         slug : 'address_proof',
-        msg : 'No address_proof selected',
+        msg : 'No address proof selected',
         selected_file_name : null,
     },
 });
@@ -764,26 +783,26 @@ function submitForm() {
 
     if (profile_image && profile_image.files.length > 0) {
         let file = profile_image.files[0];
-        form_data.set("profile_image", file, file.name);
+        form_data.set("basic_details[profile_image]", file, file.name);
     }
 
-    form_data.set("id", basic_details.id);
-    form_data.set("name", basic_details.name);
-    form_data.set("first_name", basic_details.first_name);
-    form_data.set("last_name", basic_details.last_name);
-    form_data.set("email", basic_details.email);
-    form_data.set("mobile", basic_details.mobile);
-    form_data.set("gender", basic_details.gender);
-    form_data.set("role_id", basic_details.role_id);
-    form_data.set("designation_id", basic_details.designation_id);
-    form_data.set("password", basic_details.password);
-    form_data.set("confirm_password", basic_details.confirm_password);
+    form_data.set("basic_details[id]", basic_details.id);
+    form_data.set("basic_details[name]", basic_details.name);
+    form_data.set("basic_details[first_name]", basic_details.first_name);
+    form_data.set("basic_details[last_name]", basic_details.last_name);
+    form_data.set("basic_details[email]", basic_details.email);
+    form_data.set("basic_details[mobile]", basic_details.mobile);
+    form_data.set("basic_details[gender]", basic_details.gender);
+    form_data.set("basic_details[role_id]", basic_details.role_id);
+    form_data.set("basic_details[designation_id]", basic_details.designation_id);
+    form_data.set("basic_details[password]", basic_details.password);
+    form_data.set("basic_details[confirm_password]", basic_details.confirm_password);
 
-    form_data.set("state", address_details.state);
-    form_data.set("city", address_details.city);
-    form_data.set("pincode", address_details.pincode);
-    form_data.set("address_line_1", address_details.address_line_1);
-    form_data.set("address_line_2", address_details.address_line_2);
+    form_data.set("address_details[state]", address_details.state);
+    form_data.set("address_details[city]", address_details.city);
+    form_data.set("address_details[pincode]", address_details.pincode);
+    form_data.set("address_details[address_line_1]", address_details.address_line_1);
+    form_data.set("address_details[address_line_2]", address_details.address_line_2);
 
     form_data.set("educations" , []);
 
@@ -846,6 +865,18 @@ function submitForm() {
                 address_details_validation.setServerSideErrors(
                     error.response.data.errors
                 );
+
+                education_details_validation.setServerSideErrors(
+                    error.response.data.errors
+                );
+
+                experiance_details_validation.setServerSideErrors(
+                    error.response.data.errors
+                );
+
+                document_details_validation.setServerSideErrors(
+                    error.response.data.errors
+                );
             }
 
             document.getElementById('save_button').disabled = false;
@@ -853,46 +884,11 @@ function submitForm() {
 }
 
 let basic_details_validation = reactive(
-    new FormValidation(basic_details, {
-        profile_image: {
-            required: "Profile picture is required.",
-        },
-        name: {
-            required: "Name field is required.",
-        },
-        email: {
-            required: "Email field is required.",
-        },
-        first_name: {
-            required: "First name field is required.",
-        },
-        last_name: {
-            required: "Last name field is required.",
-        },
-        role_id: {
-            required: "Role field is required.",
-        },
-        designation_id: {
-            required: "Designation field is required.",
-        },
-    })
+    new FormValidation(basic_details, {})
 );
 
 let address_details_validation = reactive(
-    new FormValidation(address_details, {
-        state: {
-            required: "State field is required.",
-        },
-        city: {
-            required: "City field is required.",
-        },
-        pincode: {
-            required: "Pincode field is required.",
-        },
-        address_line_1: {
-            required: "Address line 1 field is required.",
-        },
-    })
+    new FormValidation(address_details, {})
 );
 
 let education_details_validation = reactive(
@@ -901,6 +897,10 @@ let education_details_validation = reactive(
 
 let experiance_details_validation = reactive(
     new FormValidation(address_details, {})
+);
+
+let document_details_validation = reactive(
+    new FormValidation(document_details, {})
 );
 
 </script>

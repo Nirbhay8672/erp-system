@@ -49,6 +49,7 @@ Route::prefix('employees')->as('employees.')->middleware(['auth', '2fa'])->group
     Route::post('/update-profile/{employee}', [EmployeeController::class, 'updateProfile'])->middleware(['permission:update_profile'])->name('update_profile');
 
     Route::get('/index', [EmployeeController::class, 'index'])->middleware(['permission:view_employees'])->name('employee_index');
+    Route::get('/details/{employee}', [EmployeeController::class, 'employee'])->middleware(['permission:view_employees'])->name('employee_details');
     Route::post('/datatable', [EmployeeController::class, 'datatable'])->middleware(['permission:view_employees'])->name('employee_datatable');
     Route::post('/create-or-update/{employee?}', [EmployeeController::class, 'createOrUpdate'])->middleware(['permission:add_employee'])->name('create_or_update');
     Route::get('/delete/{employee?}', [EmployeeController::class, 'delete'])->middleware(['permission:delete_employee'])->name('employee_delete');

@@ -117,6 +117,13 @@
                                                         <div class="d-flex justify-content-center mb-0">
 
                                                             <a
+                                                                :href="`${$page.props.url}/employees/details/${user.id}`"
+                                                                class="btn btn-link text-info text-gradient px-3 mb-0"
+                                                                role="button"
+                                                                aria-pressed="true"
+                                                            ><i class="fa fa-eye"></i></a>
+
+                                                            <a
                                                                 :href="`${$page.props.url}/employees/form/${user.id}`"
                                                                 v-if="hasPermission('update_employee')"
                                                                 class="btn btn-link text-info text-gradient px-3 mb-0"

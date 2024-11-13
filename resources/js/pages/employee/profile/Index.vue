@@ -27,44 +27,257 @@
                     </div>
                 </div>
             </div>
-            <div class="row">
-                <div class="row mt-3">
-                    <div class="col-12 col-md-6 col-xl-4 mt-md-0 mt-4 position-relative">
-                        <div class="card card-plain h-100">
-                            <div class="card-header pb-0 p-3">
-                                <div class="row">
-                                    <div class="col-md-8 d-flex align-items-center">
-                                        <h6 class="mb-0">Profile Information</h6>
-                                    </div>
-                                    <div class="col-md-4 text-end">
-                                        <button
-                                            type="button"
-                                            class="btn bg-gradient-primary btn-sm mt-2"
-                                            @click="openForm()"
-                                            title="Edit Profile"
-                                            data-bs-toggle="tooltip"
-                                            data-bs-placement="top"
-                                        >
-                                            <span aria-hidden="true"><i class="fa fa-pencil"></i></span>
-                                        </button>
-                                    </div>
+
+            <div class="row mb-4">
+                <div class="col-lg-4 col-md-6 mt-4 mb-4">
+                    <div class="card card-plain">
+                        <div class="card-header pb-0 p-3">
+                            <div class="row">
+                                <div class="col-md-8 d-flex align-items-center">
+                                    <h6 class="mb-0">Basic Information</h6>
                                 </div>
                             </div>
-                            <div class="card-body p-3">
-                                <hr class="horizontal gray-light my-2">
-                                <ul class="list-group">
-                                    <li class="list-group-item border-0 ps-0 pt-0 text-sm"><strong
-                                            class="text-dark">Username :</strong> &nbsp; {{ user_data.name }}</li>
-                                    <li class="list-group-item border-0 ps-0 text-sm"><strong
-                                            class="text-dark">First Name :</strong> &nbsp; {{ user_data.first_name }}</li>
-                                    <li class="list-group-item border-0 ps-0 text-sm"><strong
-                                            class="text-dark">Last Name :</strong> &nbsp; {{ user_data.last_name }}</li>
-                                    <li class="list-group-item border-0 ps-0 text-sm"><strong
-                                            class="text-dark">Email :</strong> &nbsp; {{ user_data.email }}</li>
-                                </ul>
+                        </div>
+                        <div class="card-body p-3 text-sm">
+                            <hr class="horizontal gray-light my-2">
+                            <div class="row mb-3">
+                                <div class="col-12 col-md-6">
+                                    <strong class="text-dark">Username</strong>
+                                </div>
+                                <div class="col-12 col-md-6">
+                                    {{ user_data.name }}
+                                </div>
+                            </div>
+                            <div class="row mb-3">
+                                <div class="col-12 col-md-6">
+                                    <strong class="text-dark">First Name</strong>
+                                </div>
+                                <div class="col-12 col-md-6">
+                                    {{ user_data.first_name }}
+                                </div>
+                            </div>
+                            <div class="row mb-3">
+                                <div class="col-12 col-md-6">
+                                    <strong class="text-dark">Last Name</strong>
+                                </div>
+                                <div class="col-12 col-md-6">
+                                    {{ user_data.last_name }}
+                                </div>
+                            </div>
+                            <div class="row mb-3">
+                                <div class="col-12 col-md-6">
+                                    <strong class="text-dark">Email</strong>
+                                </div>
+                                <div class="col-12 col-md-6">
+                                    {{ user_data.email }}
+                                </div>
+                            </div>
+                            <div class="row mb-3">
+                                <div class="col-12 col-md-6">
+                                    <strong class="text-dark">Mobile</strong>
+                                </div>
+                                <div class="col-12 col-md-6">
+                                    {{ user_data.mobile }}
+                                </div>
+                            </div>
+                            <div class="row mb-3">
+                                <div class="col-12 col-md-6">
+                                    <strong class="text-dark">Gender</strong>
+                                </div>
+                                <div class="col-12 col-md-6">
+                                    {{ user_data.gender == 'male' ? 'Male' : 'Female' }}
+                                </div>
+                            </div>
+                            <div class="row mb-3">
+                                <div class="col-12 col-md-6">
+                                    <strong class="text-dark">Role</strong>
+                                </div>
+                                <div class="col-12 col-md-6">
+                                    {{ user_data.roles[0].display_name }}
+                                </div>
+                            </div>
+                            <div class="row mb-3">
+                                <div class="col-12 col-md-6">
+                                    <strong class="text-dark">Designation</strong>
+                                </div>
+                                <div class="col-12 col-md-6">
+                                    {{ user_data.designation.name }}
+                                </div>
                             </div>
                         </div>
-                        <hr class="vertical dark">
+                    </div>
+                </div>
+                <div class="col-lg-4 col-md-6 mt-4 mb-4">
+                    <div class="card card-plain">
+                        <div class="card-header pb-0 p-3">
+                            <div class="row">
+                                <div class="col-md-8 d-flex align-items-center">
+                                    <h6 class="mb-0">Address Details</h6>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="card-body p-3 text-sm">
+                            <hr class="horizontal gray-light my-2">
+                            <div class="row mb-3">
+                                <div class="col-12 col-md-6">
+                                    <strong class="text-dark">State</strong>
+                                </div>
+                                <div class="col-12 col-md-6">
+                                    {{ user_data.address.state }}
+                                </div>
+                            </div>
+                            <div class="row mb-3">
+                                <div class="col-12 col-md-6">
+                                    <strong class="text-dark">City</strong>
+                                </div>
+                                <div class="col-12 col-md-6">
+                                    {{ user_data.address.city }}
+                                </div>
+                            </div>
+                            <div class="row mb-3">
+                                <div class="col-12 col-md-6">
+                                    <strong class="text-dark">Pincode</strong>
+                                </div>
+                                <div class="col-12 col-md-6">
+                                    {{ user_data.address.pincode }}
+                                </div>
+                            </div>
+                            <div class="row mb-3">
+                                <div class="col-12 col-md-6">
+                                    <strong class="text-dark">Address</strong>
+                                </div>
+                                <div class="col-12 col-md-6">
+                                    <p>{{ user_data.address.address_line_1 ?? '' }}</p>
+                                    <p>{{ user_data.address.address_line_2 ?? '' }}</p>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div class="col-lg-4 mt-4 mb-3">
+                    <div class="card card-plain">
+                        <div class="card-header pb-0 p-3">
+                            <div class="row">
+                                <div class="col-md-8 d-flex align-items-center">
+                                    <h6 class="mb-0">Education Details</h6>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="card-body p-3 text-sm">
+
+                            <hr class="horizontal gray-light my-2">
+
+                            <template v-for="(education, index ) in user_data.educations" :key="`edu_${index}`">
+                                <div class="row">
+                                    <span>Education {{ index + 1 }}</span>
+                                    <hr class="horizontal mt-0">
+                                </div>
+                                <div class="row mb-3">
+                                    <div class="col-12 col-md-6">
+                                        <strong class="text-dark">Degree Name</strong>
+                                    </div>
+                                    <div class="col-12 col-md-6">
+                                        {{ education.degree_name }}
+                                    </div>
+                                </div>
+                                <div class="row mb-3">
+                                    <div class="col-12 col-md-6">
+                                        <strong class="text-dark">University</strong>
+                                    </div>
+                                    <div class="col-12 col-md-6">
+                                        {{ education.university_name }}
+                                    </div>
+                                </div>
+                                <div class="row mb-3">
+                                    <div class="col-12 col-md-6">
+                                        <strong class="text-dark">Passing Year</strong>
+                                    </div>
+                                    <div class="col-12 col-md-6">
+                                        {{ education.starting_year }} - {{ education.is_pursuing > 0 ? 'Pursuing' :
+                                            education.ending_year }}
+                                    </div>
+                                </div>
+                            </template>
+                        </div>
+                    </div>
+                </div>
+                <div class="col-lg-4 mt-4 mb-3">
+                    <div class="card card-plain">
+                        <div class="card-header pb-0 p-3">
+                            <div class="row">
+                                <div class="col-md-8 d-flex align-items-center">
+                                    <h6 class="mb-0">Experience Details</h6>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="card-body p-3 text-sm">
+                            
+                            <hr class="horizontal gray-light my-2">
+
+                            <template v-for="(experience, index ) in user_data.experiences" :key="`exp_${index}`">
+                                <div class="row">
+                                    <span>Experience {{ index + 1 }}</span>
+                                    <hr class="horizontal mt-0">
+                                </div>
+                                <div class="row mb-3">
+                                    <div class="col-12 col-md-6">
+                                        <strong class="text-dark">Job Title</strong>
+                                    </div>
+                                    <div class="col-12 col-md-6">
+                                        {{ experience.job_title }}
+                                    </div>
+                                </div>
+                                <div class="row mb-3">
+                                    <div class="col-12 col-md-6">
+                                        <strong class="text-dark">Joining Date</strong>
+                                    </div>
+                                    <div class="col-12 col-md-6">
+                                        {{ experience.joining_date }}
+                                    </div>
+                                </div>
+                                <div class="row mb-3">
+                                    <div class="col-12 col-md-6">
+                                        <strong class="text-dark">Leaving Date</strong>
+                                    </div>
+                                    <div class="col-12 col-md-6">
+                                        {{ experience.leaving_date }}
+                                    </div>
+                                </div>
+                                <div class="row mb-3">
+                                    <div class="col-12 col-md-6">
+                                        <strong class="text-dark">Job Description</strong>
+                                    </div>
+                                    <div class="col-12 col-md-6">
+                                        {{ experience.job_description ?? '' }}
+                                    </div>
+                                </div>
+                            </template>
+                        </div>
+                    </div>
+                </div>
+                <div class="col-lg-4 mt-4 mb-3">
+                    <div class="card card-plain">
+                        <div class="card-header pb-0 p-3">
+                            <div class="row">
+                                <div class="col-md-8 d-flex align-items-center">
+                                    <h6 class="mb-0">Document Details</h6>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="card-body p-3 text-sm">
+                            <hr class="horizontal gray-light my-2">
+
+                            <template v-for="(document, index ) in user_data.documents" :key="`doc_${index}`">
+                                <div class="row mb-3">
+                                    <div class="col-12 col-md-6">
+                                        <strong class="text-dark">{{ document.document_type }}</strong>
+                                    </div>
+                                    <div class="col-12 col-md-6">
+                                        <a  :href="`/uploads/employees/${user_data.id}/${document.document_file_name}`" target="_blank">{{ document.document_file_name }}</a>
+                                    </div>
+                                </div>
+                            </template>
+                        </div>
                     </div>
                 </div>
             </div>

@@ -32,19 +32,34 @@ class EmployeeController extends Controller
 
     public function profile(): Response
     {
-        $user = User::find(Auth::user()->id);
+        $user = User::with([
+            'designation',
+            'roles',
+            'address',
+            'educations',
+            'experiences',
+            'documents',
+        ])->where('id',Auth::user()->id)->first();
 
-        $data = $user->only([
-            'id',
-            'profile_path',
-            'name',
-            'email',
-            'first_name',
-            'last_name',
+        return Inertia::render('employee/profile/Index', [
+            'user_details' => $user,
+            'page_name' => 'Profile',
+        ]);
+    }
+
+    public function employee(User $employee): Response
+    {
+        $user = $employee->load([
+            'designation',
+            'roles',
+            'address',
+            'educations',
+            'experiences',
+            'documents',
         ]);
 
         return Inertia::render('employee/profile/Index', [
-            'user_details' => $data,
+            'user_details' => $user,
             'page_name' => 'Profile',
         ]);
     }
@@ -139,10 +154,10 @@ class EmployeeController extends Controller
             $basic_details_fields['profile_path'] = $employee->exists ? $employee->profile_path : '';
 
             $employee->fill($basic_details_fields)->save();
-            $employee->assignRole(Role::find($request->role_id));
+            $employee->assignRole(Role::find($request->basic_details['role_id']));
 
-            if ($request->profile_image) {
-                $userService->storeProfileImage($request->profile_image, $employee);
+            if (isset($request->basic_details['profile_image'])) {
+                $userService->storeProfileImage($request->basic_details['profile_image'], $employee);
             }
 
             $address_details_fields = $request->address_details();

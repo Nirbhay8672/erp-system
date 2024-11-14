@@ -26,10 +26,18 @@
                         </p>
                     </div>
                 </div>
+                <div class="col-auto ms-auto">
+                    <a
+                        :href="`${$page.props.url}/employees/form/${user_data.id}`"
+                        class="btn btn-primary btn-icon-only"
+                        role="button"
+                        aria-pressed="true"
+                    ><i class="fa fa-pencil link-icon"></i></a>
+                </div>
             </div>
 
             <div class="row mb-4">
-                <div class="col-lg-4 col-md-6 mt-4 mb-4">
+                <div class="col-lg-4 col-md-6 mt-2">
                     <div class="card card-plain">
                         <div class="card-header pb-0 p-3">
                             <div class="row">
@@ -39,7 +47,7 @@
                             </div>
                         </div>
                         <div class="card-body p-3 text-sm">
-                            <hr class="horizontal gray-light my-2">
+                            <hr class="my-2 profile-header">
                             <div class="row mb-3">
                                 <div class="col-12 col-md-6">
                                     <strong class="text-dark">Username</strong>
@@ -107,7 +115,7 @@
                         </div>
                     </div>
                 </div>
-                <div class="col-lg-4 col-md-6 mt-4 mb-4">
+                <div class="col-lg-4 col-md-6 mt-2">
                     <div class="card card-plain">
                         <div class="card-header pb-0 p-3">
                             <div class="row">
@@ -117,7 +125,7 @@
                             </div>
                         </div>
                         <div class="card-body p-3 text-sm">
-                            <hr class="horizontal gray-light my-2">
+                            <hr class="my-2 profile-header">
                             <div class="row mb-3">
                                 <div class="col-12 col-md-6">
                                     <strong class="text-dark">State</strong>
@@ -154,7 +162,7 @@
                         </div>
                     </div>
                 </div>
-                <div class="col-lg-4 mt-4 mb-3">
+                <div class="col-lg-4 col-md-6 mt-2">
                     <div class="card card-plain">
                         <div class="card-header pb-0 p-3">
                             <div class="row">
@@ -164,9 +172,7 @@
                             </div>
                         </div>
                         <div class="card-body p-3 text-sm">
-
-                            <hr class="horizontal gray-light my-2">
-
+                            <hr class="my-2 profile-header">
                             <template v-for="(education, index ) in user_data.educations" :key="`edu_${index}`">
                                 <div class="row">
                                     <span>Education {{ index + 1 }}</span>
@@ -201,7 +207,7 @@
                         </div>
                     </div>
                 </div>
-                <div class="col-lg-4 mt-4 mb-3">
+                <div class="col-lg-4 col-md-6 mt-2">
                     <div class="card card-plain">
                         <div class="card-header pb-0 p-3">
                             <div class="row">
@@ -211,9 +217,7 @@
                             </div>
                         </div>
                         <div class="card-body p-3 text-sm">
-                            
-                            <hr class="horizontal gray-light my-2">
-
+                            <hr class="my-2 profile-header">
                             <template v-for="(experience, index ) in user_data.experiences" :key="`exp_${index}`">
                                 <div class="row">
                                     <span>Experience {{ index + 1 }}</span>
@@ -255,7 +259,7 @@
                         </div>
                     </div>
                 </div>
-                <div class="col-lg-4 mt-4 mb-3">
+                <div class="col-lg-4 col-md-6 mt-2">
                     <div class="card card-plain">
                         <div class="card-header pb-0 p-3">
                             <div class="row">
@@ -265,8 +269,7 @@
                             </div>
                         </div>
                         <div class="card-body p-3 text-sm">
-                            <hr class="horizontal gray-light my-2">
-
+                            <hr class="my-2 profile-header">
                             <template v-for="(document, index ) in user_data.documents" :key="`doc_${index}`">
                                 <div class="row mb-3">
                                     <div class="col-12 col-md-6">

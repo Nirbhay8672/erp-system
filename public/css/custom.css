@@ -208,3 +208,9 @@ input[type="date"].has-value::-webkit-datetime-edit-year-field {
     padding: 6px;
     border-radius: 14px;
 }
+
+.profile-header {
+    border-top: 2px solid #ff005d;
+    padding-bottom: 10px;
+    max-width: 80%;
+}

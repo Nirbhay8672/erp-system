@@ -47,7 +47,7 @@ class EmployeeFormRequest extends FormRequest
 
             $rules['documents.addhar_card'] = 'required|file|mimes:jpeg,png,pdf|max:2000';
             $rules['documents.pan_card'] = 'required|file|mimes:jpeg,png,pdf|max:2000';
-            $rules['documents.passbook_front_page'] = 'required|file|mimes:jpeg,png,pdf|max:2000';+
+            $rules['documents.passbook_front_page'] = 'required|file|mimes:jpeg,png,pdf|max:2000';
             $rules['documents.address_proof'] = 'required|file|mimes:jpeg,png,pdf|max:2000';
         } else {
             if (!empty($this->basic_details['password'])) {

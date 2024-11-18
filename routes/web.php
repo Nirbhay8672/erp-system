@@ -8,6 +8,7 @@ use App\Http\Controllers\Employee\EmployeeController;
 use App\Http\Controllers\LoginController;
 use App\Http\Controllers\RolePermission\PermissionController;
 use App\Http\Controllers\RolePermission\RoleController;
+use App\Http\Controllers\Settings\HolidayController;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Route;
 
@@ -89,5 +90,13 @@ Route::prefix('permissions')->as('permissions.')->middleware(['auth'])->group(fu
     Route::post('/save-changes', [PermissionController::class, 'assignPermission'])->name('role_permission_save_changes');
 });
 
+// holiday
+Route::prefix('holidays')->as('holidays.')->middleware(['auth'])->group(function () {
+    Route::get('/', [HolidayController::class, 'index'])->name('index');
+    Route::get('/holiday-list', [HolidayController::class, 'holidayList'])->name('holiday_list');
+    Route::post('/year-filter', [HolidayController::class, 'yearFilter'])->name('year_filter');
+    Route::post('/get-holiday', [HolidayController::class, 'getHoliday'])->name('get_holiday');
+    Route::post('/update-holiday', [HolidayController::class, 'updateHoliday'])->name('update-holiday');
+});
 
 Route::get('/send-msg', [DashboardController::class, 'generateInvoice']);

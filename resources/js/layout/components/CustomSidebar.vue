@@ -127,6 +127,12 @@ let menuItems = reactive([
         url: "permissions/index",
         has_permission: hasPermission('view_permission'),
     },
+    {
+        name: "Holiday",
+        icon: "fa fa-calendar",
+        url: "holidays",
+        has_permission: true,
+    },
 ]);
 
 function hasPermission(permission_name) {

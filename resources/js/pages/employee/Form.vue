@@ -567,6 +567,11 @@ const props = defineProps({
     },
     employee: {
 
+    },
+    url: {
+        required: true,
+        type: String,
+        default: '/',
     }
 });
 
@@ -825,19 +830,13 @@ function submitForm() {
         form_data.append(`experiences[${index}][job_description]`, experience.job_description);
     });
 
-    let document_index = 0;
-
     Object.entries(document_details).forEach(([key, value]) => {
 
         let document_file_element = document.getElementById(`${key}_file`);
 
         if (document_file_element && document_file_element.files.length > 0) {
             let document_file = document_file_element.files[0];
-
-            form_data.append(`documents[${document_index}][type]`, key);
-            form_data.append(`documents[${document_index}][file]`, document_file, document_file.name);
-
-            document_index++;
+            form_data.append(`documents[${key}]`, document_file, document_file.name);
         }
     });
 
@@ -853,10 +852,11 @@ function submitForm() {
         .post(EmployeeRoutes.createOrUpdate(basic_details.id ?? null), form_data, settings)
         .then((response) => {
             toastAlert({ title: response.data.message ,  didClose: () => {
-                location.reload(true);
+                window.location.href = `${props.url}/employees/index`; 
             }});
         })
         .catch(function (error) {
+            
             if (error.response.status === 422) {
                 basic_details_validation.setServerSideErrors(
                     error.response.data.errors

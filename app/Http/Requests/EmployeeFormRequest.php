@@ -44,11 +44,21 @@ class EmployeeFormRequest extends FormRequest
             $rules['basic_details.profile_image'] = 'required|file|mimes:jpeg,png|max:2000';
             $rules['basic_details.password'] = 'required|min:6|max:8';
             $rules['basic_details.confirm_password'] = 'required_with:basic_details.password|same:basic_details.password';
+
+            $rules['documents.addhar_card'] = 'required|file|mimes:pdf,png,jpeg,jpg|max:2048';
+            $rules['documents.pan_card'] = 'required|file|mimes:pdf,png,jpeg,jpg|max:2048';
+            $rules['documents.passbook_front_page'] = 'required|file|mimes:pdf,png,jpeg,jpg|max:2048';
+            $rules['documents.address_proof'] = 'required|file|mimes:pdf,png,jpeg,jpg|max:2048';
         } else {
             if (!empty($this->basic_details['password'])) {
                 $rules['basic_details.password'] = 'required_if:basic_details.id,null|nullable|min:6';
                 $rules['basic_details.confirm_password'] = 'required_with:basic_details.password|same:basic_details.password';
             }
+
+            $rules['documents.addhar_card'] = 'nullable|file|mimes:pdf,png,jpeg,jpg|max:2048';
+            $rules['documents.pan_card'] = 'nullable|file|mimes:pdf,png,jpeg,jpg|max:2048';
+            $rules['documents.passbook_front_page'] = 'nullable|file|mimes:pdf,png,jpeg,jpg|max:2048';
+            $rules['documents.address_proof'] = 'nullable|file|mimes:pdf,png,jpeg,jpg|max:2048';
         }
 
         if($this->profile_image) {

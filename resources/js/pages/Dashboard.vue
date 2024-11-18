@@ -91,6 +91,22 @@
                             </div>
                         </div>
                     </div>
+                    <div class="col-12 col-lg-6">
+                        <div class="card mb-2">
+                            <div class="card-header p-3 pt-2">
+                                Today Activity
+                            </div>
+                            
+                            <hr class="dark horizontal my-0">
+
+                            <div class="card-body">
+                                <today-activity
+                                    ref="today_activity_element"
+                                    :auth="auth"
+                                />
+                            </div>
+                        </div>
+                    </div>
                 </div>
             </div>
         </div>
@@ -102,8 +118,10 @@
 import { reactive , ref } from 'vue';
 import BasicInfo from './components/attendance/BasicInfo.vue';
 import PunchButton from './components/attendance/PunchButton.vue';
+import TodayActivity from './components/attendance/TodayActivity.vue';
 
 let basic_info_element = ref("");
+let today_activity_element = ref("");
 
 const props = defineProps({
     auth: {
@@ -125,9 +143,8 @@ function updateButtonDetails(buttonData) {
 
 function reloadData() {
     basic_info_element.value.reloadData();
-    // today_activity_element.value.reloadActivity();
-    // today_activity_element.value.reloadTime();
-    // loadDataTable();
+    today_activity_element.value.reloadActivity();
+    today_activity_element.value.reloadTime();
 }
 
 </script>

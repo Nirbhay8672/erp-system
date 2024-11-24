@@ -104,6 +104,12 @@ let menuItems = reactive([
         has_permission: hasPermission('view_dashboard'),
     },
     {
+        name: "Attendance",
+        icon: "fa fa-th-list",
+        url: "attendance/index",
+        has_permission: true,
+    },
+    {
         name: "Employees",
         icon: "fa fa-users",
         url: "employees/index",

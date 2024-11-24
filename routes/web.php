@@ -60,7 +60,8 @@ Route::prefix('employees')->as('employees.')->middleware(['auth', '2fa'])->group
 
 // employee attendance
 Route::prefix('attendance')->as('attendance.')->middleware(['auth'])->group(function () {
-    Route::post('/data-table', [AttendanceController::class, 'dataTable'])->name('data_table');
+    Route::get('/index', [AttendanceController::class, 'index'])->name('index');
+    Route::post('/datatable', [AttendanceController::class, 'dataTable'])->name('data_table');
     Route::post('/summary', [AttendanceController::class, 'summary'])->name('attendance_summary');
     Route::post('/details', [AttendanceController::class, 'details'])->name('attendance_details');
     Route::get('/punch-in', [AttendanceController::class, 'punchIn'])->name('punch_in');

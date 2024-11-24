@@ -44,10 +44,10 @@
                             </div>
                         </div>
 
-                        <div class="row gy-3 mt-3">
+                        <div class="row gy-3 mt-3" id="holiday_card">
                             <div class="col-12 col-md-4 col-sm-6" v-for="(holidays, title) in year_list" :key="title"
                                 v-if="Object.entries(year_list).length > 0">
-                                <div class="card mb-4" style="min-height: 200px;">
+                                <div class="card mb-4" style="min-height: 250px;">
                                     <div class="card-header p-3 pt-2"> {{ title }} </div>
                                     <hr class="dark horizontal my-0">
                                     <div class="card-body p-3" v-if="holidays.length > 0">

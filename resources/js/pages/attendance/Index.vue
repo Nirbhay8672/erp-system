@@ -26,8 +26,11 @@
                             <div class="dataTable-wrapper dataTable-loading no-footer sortable searchable fixed-columns">
                                 <div class="dataTable-top">
                                     <div class="row">
-                                        <div class="input-group input-group-outline">
-                                            <input type="date" class="form-control" id="date">
+                                        <div class="col justify-content-center">
+                                            <button class="btn btn-primary btn-sm mt-2" @click="adjustDate(-1)"><i class="fa fa-arrow-left fs-6"></i></button>
+                                            <span class="ms-3 me-3">{{ fields.date }}</span>
+                                            <input type="date" id="from_date" class="form-control d-none" v-model="fields.date">
+                                            <button class="btn btn-primary btn-sm mt-2" @click="adjustDate(1)"><i class="fa fa-arrow-right fs-6"></i></button>
                                         </div>
                                     </div>
                                 </div>
@@ -122,10 +125,7 @@ let loader = ref(true);
 let designation_form = ref(null);
 
 let fields = reactive({
-    filterData: {
-        'from_date': null,
-        'to_date': null,
-    }
+    'date': getTodayDate(),
 });
 
 onMounted(() => {
@@ -133,6 +133,14 @@ onMounted(() => {
         reloadTable();
     }, 1000);
 });
+
+function getTodayDate() {
+    const today = new Date();
+    const year = today.getFullYear();
+    const month = String(today.getMonth() + 1).padStart(2, '0');
+    const day = String(today.getDate()).padStart(2, '0');
+    return `${year}-${month}-${day}`;
+}
 
 function changeMainFilter() {
     reloadTable();
@@ -158,4 +166,16 @@ function reloadTable() {
             }
         });
 }
+
+function adjustDate(days) {
+    if (!fields.date) {
+        fields.date = new Date().toISOString().split("T")[0];
+    }
+    const currentDate = new Date(fields.date);
+    currentDate.setDate(currentDate.getDate() + days);
+    fields.date = currentDate.toISOString().split("T")[0];
+
+    reloadTable();
+}
+
 </script>

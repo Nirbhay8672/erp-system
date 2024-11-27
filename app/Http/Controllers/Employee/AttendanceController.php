@@ -24,60 +24,35 @@ class AttendanceController extends Controller
     public function dataTable(Request $request): JsonResponse
     {
         try {
-            $perPage = $request->per_page ?? 10;
-            $page = $request->page ?? 1;
 
-            $filterData = $request->filterData;
+            $date = $request->date ? $request->date : Carbon::now();
 
-            $from_date = $filterData['from_date'] ? Carbon::createFromFormat('d/m/Y', $filterData['from_date'])->format('Y-m-d') : Carbon::now();
-            $to_date = $filterData['to_date'] ? Carbon::createFromFormat('d/m/Y', $filterData['to_date'])->format('Y-m-d') : Carbon::now();
+            $attendance_data = DB::table('employee_attendance_details')
+                ->select([
+                    'time_different',
+                    DB::raw("DATE_FORMAT(attendance_date, '%d/%m/%Y') as date"),
+                    DB::raw("TIME_FORMAT(time_in, '%h:%i %p') as punch_in_formatted"),
+                    DB::raw("TIME_FORMAT(time_out, '%h:%i %p') as punch_out_formatted"),
+                    DB::raw("TIME_FORMAT(time_in, '%H:%i') as punch_in"),
+                    DB::raw("TIME_FORMAT(time_out, '%H:%i') as punch_out"),
+                ])
+                ->where('employee_id', Auth::user()->id);
 
-            $query = DB::table('employee_attendance_details');
-
-            if ($from_date && $to_date) {
-                $query->whereDate('attendance_date', '>=', $from_date);
-                $query->whereDate('attendance_date', '<=', $to_date);
+            if ($date) {
+                $attendance_data->whereDate('attendance_date', '=', $date);
             }
-
-            $query->groupBy('id');
-
-            $query->select([
-                DB::raw("DATE_FORMAT(attendance_date, '%d/%m/%Y') as date"),
-                DB::raw("TIME_FORMAT(time_in, '%h:%i %p') as punch_in_formatted"),
-                DB::raw("TIME_FORMAT(time_out, '%h:%i %p') as punch_out_formatted"),
-                DB::raw("TIME_FORMAT(time_in, '%H:%i') as punch_in"),
-                DB::raw("TIME_FORMAT(time_out, '%H:%i') as punch_out"),
-                DB::raw("SUM(time_different) as total_time"),
-            ])
-            ->where('employee_id', Auth::user()->id);
-
-            $total = $query->count(); 
-            $offset = ($page - 1) * $perPage;
-
-            $attendances = $query->offset($offset)
-                ->limit($perPage)
-                ->get();
 
             $attendanceService = new AttendanceService();
 
             $new_data_array = [];
-            foreach ($attendances as $attendance) {
-                $attendance->total_hours = $attendance->punch_out_formatted ? $attendanceService->convertMinutesToHoursAndMinutes($attendance->total_time) : '-';
+            foreach ($attendance_data->get() ?? [] as $attendance) {
+                $attendance->total_hours = $attendance->punch_out_formatted ? $attendanceService->convertMinutesToHoursAndMinutes($attendance->time_different) : '-';
                 $attendance->punch_out_formatted = $attendance->punch_out_formatted ?? '-';
                 array_push($new_data_array, $attendance);
             }
 
-            $total_pages = ceil($total / $perPage);
-
-            $startIndex = ($page - 1) * $perPage;
-            $endIndex = min($startIndex + $perPage, $total);
-
             return $this->successResponse(message: "Users details fetch.", data: [
                 'attendances' => $new_data_array,
-                'total' => $total,
-                'total_pages' => $total_pages,
-                'start_index' => $startIndex + 1,
-                'end_index' => $endIndex,
             ]);
         } catch (\Exception $exception) {
             DB::rollBack();

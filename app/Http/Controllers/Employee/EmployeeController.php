@@ -19,6 +19,7 @@ use App\Models\EmployeeAddressDetails;
 use App\Models\EmployeeDocumentsDetails;
 use App\Models\EmployeeEducationDetails;
 use App\Models\EmployeeExperienceDetails;
+use Carbon\Carbon;
 
 class EmployeeController extends Controller
 {
@@ -36,9 +37,19 @@ class EmployeeController extends Controller
             'designation',
             'roles',
             'address',
+            'experiences' => function ($query) {
+                $query->select([
+                    'employee_experience_details.*',
+                    DB::raw("DATE_FORMAT(joining_date, '%d-%m-%Y') as joining_date"),
+                    DB::raw("DATE_FORMAT(leaving_date, '%d-%m-%Y') as leaving_date")
+                ]);
+            },
             'educations',
-            'experiences',
             'documents',
+        ])->select([
+            "users.*",
+            DB::raw("DATE_FORMAT(dob ,'%d-%m-%Y') as date_of_birth"),
+            DB::raw("DATE_FORMAT(doj ,'%d-%m-%Y') as date_of_joining")
         ])->where('id',Auth::user()->id)->first();
 
         return Inertia::render('employee/profile/Index', [
@@ -54,9 +65,18 @@ class EmployeeController extends Controller
             'roles',
             'address',
             'educations',
-            'experiences',
+            'experiences' => function ($query) {
+                $query->select([
+                    'employee_experience_details.*',
+                    DB::raw("DATE_FORMAT(joining_date, '%d-%m-%Y') as joining_date"),
+                    DB::raw("DATE_FORMAT(leaving_date, '%d-%m-%Y') as leaving_date")
+                ]);
+            },
             'documents',
         ]);
+
+        $user->date_of_birth = Carbon::parse($user->dob)->format('d-m-Y');
+        $user->date_of_joining = Carbon::parse($user->doj)->format('d-m-Y');
 
         return Inertia::render('employee/profile/Index', [
             'user_details' => $user,

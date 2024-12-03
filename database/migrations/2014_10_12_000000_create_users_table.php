@@ -18,6 +18,8 @@ return new class extends Migration {
             $table->string('email');
             $table->double('mobile');
             $table->string('gender');
+            $table->date('dob');
+            $table->date('doj');
             $table->unsignedBigInteger('designation_id');
             $table->timestamp('email_verified_at')->nullable();
             $table->string('password');

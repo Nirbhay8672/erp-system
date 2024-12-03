@@ -98,6 +98,22 @@
                             </div>
                             <div class="row mb-3">
                                 <div class="col-12 col-md-6">
+                                    <strong class="text-dark">Date of birth</strong>
+                                </div>
+                                <div class="col-12 col-md-6">
+                                    {{ user_data.date_of_birth }}
+                                </div>
+                            </div>
+                            <div class="row mb-3">
+                                <div class="col-12 col-md-6">
+                                    <strong class="text-dark">Date of joining</strong>
+                                </div>
+                                <div class="col-12 col-md-6">
+                                    {{ user_data.date_of_joining }}
+                                </div>
+                            </div>
+                            <div class="row mb-3">
+                                <div class="col-12 col-md-6">
                                     <strong class="text-dark">Role</strong>
                                 </div>
                                 <div class="col-12 col-md-6">
@@ -285,18 +301,11 @@
                 </div>
             </div>
         </div>
-
-        <teleport to="body">
-            <profile-form ref="profile_form" @reload="loadProfileData" />
-        </teleport>
     </main-page>
 </template>
 
 <script setup>
 import { ref } from "vue";
-import profileForm from "./Form.vue";
-
-let profile_form = ref(null);
 
 const props = defineProps({
     user_details: {
@@ -310,12 +319,4 @@ const props = defineProps({
 });
 
 let user_data = ref(props.user_details);
-
-function loadProfileData(data) {
-    user_data.value = data;
-}
-
-function openForm() {
-    profile_form.value.openModal(user_data.value);
-}
 </script>

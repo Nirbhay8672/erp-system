@@ -17,6 +17,7 @@ class DatabaseSeeder extends Seeder
         $this->call([
             DesignationTableDataSeeder::class,
             EmployeeSeeder::class,
+            HolidaySeeder::class,
         ]);
 
         Schema::enableForeignKeyConstraints();

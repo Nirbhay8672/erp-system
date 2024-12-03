@@ -189,6 +189,30 @@
                                 </div>
                                 <div class="col-12 col-lg-3 col-md-3 mb-1">
                                     <Field
+                                        v-model="basic_details.dob"
+                                        label="DOB"
+                                        label-class="required"
+                                        type="date"
+                                        :id="`basic_details.dob`"
+                                        :field="`basic_details.dob`"
+                                        :class="basic_details.dob ? 'has-value' : ''"
+                                        :errors="basic_details_validation.errors"
+                                    ></Field>
+                                </div>
+                                <div class="col-12 col-lg-3 col-md-3 mb-1">
+                                    <Field
+                                        v-model="basic_details.doj"
+                                        label="DOJ"
+                                        label-class="required"
+                                        type="date"
+                                        :id="`basic_details.doj`"
+                                        :field="`basic_details.doj`"
+                                        :class="basic_details.doj ? 'has-value' : ''"
+                                        :errors="basic_details_validation.errors"
+                                    ></Field>
+                                </div>
+                                <div class="col-12 col-lg-3 col-md-3 mb-1">
+                                    <Field
                                         field="basic_details.role_id"
                                         id="basic_details.role_id"
                                         label-class="required"
@@ -590,6 +614,8 @@ let basic_details = reactive({
     email: "",
     mobile: "",
     gender: "",
+    dob: "",
+    doj: "",
     role_id: "",
     designation_id: "",
     password: "",
@@ -652,7 +678,7 @@ function fetchEmployeeDetails() {
     loader.value = false;
 
     if(props.employee) {
-
+        
         basic_details.id = props.employee.id;
         basic_details.name = props.employee.name;
         basic_details.first_name = props.employee.first_name;
@@ -660,6 +686,8 @@ function fetchEmployeeDetails() {
         basic_details.email = props.employee.email;
         basic_details.mobile = props.employee.mobile;
         basic_details.gender = props.employee.gender;
+        basic_details.dob = props.employee.dob;
+        basic_details.doj = props.employee.doj;
         basic_details.designation_id = props.employee.designation_id;
 
         basic_details.profile_path = props.employee.profile_path;
@@ -798,6 +826,8 @@ function submitForm() {
     form_data.set("basic_details[email]", basic_details.email);
     form_data.set("basic_details[mobile]", basic_details.mobile);
     form_data.set("basic_details[gender]", basic_details.gender);
+    form_data.set("basic_details[dob]", basic_details.dob);
+    form_data.set("basic_details[doj]", basic_details.doj);
     form_data.set("basic_details[role_id]", basic_details.role_id);
     form_data.set("basic_details[designation_id]", basic_details.designation_id);
     form_data.set("basic_details[password]", basic_details.password);

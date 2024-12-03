@@ -108,6 +108,41 @@
                         </div>
                     </div>
                 </div>
+
+                <div class="row gy-3 mt-3 custom-card">
+                    <div class="col-12 col-md-4 col-sm-6">
+                        <div class="card mb-5 h-100">
+                            <div class="card-header p-3 pt-2 text-primary"> Upcoming Holidays </div>
+                            <hr class="dark horizontal my-0">
+                            <div class="card-body p-3" v-if="$page.props.upcomingHolidays.length > 0">
+                                <div v-for="holiday in $page.props.upcomingHolidays" :key="`holiday_${holiday.id}`">
+                                    <p> {{ holiday.day }} {{ holiday.day_name }} - {{ holiday.title }}</p>
+                                </div>
+                            </div>
+                            <div class="card-body p-3" v-else>
+                                <span class="text-center">
+                                    No upcoming holidays
+                                </span>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="col-12 col-md-4 col-sm-6">
+                        <div class="card mb-5 h-100">
+                            <div class="card-header p-3 pt-2 text-primary"> Upcoming Birtdays </div>
+                            <hr class="dark horizontal my-0">
+                            <div class="card-body p-3" v-if="$page.props.upcomingBirthDays.length > 0">
+                                <div v-for="birth_day in $page.props.upcomingBirthDays" :key="`birth_day_${birth_day.id}`">
+                                    <p> {{ birth_day.date_format }} - {{ birth_day.employee_name }} </p>
+                                </div>
+                            </div>
+                            <div class="card-body p-3" v-else>
+                                <span class="text-center mt-5">
+                                    No upcoming birthdays
+                                </span>
+                            </div>
+                        </div>
+                    </div>
+                </div>
             </div>
         </div>
     </main-page>

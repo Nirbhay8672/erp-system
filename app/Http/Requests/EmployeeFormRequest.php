@@ -22,6 +22,8 @@ class EmployeeFormRequest extends FormRequest
             'basic_details.email' => 'required|email|unique:users,email,' . $this->basic_details['id'] ?? 0,
             'basic_details.mobile' => 'required|numeric',
             'basic_details.gender' => 'required',
+            'basic_details.dob' => 'required',
+            'basic_details.doj' => 'required',
             'basic_details.role_id' => 'required',
             'basic_details.designation_id' => 'required',
 
@@ -83,6 +85,9 @@ class EmployeeFormRequest extends FormRequest
             'basic_details.mobile.required' => 'The mobile number field is required.',
             'basic_details.mobile.numeric' => 'The mobile number must number.',
 
+            'basic_details.dob.required' => 'The date of birth field is required.',
+            'basic_details.doj.required' => 'The date of joining field is required.',
+
             'basic_details.gender.required' => 'The gender field is required.',
             'basic_details.role_id.required' => 'The role field is required.',
             'basic_details.designation_id.required' => 'The designation field is required.',
@@ -137,6 +142,8 @@ class EmployeeFormRequest extends FormRequest
             'mobile' => $this->basic_details['mobile'],
             'gender' => $this->basic_details['gender'],
             'designation_id' => $this->basic_details['designation_id'],
+            'dob' => $this->basic_details['dob'],
+            'doj' => $this->basic_details['doj'],
         ];
 
         if (!empty($this->basic_details['password'])) {

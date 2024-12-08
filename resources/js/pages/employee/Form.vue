@@ -197,6 +197,7 @@
                                         :field="`basic_details.dob`"
                                         :class="basic_details.dob ? 'has-value' : ''"
                                         :errors="basic_details_validation.errors"
+                                        :isDate="true"
                                     ></Field>
                                 </div>
                                 <div class="col-12 col-lg-3 col-md-3 mb-1">
@@ -209,6 +210,7 @@
                                         :field="`basic_details.doj`"
                                         :class="basic_details.doj ? 'has-value' : ''"
                                         :errors="basic_details_validation.errors"
+                                        :isDate="true"
                                     ></Field>
                                 </div>
                                 <div class="col-12 col-lg-3 col-md-3 mb-1">
@@ -479,6 +481,7 @@
                                                         :field="`experiences.${index}.joining_date`"
                                                         :class="experience.joining_date ? 'has-value' : ''"
                                                         :errors="experiance_details_validation.errors"
+                                                        :isDate="true"
                                                     ></Field>
                                                 </div>
                                                 <div class="col-12 col-lg-3 col-md-3 mb-1">
@@ -491,6 +494,7 @@
                                                         :field="`experiences.${index}.leaving_date`"
                                                         :class="experience.leaving_date ? 'has-value' : ''"
                                                         :errors="experiance_details_validation.errors"
+                                                        :isDate="true"
                                                     ></Field>
                                                 </div>
                                                 <div class="col-12 col-lg-3 col-md-3 mb-1">

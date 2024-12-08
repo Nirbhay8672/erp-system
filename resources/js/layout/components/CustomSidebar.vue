@@ -139,6 +139,12 @@ let menuItems = reactive([
         url: "holidays",
         has_permission: true,
     },
+    {
+        name: "Settings",
+        icon: "fa fa-gear",
+        url: "settings",
+        has_permission: true,
+    },
 ]);
 
 function hasPermission(permission_name) {

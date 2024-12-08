@@ -9,6 +9,7 @@ use App\Http\Controllers\LoginController;
 use App\Http\Controllers\RolePermission\PermissionController;
 use App\Http\Controllers\RolePermission\RoleController;
 use App\Http\Controllers\Settings\HolidayController;
+use App\Http\Controllers\Settings\LeaveController;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Route;
 
@@ -100,4 +101,17 @@ Route::prefix('holidays')->as('holidays.')->middleware(['auth'])->group(function
     Route::post('/update-holiday', [HolidayController::class, 'updateHoliday'])->name('update-holiday');
 });
 
+// settings
+Route::prefix('settings')->as('settings.')->middleware(['auth'])->group(function () {
+    Route::get('/', [DashboardController::class, 'settings'])->name('index');
+    Route::get('/leave', [LeaveController::class, 'index'])->name('leave');
+});
+
+// settings
+Route::prefix('leave-settings')->as('leave_settings.')->middleware(['auth'])->group(function () {
+    Route::get('/all-leaves', [LeaveController::class, 'allLeaves'])->name('all_leave');
+    Route::post('/update', [LeaveController::class, 'update'])->name('update');
+});
+
+// common
 Route::get('/send-msg', [DashboardController::class, 'generateInvoice']);

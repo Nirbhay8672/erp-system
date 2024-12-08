@@ -4,7 +4,7 @@
             class="input-group input-group-outline my-3"
             :class="{
                 'is-invalid': hasError,
-                'is-filled': modelValue || hasError,
+                'is-filled': modelValue || hasError || isDate || modelValue == 0,
             }">
             <slot name="label" v-if="!noLabel">
                 <label class="form-label" :for="$attrs['id'] || id" :class="labelClass">{{ label }}</label>
@@ -60,6 +60,10 @@ const props = defineProps({
         type: Boolean,
         default: false,
     },
+    isDate: {
+        type: Boolean,
+        default: false,
+    }
 });
 defineEmits(["update:modelValue"]);
 

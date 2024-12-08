@@ -18,6 +18,7 @@ class DatabaseSeeder extends Seeder
             DesignationTableDataSeeder::class,
             EmployeeSeeder::class,
             HolidaySeeder::class,
+            LeaveSettingsSeeder::class,
         ]);
 
         Schema::enableForeignKeyConstraints();

@@ -64,4 +64,11 @@ class DashboardController extends Controller
             'upcomingBirthDays' => $upcomingBirthdays,
         ]);
     }
+
+    public function settings() : Response
+    {
+        return Inertia::render('setting/Settings', [
+            'page_name' => 'Settings',
+        ]);
+    }
 }

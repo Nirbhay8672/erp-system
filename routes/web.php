@@ -5,6 +5,7 @@ use App\Http\Controllers\DashboardController;
 use App\Http\Controllers\Designation\DesignationController;
 use App\Http\Controllers\Employee\AttendanceController;
 use App\Http\Controllers\Employee\EmployeeController;
+use App\Http\Controllers\Employee\LeaveController as EmployeeLeaveController;
 use App\Http\Controllers\LoginController;
 use App\Http\Controllers\RolePermission\PermissionController;
 use App\Http\Controllers\RolePermission\RoleController;
@@ -111,6 +112,20 @@ Route::prefix('settings')->as('settings.')->middleware(['auth'])->group(function
 Route::prefix('leave-settings')->as('leave_settings.')->middleware(['auth'])->group(function () {
     Route::get('/all-leaves', [LeaveController::class, 'allLeaves'])->name('all_leave');
     Route::post('/update', [LeaveController::class, 'update'])->name('update');
+});
+
+// my leaves
+Route::prefix('my-leaves')->as('my_leaves.')->middleware(['auth'])->group(function () {
+    Route::get('/index', [EmployeeLeaveController::class, 'index'])->name('my_leaves');
+    Route::post('/datatable', [EmployeeLeaveController::class, 'datatable'])->name('leave_list');
+    Route::post('/add', [EmployeeLeaveController::class, 'addLeave'])->name('add');
+});
+
+// employee leaves
+Route::prefix('employee-leaves')->as('employee_leaves.')->middleware(['auth'])->group(function () {
+    Route::get('/index', [EmployeeLeaveController::class, 'employeeLeavesIndex'])->name('employee_leaves');
+    Route::post('/datatable', [EmployeeLeaveController::class, 'allEmployeeLeaves'])->name('employee_leves_list');
+    Route::post('/update-status', [EmployeeLeaveController::class, 'updateStatus'])->name('update_status');
 });
 
 // common

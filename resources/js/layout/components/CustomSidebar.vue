@@ -110,6 +110,18 @@ let menuItems = reactive([
         has_permission: true,
     },
     {
+        name: "My Leaves",
+        icon: "fa fa-cube",
+        url: "my-leaves/index",
+        has_permission: true,
+    },
+    {
+        name: "Employee Leaves",
+        icon: "fa fa-cubes",
+        url: "employee-leaves/index",
+        has_permission: true,
+    },
+    {
         name: "Employees",
         icon: "fa fa-users",
         url: "employees/index",

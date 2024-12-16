@@ -80,7 +80,7 @@ class EmployeeController extends Controller
 
         return Inertia::render('employee/profile/Index', [
             'user_details' => $user,
-            'page_name' => 'Profile',
+            'page_name' => 'Employee Detail',
         ]);
     }
 
@@ -122,6 +122,30 @@ class EmployeeController extends Controller
             DB::rollBack();
             return $this->errorResponse(message: $exception->getMessage());
         }
+    }
+
+    public function editProfile(User $employee) : Response
+    {
+        if($employee->exists) {
+            $employee->load('address');
+            $employee->load('educations');
+            $employee->load('experiences');
+            $employee->load('documents');
+            $employee->load('roles');
+
+            if(count($employee->educations) > 0) {
+                foreach ($employee->educations as $index => $education) {
+                    $employee->educations[$index]['is_pursuing'] = $education->is_pursuing == 1 ? true : false;
+                }
+            }
+        }
+
+        return Inertia::render('employee/Form',[
+            'employee' => $employee->exists ? $employee : null,
+            'page_name' => 'Edit Profile',
+            'roles' => Role::all(),
+            'designations' => DesignationDetails::all(),
+        ]);
     }
 
     public function form(User $employee) : Response

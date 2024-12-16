@@ -27,7 +27,7 @@
                 <ul class="navbar-nav justify-content-end">
                     <li class="nav-item">
                         <a
-                            :href="`${$page.props.url}/employees/profile`"
+                            :href="`${$page.props.url}/profile`"
                             class="nav-link text-body p-0 position-relative"
                         >
                         <span class="me-3">{{ $page.props.auth.user.name }}</span>

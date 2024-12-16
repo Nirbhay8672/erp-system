@@ -27,15 +27,8 @@ class LeaveSettingFormRequest extends FormRequest
             'sick_leave.details.add_leave_per_month' => 'required|numeric',
             'sick_leave.details.total_leave_per_year' => 'required|numeric',
 
-            'maternity_leave.details.paid_leaves' => 'required|numeric',
-            'maternity_leave.details.one_time_in_organization' => 'required|boolean',
-
-            'paternity_leave.details.paid_leaves' => 'required|numeric',
-            'paternity_leave.details.one_time_in_organization' => 'required|boolean',
-
-            'marriage_leave.details.paid_leaves' => 'required|numeric',
-            'marriage_leave.details.max_allowed_leaves' => 'required|numeric',
-            'marriage_leave.details.one_time_in_organization' => 'required|boolean',
+            'work_from_home.details.add_leave_per_month' => 'required|numeric',
+            'work_from_home.details.total_leave_per_year' => 'required|numeric',
         ];
 
         return $rules;

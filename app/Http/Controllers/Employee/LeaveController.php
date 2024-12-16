@@ -8,6 +8,7 @@ use App\Http\Controllers\Controller;
 use App\Http\Requests\LeaveRequestFormRequest;
 use App\Models\LeaveRequest;
 use App\Models\LeaveSettings;
+use App\Models\User;
 use Illuminate\Http\JsonResponse;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
@@ -32,10 +33,13 @@ class LeaveController extends Controller
 
     public function index(): Response
     {
+        $user = User::with(['leaveBalance'])->where('id' , Auth::user()->id)->first();
+
         return Inertia::render('leave/Index',[
             'page_name' => 'My Leaves',
             'leave_types' => LeaveSettings::select(['id','leave_type', 'leave_type_slug', 'leave_type_uniue_id'])->get(),
             'leave_status' => $this->leave_status,
+            'leave_balance' => $user->leaveBalance,
         ]);
     }
 

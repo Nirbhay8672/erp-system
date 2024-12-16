@@ -6,6 +6,9 @@ use App\Models\AttendanceDetails;
 use App\Models\EmployeeAddressDetails;
 use App\Models\EmployeeEducationDetails;
 use App\Models\EmployeeExperienceDetails;
+use App\Models\LeaveBalance;
+use App\Models\LeaveBalanceSummary;
+use App\Models\LeaveRequest;
 use App\Models\User;
 use Carbon\Carbon;
 use Illuminate\Database\Seeder;
@@ -25,6 +28,9 @@ class EmployeeSeeder extends Seeder
         DB::table('role_has_permissions')->truncate();
         Role::truncate();
         Permission::truncate();
+        LeaveRequest::truncate();
+        LeaveBalance::truncate();
+        LeaveBalanceSummary::truncate();
 
         $permissions_array = [
             // dashboard
@@ -90,6 +96,15 @@ class EmployeeSeeder extends Seeder
 
         $super_admin->assignRole($super_admin_role);
         $this->storeProfileImage($super_admin);
+
+        LeaveBalance::create([
+            'employee_id' => $super_admin->id,
+            'casual_leave' => 3,
+            'earned_leave' => 2,
+            'sick_leave' => 4,
+            'compensatory_off' => 1,
+            'work_from_home' => 3,
+        ]);
 
         EmployeeAddressDetails::create([
             'employee_id' => $super_admin->id,
@@ -198,6 +213,15 @@ class EmployeeSeeder extends Seeder
     
             $new_user->assignRole($user_role);
             $this->storeProfileImage($new_user);
+
+            LeaveBalance::create([
+                'employee_id' => $new_user->id,
+                'casual_leave' => 1,
+                'earned_leave' => 2,
+                'sick_leave' => 4,
+                'compensatory_off' => 2,
+                'work_from_home' => 6,
+            ]);
     
             EmployeeAddressDetails::create([
                 'employee_id' => $new_user->id,

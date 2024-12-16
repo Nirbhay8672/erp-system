@@ -34,6 +34,8 @@ Route::get('/complete-registration', [RegisterController::class, 'completeRegist
 
 Route::middleware(['auth'])->group(function () {
     Route::get('/', [DashboardController::class, 'index'])->name('dashboard');
+    Route::get('/profile', [EmployeeController::class, 'profile'])->middleware(['permission:view_profile'])->name('profile');
+    Route::get('/edit-profile/{employee?}', [EmployeeController::class, 'editProfile'])->name('employee_form');
     Route::get('/logout-auth', [LoginController::class, 'logOut']);
 });
 
@@ -47,8 +49,7 @@ Route::middleware(['2fa', 'auth'])->group(function () {
 
 // employees url
 Route::prefix('employees')->as('employees.')->middleware(['auth', '2fa'])->group(function () {
-
-    Route::get('/profile', [EmployeeController::class, 'profile'])->middleware(['permission:view_profile'])->name('profile');
+    
     Route::post('/update-profile/{employee}', [EmployeeController::class, 'updateProfile'])->middleware(['permission:update_profile'])->name('update_profile');
 
     Route::get('/index', [EmployeeController::class, 'index'])->middleware(['permission:view_employees'])->name('employee_index');

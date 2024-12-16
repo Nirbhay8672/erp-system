@@ -18,17 +18,17 @@ class LeaveSettingsSeeder extends Seeder
                 'details' => [
                     'total_leave_per_year' => 9,
                     'max_leave_per_month' => 3,
-                    'add_leave_per_month' => 0.75,
-                    'is_carry_forward' => 0,
+                    'add_leave_per_month' => 1,
+                    'is_carry_forward' => 1,
                 ],
             ],
             [
                 'leave_type' => 'Earned Leave',
                 'leave_type_slug' => 'earned_leave',
                 'details' => [
-                    'total_leave_per_year' => 15,
+                    'total_leave_per_year' => 12,
                     'max_accumulated_leaves' => 30,
-                    'add_leave_per_month' => 1.25,
+                    'add_leave_per_month' => 1,
                     'is_carry_forward' => 1,
                 ],
             ],
@@ -36,35 +36,29 @@ class LeaveSettingsSeeder extends Seeder
                 'leave_type' => 'Sick Leave',
                 'leave_type_slug' => 'sick_leave',
                 'details' => [
-                    'total_leave_per_year' => 9,
-                    'add_leave_per_month' => 0.75,
-                    'is_carry_forward' => 0,
+                    'total_leave_per_year' => 4,
+                    'add_leave_per_month' => 2,
+                    'is_carry_forward' => 1,
                 ],
             ],
             [
-                'leave_type' => 'Maternity Leave',
-                'leave_type_slug' => 'maternity_leave',
+                'leave_type' => 'Work From Home',
+                'leave_type_slug' => 'work_from_home',
                 'details' => [
-                    'paid_leaves' => 84,
-                    'one_time_in_organization' => 1,
+                    'total_leave_per_year' => 12,
+                    'add_leave_per_month' => 2,
+                    'is_carry_forward' => 1,
                 ],
             ],
             [
-                'leave_type' => 'Paternity Leave',
-                'leave_type_slug' => 'paternity_leave',
-                'details' => [
-                    'paid_leaves' => 5,
-                    'one_time_in_organization' => 1,
-                ],
+                'leave_type' => 'Compensatory Off',
+                'leave_type_slug' => 'compensatory_off',
+                'details' => [],
             ],
             [
-                'leave_type' => 'Marriage Leave',
-                'leave_type_slug' => 'marriage_leave',
-                'details' => [
-                    'paid_leaves' => 5,
-                    'max_allowed_leaves' => 15,
-                    'one_time_in_organization' => 1,
-                ],
+                'leave_type' => 'Leave Without Pay',
+                'leave_type_slug' => 'leave_without_pay',
+                'details' => [],
             ],
         ];
 

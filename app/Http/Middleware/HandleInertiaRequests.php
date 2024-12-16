@@ -37,11 +37,17 @@ class HandleInertiaRequests extends Middleware
      */
     public function share(Request $request): array
     {
+        $segments = request()->segments();
+        $secondLastSegment = $segments[count($segments) - 2] ?? null;
+        $thirdLastSegment = $segments[count($segments) - 3] ?? null;
+
         return array_merge(parent::share($request), [
             'auth.user' => fn() => $request->user()
                 ? User::with(['roles.permissions'])->find($request->user()->id)
                 : null,
             'url' => url('/'),
+            'secondLastSegment' => $secondLastSegment,
+            'thirdLastSegment' => $thirdLastSegment,
             'storage_path' => storage_path('app/public'),
         ]);
     }

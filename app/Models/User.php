@@ -82,4 +82,9 @@ class User extends Authenticatable
     {
         return $this->hasMany(EmployeeDocumentsDetails::class , 'employee_id' , 'id');
     }
+
+    public function leaveBalance() : HasOne
+    {
+        return $this->hasOne(LeaveBalance::class , 'employee_id');
+    }
 }

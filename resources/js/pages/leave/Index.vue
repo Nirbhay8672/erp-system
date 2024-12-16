@@ -2,6 +2,23 @@
     <inertia-head title="My Leaves" />
     <main-page>
         <div class="row">
+            <div class="col-lg-12">
+                <div class="row gy-3 mt-3 d-flex justify-content-between">
+                    <template v-for="(leave , key ) in $page.props.leave_balance" :key="key">
+                        <div class="col-12 col-md-2 col-sm-6" v-if="!['id','employee_id','created_at', 'updated_at'].includes(key)">
+                            <div class="card mb-2 text-center">
+                                <div class="card-header p-3 pt-4">
+                                    <h6 class="mb-3 text-capitalize"> {{ convertIntoTitleText(key) }}</h6>
+                                    <h4 class="mb-0 text-primary">{{ leave }}</h4>
+                                </div>
+                            </div>
+                        </div>
+                    </template>
+                </div>
+            </div>
+        </div>
+        
+        <div class="row mt-3">
             <div class="col-lg-12 position-relative z-index-2">
                 <div class="card mb-4" v-if="loader" style="height: 200px">
                     <div class="card-body p-4">
@@ -165,6 +182,7 @@
                 </div>
             </div>
         </div>
+
         <teleport to="body">
             <leave-form ref="leave_form" @reload="reloadTable()"></leave-form>
         </teleport>
@@ -255,6 +273,13 @@ function reloadTable() {
                 });
             }
         });
+}
+
+function convertIntoTitleText(string) {
+    return string
+        .replace(/(^\w)/g, (g) => g[0].toUpperCase())
+        .replace(/([-_]\w)/g, (g) => " " + g[1].toUpperCase())
+        .trim();
 }
 
 function hasPermission(permission_name) {

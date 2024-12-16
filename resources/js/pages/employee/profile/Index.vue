@@ -1,5 +1,5 @@
 <template>
-    <inertia-head title="Profile" />
+    <inertia-head :title="$page.props.page_name" />
     <main-page>
         <div class="page-header min-height-300 border-radius-xl mt-4"
             style="background-image: url('https://images.unsplash.com/photo-1531512073830-ba890ca4eba2?ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&amp;ixlib=rb-1.2.1&amp;auto=format&amp;fit=crop&amp;w=1920&amp;q=80');">
@@ -28,7 +28,7 @@
                 </div>
                 <div class="col-auto ms-auto">
                     <a
-                        :href="`${$page.props.url}/employees/form/${user_data.id}`"
+                        :href="`${$page.props.url}/edit-profile/${user_data.id}`"
                         class="btn btn-primary btn-icon-only"
                         role="button"
                         aria-pressed="true"

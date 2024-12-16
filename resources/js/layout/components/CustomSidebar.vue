@@ -21,8 +21,8 @@
                         class="nav-link text-white"
                         aria-controls="ProfileNav"
                         role="button"
-                        :aria-expanded="current_url == `${$page.props.url}/employees/profile` ? true : false"
-                        :class="current_url == `${$page.props.url}/employees/profile` ? '' : 'collapsed'"
+                        :aria-expanded="current_url == `${$page.props.url}/profile` ? true : false"
+                        :class="current_url == `${$page.props.url}/profile` ? '' : 'collapsed'"
                     >
                         <img :src="$page.props.auth.user.profile_path
                                 ? $page.props.auth.user.profile_path
@@ -31,13 +31,13 @@
                         <span class="nav-link-text ms-2 ps-1">{{ $page.props.auth.user.first_name }} {{
                             $page.props.auth.user.last_name }}</span>
                     </a>
-                    <div class="collapse" id="ProfileNav" :class="current_url == `${$page.props.url}/employees/profile` ? 'show' : ''" >
+                    <div class="collapse" id="ProfileNav" :class="current_url == `${$page.props.url}/profile` ? 'show' : ''" >
                         <ul class="nav">
                             <li class="nav-item">
                                 <a
                                     class="nav-link text-white"
-                                    :href="`${$page.props.url}/employees/profile`"
-                                    :class="current_url == `${$page.props.url}/employees/profile` ? 'bg-gradient-primary active' : ''"
+                                    :href="`${$page.props.url}/profile`"
+                                    :class="current_url == `${$page.props.url}/profile` ? 'bg-gradient-primary active' : ''"
                                     id="my_profile_nav_link"
                                 >
                                     <div class="text-white text-center me-2 d-flex align-items-center justify-content-center" style="margin-left: 9px;">
@@ -62,7 +62,7 @@
                 <template v-for="(menu, index) in menuItems">
                     <li class="nav-item" v-if="menu.has_permission">
                         <a class="nav-link text-white"
-                            :class="current_url == `${$page.props.url}/${menu.url}` ? 'bg-gradient-primary active' : ''"
+                            :class="current_url == `${$page.props.url}/${menu.url}` || $page.props.secondLastSegment == menu.parent_segment || $page.props.thirdLastSegment == menu.parent_segment ? 'bg-gradient-primary active' : ''"
                             :href="`${$page.props.url}/${menu.url}`"
                             :id="`nav-link-${index}`"
                         >
@@ -101,60 +101,70 @@ let menuItems = reactive([
         name: "Dashboard",
         icon: "fa fa-th-large",
         url: "home",
+        parent_segment : "home", 
         has_permission: hasPermission('view_dashboard'),
     },
     {
         name: "Attendance",
         icon: "fa fa-th-list",
         url: "attendance/index",
+        parent_segment : "attendance", 
         has_permission: true,
     },
     {
         name: "My Leaves",
         icon: "fa fa-cube",
         url: "my-leaves/index",
+        parent_segment : "my-leaves",
         has_permission: true,
     },
     {
         name: "Employee Leaves",
         icon: "fa fa-cubes",
         url: "employee-leaves/index",
+        parent_segment : "employee-leaves",
         has_permission: true,
     },
     {
         name: "Employees",
         icon: "fa fa-users",
         url: "employees/index",
+        parent_segment : "employees",
         has_permission: hasPermission('view_employees'),
     },
     {
         name: "Designations",
         icon: "fa fa-id-card",
         url: "designations/index",
+        parent_segment : "designations",
         has_permission: hasPermission('view_designations'),
     },
     {
         name: "Roles",
         icon: "fa fa-user-secret",
         url: "roles/index",
+        parent_segment : "roles",
         has_permission: hasPermission('view_roles'),
     },
     {
         name: "Permission",
         icon: "fa fa-shield",
         url: "permissions/index",
+        parent_segment : "permissions",
         has_permission: hasPermission('view_permission'),
     },
     {
         name: "Holiday",
         icon: "fa fa-calendar",
         url: "holidays",
+        parent_segment : "holidays",
         has_permission: true,
     },
     {
         name: "Settings",
         icon: "fa fa-gear",
         url: "settings",
+        parent_segment : "settings",
         has_permission: true,
     },
 ]);

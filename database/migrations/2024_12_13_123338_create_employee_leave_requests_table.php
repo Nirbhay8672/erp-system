@@ -22,6 +22,33 @@ return new class extends Migration
             $table->foreign('employee_id')->references('id')->on('users');
             $table->timestamps();
         });
+
+        Schema::create('employee_leave_balance', function (Blueprint $table) {
+            $table->id();
+            $table->unsignedBigInteger('employee_id');
+            $table->double('casual_leave');
+            $table->double('earned_leave');
+            $table->double('sick_leave');
+            $table->double('compensatory_off');
+            $table->double('work_from_home');
+            $table->timestamps();
+
+            $table->foreign('employee_id')->references('id')->on('users');
+        });
+
+        Schema::create('employee_leave_balance_summary', function (Blueprint $table) {
+            $table->id();
+            $table->unsignedBigInteger('employee_id');
+            $table->unsignedBigInteger('employee_leave_request_id')->nullable();
+            $table->integer('leave_type');
+            $table->double('credit');
+            $table->double('debit');
+            $table->double('balance');
+            $table->timestamps();
+
+            $table->foreign('employee_id')->references('id')->on('users');
+            $table->foreign('employee_leave_request_id')->references('id')->on('employee_leave_requests');
+        });
     }
 
     /**
@@ -30,5 +57,7 @@ return new class extends Migration
     public function down(): void
     {
         Schema::dropIfExists('employee_leave_requests');
+        Schema::dropIfExists('employee_leave_balance');
+        Schema::dropIfExists('employee_leave_balance_summary');
     }
 };

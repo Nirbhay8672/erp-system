@@ -170,115 +170,41 @@
                             <div class="row gy-5">
                                 <div class="col-md-5">
                                     <h5 class="stepper-title text-center">
-                                        Maternity Leave
+                                        Work From Home
                                     </h5>
                                     <div class="text-center mt-3 text-primary">
-                                        <i class="fa-solid fa-person-pregnant fs-3"></i>
+                                        <i class="fa fa-laptop fs-3"></i>
                                     </div>
                                 </div>
                                 <div class="col-md-7">
                                     <div class="row gy-3">
                                         <div class="col-12 col-sm-6 col-md-6 col-lg-6">
-                                            <Field v-model="fields.maternity_leave.details
-                                                .paid_leaves
-                                                " label="Paid Leaves" label-class="required" type="text"
-                                                id="ml_paid_leave" field="maternity_leave.details.paid_leaves"
-                                                placeholder="Enter Paid Leaves" :errors="formValidation.errors"></Field>
-                                        </div>
-                                        <div class="col-12 col-sm-6 col-md-6 col-lg-6">
-                                            <div class="form-check mt-4">
-                                                <input
-                                                    class="form-check-input"
-                                                    type="checkbox"
-                                                    id="ml_one_time_in_organization"
-                                                    @change="updateCheckbox('ml_one_time_in_organization', 'maternity_leave' , 'one_time_in_organization')"
-                                                    :checked="fields.maternity_leave.details.one_time_in_organization == 1"
-                                                />
-                                                <label class="form-check-label" for="ml_one_time_in_organization">
-                                                    One Time In Organization
-                                                </label>
-                                            </div>
-                                        </div>
-                                    </div>
-                                </div>
-                            </div>
-                            <hr class="horizontal dark" />
-                            <div class="row gy-5">
-                                <div class="col-md-5">
-                                    <h5 class="stepper-title text-center">
-                                        Paternity Leave
-                                    </h5>
-                                    <div class="text-center mt-3 text-primary">
-                                        <i class="fa-solid fa-baby fs-3"></i>
-                                    </div>
-                                </div>
-                                <div class="col-md-7">
-                                    <div class="row gy-5">
-                                        <div class="col-12 col-sm-6 col-md-6 col-lg-6">
-                                            <Field v-model="fields.paternity_leave.details
-                                                .paid_leaves
-                                                " label="Paid Leaves" label-class="required" type="text"
-                                                id="pl_paid_leave" field="paternity_leave.details.paid_leaves"
-                                                placeholder="Enter Paid Leaves" :errors="formValidation.errors"></Field>
-                                        </div>
-                                        <div class="col-12 col-sm-6 col-md-6 col-lg-6">
-                                            <div class="form-check mt-4">
-                                                <input
-                                                    class="form-check-input"
-                                                    type="checkbox"
-                                                    id="pl_one_time_in_organization"
-                                                    @change="updateCheckbox('pl_one_time_in_organization', 'paternity_leave' , 'one_time_in_organization')"
-                                                    :checked="fields.paternity_leave.details.one_time_in_organization == 1"
-                                                />
-                                                <label class="form-check-label"
-                                                    for="pl_one_time_in_organization">
-                                                    One Time In Organization
-                                                </label>
-                                            </div>
-                                        </div>
-                                    </div>
-                                </div>
-                            </div>
-                            <hr class="horizontal dark" />
-                            <div class="row gy-5">
-                                <div class="col-md-5">
-                                    <h5 class="stepper-title text-center">
-                                        Marriage Leave
-                                    </h5>
-                                    <div class="text-center mt-3 text-primary">
-                                        <i class="fa-solid fa-heart fs-3"></i>
-                                    </div>
-                                </div>
-                                <div class="col-md-7">
-                                    <div class="row gy-3">
-                                        <div class="col-12 col-sm-6 col-md-6 col-lg-6">
-                                            <Field v-model="fields.marriage_leave.details
-                                                .max_allowed_leaves
-                                                " label="Max Allowed Leaves" label-class="required" type="text"
-                                                id="mrgl_max_allowed_leaves"
-                                                field="marriage_leave.details.max_allowed_leaves"
-                                                placeholder="Enter Max Allowed Leaves" :errors="formValidation.errors">
+                                            <Field v-model="fields.work_from_home.details
+                                                .add_leave_per_month
+                                                " label="Add Leave Per Month" label-class="required" type="text"
+                                                id="wfh_add_leave_per_month" field="work_from_home.details.add_leave_per_month"
+                                                placeholder="Enter add leave per month" :errors="formValidation.errors">
                                             </Field>
                                         </div>
                                         <div class="col-12 col-sm-6 col-md-6 col-lg-6">
-                                            <Field v-model="fields.marriage_leave.details
-                                                .paid_leaves
-                                                " label="Paid Leaves" label-class="required" type="text"
-                                                id="mrgl_paid_leave" field="marriage_leave.details.paid_leaves"
-                                                placeholder="Enter Paid Leaves" :errors="formValidation.errors"></Field>
+                                            <Field v-model="fields.work_from_home.details
+                                                .total_leave_per_year
+                                                " label="Total Leave Per Year" label-class="required" type="text"
+                                                id="wfh_total_leave_per_year" field="work_from_home.details.total_leave_per_year"
+                                                placeholder="Enter total leave per year" :errors="formValidation.errors">
+                                            </Field>
                                         </div>
                                         <div class="col-12 col-sm-6 col-md-6 col-lg-6">
                                             <div class="form-check">
                                                 <input
                                                     class="form-check-input"
                                                     type="checkbox"
-                                                    id="mrgl_one_time_in_organization"
-                                                    @change="updateCheckbox('mrgl_one_time_in_organization', 'marriage_leave' , 'one_time_in_organization')"
-                                                    :checked="fields.marriage_leave.details.one_time_in_organization == 1"
+                                                    id="wfh_is_carry_forward"
+                                                    @change="updateCheckbox('wfh_is_carry_forward', 'work_from_home' , 'is_carry_forward')"
+                                                    :checked="fields.work_from_home.details.is_carry_forward == 1"
                                                 />
-                                                <label class="form-check-label"
-                                                    for="mrgl_one_time_in_organization">
-                                                    One Time In Organization
+                                                <label class="form-check-label" for="wfh_is_carry_forward">
+                                                    Is Carry Forward.
                                                 </label>
                                             </div>
                                         </div>
@@ -302,25 +228,25 @@
                         <div class="row gy-3 custom-card" v-if="is_view_mode">
                             <div class="col-12 col-md-4 col-sm-6" v-for="(leave, index) in leave_seeings"
                                 :key="`leave_${index}`" v-if="leave_seeings.length > 0">
-                                <div class="card mb-5 h-100">
-                                    <div class="card-header p-3 pt-2 text-primary"> {{ leave.leave_type }} </div>
-                                    <hr class="dark horizontal my-0">
-                                    <div class="card-body p-3">
-                                        <div v-for="(leave, index) in leave.details" :key="`leave_${index}`">
-                                            <p>
-                                                <span class="fw-bold">
-                                                    {{ convertIntoTitleText(index) }} -
-                                                </span> {{
-                                                    parseInt(leave) === 0 || parseInt(leave) === 1
-                                                    ? leave === 1
-                                                        ? "Yes"
-                                                        : "No"
-                                                    : leave
-                                                }}
-                                            </p>
+                                <template v-if="leave.leave_type_slug != 'leave_without_pay' && leave.leave_type_slug != 'compensatory_off'">
+                                    <div class="card mb-5 h-100">
+                                        <div class="card-header p-3 pt-2 text-primary"> {{ leave.leave_type }}</div>
+                                        <hr class="dark horizontal my-0">
+                                        <div class="card-body p-3">
+                                            <div v-for="(leave, index) in leave.details" :key="`leave_${index}`">
+                                                <p>
+                                                    <span class="fw-bold">
+                                                        {{ convertIntoTitleText(index) }} - 
+                                                    </span>
+                                                    <span v-if="index == 'is_carry_forward' || index == 'one_time_in_organization'">
+                                                        {{ leave === 1 ? "Yes" : "No" }}
+                                                    </span>
+                                                    <span v-else>{{ leave }}</span>
+                                                </p>
+                                            </div>
                                         </div>
                                     </div>
-                                </div>
+                                </template>
                             </div>
                         </div>
                     </div>
@@ -343,15 +269,6 @@ let leave_seeings = ref({});
 onMounted(() => {
     reload();
 });
-
-let leave_dictionary = {
-    1: "casual_leave",
-    2: "earned_leave",
-    3: "sick_leave",
-    4: "maternity_leave",
-    5: "paternity_leave",
-    6: "marriage_leave",
-};
 
 let is_view_mode = ref(true);
 let leave_mode_icon = ref("fa fa-pencil");
@@ -383,26 +300,12 @@ let fields = reactive({
             is_carry_forward: false,
         },
     },
-    maternity_leave: {
-        id: "maternity_leave",
-        details: {
-            paid_leaves: 0,
-            one_time_in_organization: false,
-        },
-    },
-    paternity_leave: {
+    leave_without_pay: {
         id: "",
         details: {
-            paid_leaves: 0,
-            one_time_in_organization: false,
-        },
-    },
-    marriage_leave: {
-        id: "",
-        details: {
-            paid_leaves: 0,
-            max_allowed_leaves: 0,
-            one_time_in_organization: false,
+            total_leave_per_year: 3,
+            add_leave_per_month: 0,
+            is_carry_forward: false,
         },
     },
 });
@@ -499,40 +402,18 @@ function addValidation() {
     );
 
     formValidation.addFields(
-        fields.maternity_leave.details,
+        fields.work_from_home.details,
         {
-            paid_leaves: {
-                required: "The paid leaves field is required.",
-                numeric: "The paid leaves must be numeric.",
+            add_leave_per_month: {
+                required: "The add leave per month field is required.",
+                numeric: "The add leave per month must be numeric.",
+            },
+            total_leave_per_year: {
+                required: "The total leave per year field is required.",
+                numeric: "The total leave per year must be numeric.",
             },
         },
-        "maternity_leave.details"
-    );
-
-    formValidation.addFields(
-        fields.paternity_leave.details,
-        {
-            paid_leaves: {
-                required: "The paid leaves field is required.",
-                numeric: "The paid leaves must be numeric.",
-            },
-        },
-        "paternity_leave.details"
-    );
-
-    formValidation.addFields(
-        fields.marriage_leave.details,
-        {
-            paid_leaves: {
-                required: "The paid leaves field is required.",
-                numeric: "The paid leaves must be numeric.",
-            },
-            max_allowed_leaves: {
-                required: "The max allowed leaves field is required.",
-                numeric: "The max allowed leaves must be numeric.",
-            },
-        },
-        "marriage_leave.details"
+        "work_from_home.details"
     );
 }
 

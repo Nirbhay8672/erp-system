@@ -1,5 +1,5 @@
 <template>
-    <inertia-head :title="`${$page.props.employee ? 'Update Employee' : 'Create Employee'}`" />
+    <inertia-head :title="$page.props.page_name" />
     <main-page>
         <div class="row">
             <div class="col-lg-12 position-relative z-index-2">
@@ -886,7 +886,7 @@ function submitForm() {
         .post(EmployeeRoutes.createOrUpdate(basic_details.id ?? null), form_data, settings)
         .then((response) => {
             toastAlert({ title: response.data.message ,  didClose: () => {
-                window.location.href = `${props.url}/employees/index`; 
+                window.location.href = `${props.url}/employees/index`;
             }});
         })
         .catch(function (error) {

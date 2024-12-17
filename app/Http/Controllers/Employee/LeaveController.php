@@ -6,13 +6,16 @@ use Inertia\Inertia;
 use Inertia\Response;
 use App\Http\Controllers\Controller;
 use App\Http\Requests\LeaveRequestFormRequest;
+use App\Models\LeaveBalance;
 use App\Models\LeaveRequest;
 use App\Models\LeaveSettings;
 use App\Models\User;
+use Carbon\Carbon;
 use Illuminate\Http\JsonResponse;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\DB;
+use Illuminate\Support\Str;
 
 class LeaveController extends Controller
 {
@@ -88,6 +91,24 @@ class LeaveController extends Controller
 
     public function addLeave(LeaveRequestFormRequest $request)
     {
+        $leave_balance = LeaveBalance::where('employee_id' , Auth::user()->id)->first();
+
+        $leave_type_slug = Str::slug($request->leave_type, '_');
+
+        $fromDate = $request->input('leave_from');
+        $toDate = $request->input('leave_to');
+    
+        $start = Carbon::parse($fromDate);
+        $end = Carbon::parse($toDate);
+    
+        $totalDays = $start->diffInDays($end) + 1;
+
+        if ($leave_balance[$leave_type_slug] < $totalDays) {
+            return response()->json([
+                'message' => 'You have no leave balance as per requested days.'
+            ], 500);
+        }
+        
         LeaveRequest::create([
             'employee_id' => Auth::user()->id,
             'leave_type' => $request->leave_type,
@@ -95,6 +116,10 @@ class LeaveController extends Controller
             'leave_to' => $request->leave_to,
             'reason' => $request->reason
         ]);
+
+        $leave_balance->fill([
+           $leave_type_slug => $leave_balance[$leave_type_slug] - $totalDays,
+        ])->save();
 
         return response()->json([
             'message' => "$request->leave_type added successfully.",
@@ -162,9 +187,30 @@ class LeaveController extends Controller
 
     public function updateStatus(Request $request)
     {
-        LeaveRequest::where('id', $request->id)->update([
+        $leave_request = LeaveRequest::find($request->id);
+        
+        $leave_request->fill([
             'status' => $request->status,
-        ]);
+        ])->save();
+
+        if($request->status == 3) {
+             
+            $fromDate = $leave_request->leave_from;
+            $toDate = $leave_request->leave_to;
+        
+            $start = Carbon::parse($fromDate);
+            $end = Carbon::parse($toDate);
+        
+            $totalDays = $start->diffInDays($end) + 1;
+
+            $leave_balance = LeaveBalance::where('employee_id' , $leave_request->employee_id)->first();
+
+            $leave_type_slug = Str::slug($leave_request->leave_type, '_');
+
+            $leave_balance->fill([
+                $leave_type_slug => $leave_balance[$leave_type_slug] + $totalDays,
+            ])->save();
+        }
 
         return response()->json([
             'message' => "Leave status update successfully.",

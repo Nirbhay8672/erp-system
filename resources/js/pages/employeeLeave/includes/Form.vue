@@ -27,7 +27,7 @@
             </div>
         </div>
 
-        <template #modal_footer>
+        <template #modal_footer v-if="leave_details.status != 3">
             <button
                 class="btn btn-success btn-sm"
                 type="button"

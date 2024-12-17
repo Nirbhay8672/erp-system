@@ -138,15 +138,23 @@ function handleSubmit() {
             .post(MyLeaveRoutes.add, fields)
             .then((response) => {
                 leave_form.value.close();
-                emits("reload");
-                toastAlert({ title: response.data.message });
-                clearFormData();
+                toastAlert({ title: response.data.message ,  didClose: () => {
+                    window.location.href = `/my-leaves/index`;
+                }});
             })
             .catch(function (error) {
+                
                 if (error.response.status === 422) {
                     formValidation.setServerSideErrors(
                         error.response.data.errors
                     );
+                }
+
+                if(error.response.status === 500) {
+                    toastAlert({
+                        title: error.response.data.message,
+                        icon: "error",
+                    });
                 }
             });
     }

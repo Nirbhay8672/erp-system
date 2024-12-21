@@ -102,7 +102,7 @@ let menuItems = reactive([
         icon: "fa fa-th-large",
         url: "home",
         parent_segment : "home", 
-        has_permission: hasPermission('view_dashboard'),
+        has_permission: true,
     },
     {
         name: "Attendance",
@@ -123,7 +123,7 @@ let menuItems = reactive([
         icon: "fa fa-cubes",
         url: "employee-leaves/index",
         parent_segment : "employee-leaves",
-        has_permission: true,
+        has_permission: hasPermission('view_employee_leaves'),
     },
     {
         name: "Employees",
@@ -131,27 +131,6 @@ let menuItems = reactive([
         url: "employees/index",
         parent_segment : "employees",
         has_permission: hasPermission('view_employees'),
-    },
-    {
-        name: "Designations",
-        icon: "fa fa-id-card",
-        url: "designations/index",
-        parent_segment : "designations",
-        has_permission: hasPermission('view_designations'),
-    },
-    {
-        name: "Roles",
-        icon: "fa fa-user-secret",
-        url: "roles/index",
-        parent_segment : "roles",
-        has_permission: hasPermission('view_roles'),
-    },
-    {
-        name: "Permission",
-        icon: "fa fa-shield",
-        url: "permissions/index",
-        parent_segment : "permissions",
-        has_permission: hasPermission('view_permission'),
     },
     {
         name: "Holiday",
@@ -165,11 +144,12 @@ let menuItems = reactive([
         icon: "fa fa-gear",
         url: "settings",
         parent_segment : "settings",
-        has_permission: true,
+        has_permission: hasPermission('view_settings'),
     },
 ]);
 
 function hasPermission(permission_name) {
+    console.log(props.auth.user.roles[0].permissions);
     let permission_obj = props.auth.user.roles[0].permissions.find(
         (permission) => permission.name == permission_name
     );

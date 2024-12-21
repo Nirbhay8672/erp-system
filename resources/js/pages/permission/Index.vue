@@ -19,7 +19,7 @@
                         <div class="d-flex justify-content-between">
                             <h6 class="mb-0">Permissions</h6>
                             <template v-if="!allow_update">
-                                <button v-if="hasPermission(['update_permission'])" @click="allowUpdate()"
+                                <button v-if="hasPermission(['update_permissions'])" @click="allowUpdate()"
                                     class="btn btn-primary btn-sm">
                                     Update Permission
                                 </button>
@@ -94,7 +94,7 @@
                 </div>
             </div>
         </div>
-        <div class="row" v-if="allow_update && hasPermission(['update_permission'])">
+        <div class="row" v-if="allow_update && hasPermission(['update_permissions'])">
             <div class="form-group col-md-12 text-center mt-4">
                 <button type="button" class="btn btn-primary" @click="submitForm">
                     Save Changes

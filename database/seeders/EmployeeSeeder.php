@@ -40,7 +40,7 @@ class EmployeeSeeder extends Seeder
             ['display_name' => 'View Profile', 'name' => 'view_profile', 'category' => 'Profile', 'guard_name' => 'web'],
             ['display_name' => 'Update Profile', 'name' => 'update_profile', 'category' => 'Profile', 'guard_name' => 'web'],
 
-            // profile
+            // employee
             ['display_name' => 'View Employees', 'name' => 'view_employees', 'category' => 'Employee', 'guard_name' => 'web'],
             ['display_name' => 'Add Employee', 'name' => 'add_employee', 'category' => 'Employee', 'guard_name' => 'web'],
             ['display_name' => 'Update Employee', 'name' => 'update_employee', 'category' => 'Employee', 'guard_name' => 'web'],
@@ -58,8 +58,15 @@ class EmployeeSeeder extends Seeder
             ['display_name' => 'Update Role', 'name' => 'update_role', 'category' => 'Role', 'guard_name' => 'web'],
             ['display_name' => 'Delete Role', 'name' => 'delete_role', 'category' => 'Role', 'guard_name' => 'web'],
 
-            ['display_name' => 'View Permission', 'name' => 'view_permission', 'category' => 'Permission', 'guard_name' => 'web'],
-            ['display_name' => 'Update Permission', 'name' => 'update_permission', 'category' => 'Permission', 'guard_name' => 'web'],
+            // permission
+            ['display_name' => 'View Permissions', 'name' => 'view_permissions', 'category' => 'Permission', 'guard_name' => 'web'],
+            ['display_name' => 'Update Permissions', 'name' => 'update_permissions', 'category' => 'Permission', 'guard_name' => 'web'],
+
+            // employee leave
+            ['display_name' => 'View Employee Leave', 'name' => 'view_employee_leaves', 'category' => 'Employee Leave', 'guard_name' => 'web'],
+
+            // Settings
+            ['display_name' => 'View Settings', 'name' => 'view_settings', 'category' => 'Setting', 'guard_name' => 'web'],
         ];
 
         DB::table('permissions')->insert($permissions_array);
@@ -200,7 +207,7 @@ class EmployeeSeeder extends Seeder
             $new_user = User::create([
                 'name' => $employee['name'],
                 'first_name' => $employee['first_name'],
-                'last_name' => $employee['last_name'], 
+                'last_name' => $employee['last_name'],  
                 'email' => $employee['email'],
                 'mobile' => 8200186326,
                 'gender' => 'male',

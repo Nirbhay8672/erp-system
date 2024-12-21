@@ -3,67 +3,7 @@
     <main-page>
         <div class="row mt-4">
             <div class="col-lg-12 position-relative z-index-2">
-                <div class="row gy-3 mt-3">
-                    <div class="col-12 col-md-4 col-sm-6">
-                        <div class="card mb-2">
-                            <div class="card-header p-3 pt-2">
-                                <div
-                                    class="icon icon-lg icon-shape bg-gradient-primary shadow-primary shadow text-center border-radius-xl mt-n4 position-absolute">
-                                    <i class="material-icons fa fa-users opacity-10"></i>
-                                </div>
-                                <div class="text-end pt-1">
-                                    <p class="text-sm mb-0 text-capitalize">Employees</p>
-                                    <h4 class="mb-0">{{ $page.props.total_users }}</h4>
-                                </div>
-                            </div>
-                            <hr class="dark horizontal my-0">
-                            <div class="card-footer p-3 text-center">
-                                <a :href="`${$page.props.url}/employees/index`"
-                                    class="btn btn-outline-primary btn-sm mb-0">View</a>
-                            </div>
-                        </div>
-                    </div>
-                    <div class="col-12 col-md-4 col-sm-6">
-                        <div class="card mb-2">
-                            <div class="card-header p-3 pt-2">
-                                <div
-                                    class="icon icon-lg icon-shape bg-gradient-primary shadow-primary shadow text-center border-radius-xl mt-n4 position-absolute">
-                                    <i class="material-icons fa fa-id-card opacity-10"></i>
-                                </div>
-                                <div class="text-end pt-1">
-                                    <p class="text-sm mb-0 text-capitalize">Designations</p>
-                                    <h4 class="mb-0">{{ $page.props.total_designations }}</h4>
-                                </div>
-                            </div>
-                            <hr class="dark horizontal my-0">
-                            <div class="card-footer p-3 text-center">
-                                <a :href="`${$page.props.url}/designations/index`"
-                                    class="btn btn-outline-primary btn-sm mb-0">View</a>
-                            </div>
-                        </div>
-                    </div>
-                    <div class="col-12 col-md-4 col-sm-6">
-                        <div class="card mb-2">
-                            <div class="card-header p-3 pt-2">
-                                <div
-                                    class="icon icon-lg icon-shape bg-gradient-primary shadow-primary shadow text-center border-radius-xl mt-n4 position-absolute">
-                                    <i class="material-icons fa fa-user-secret opacity-10"></i>
-                                </div>
-                                <div class="text-end pt-1">
-                                    <p class="text-sm mb-0 text-capitalize">Roles</p>
-                                    <h4 class="mb-0">{{ $page.props.total_roles }}</h4>
-                                </div>
-                            </div>
-                            <hr class="dark horizontal my-0">
-                            <div class="card-footer p-3 text-center">
-                                <a :href="`${$page.props.url}/roles/index`"
-                                    class="btn btn-outline-primary btn-sm mb-0">View</a>
-                            </div>
-                        </div>
-                    </div>
-                </div>
-
-                <div class="row mt-5">
+                <div class="row">
                     <div class="col-12 col-lg-6">
                         <div class="card mb-2">
                             <div class="card-header p-3 pt-2">
@@ -180,6 +120,13 @@ function reloadData() {
     basic_info_element.value.reloadData();
     today_activity_element.value.reloadActivity();
     today_activity_element.value.reloadTime();
+}
+
+function hasPermission(permission_name) {
+    let permission_obj = props.auth.user.roles[0].permissions.find(
+        (permission) => permission.name == permission_name
+    );
+    return permission_obj ? true : false;
 }
 
 </script>

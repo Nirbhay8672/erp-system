@@ -57,9 +57,6 @@ class DashboardController extends Controller
 
         return Inertia::render('Dashboard', [
             'page_name' => 'Dashboard',
-            'total_users' => User::all()->count(),
-            'total_designations' => DesignationDetails::all()->count(),
-            'total_roles' => Role::all()->count(),
             'upcomingHolidays' => $upcomingHolidays,
             'upcomingBirthDays' => $upcomingBirthdays,
         ]);
@@ -69,6 +66,9 @@ class DashboardController extends Controller
     {
         return Inertia::render('setting/Settings', [
             'page_name' => 'Settings',
+            'total_users' => User::all()->count(),
+            'total_designations' => DesignationDetails::all()->count(),
+            'total_roles' => Role::all()->count(),
         ]);
     }
 }

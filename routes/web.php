@@ -7,6 +7,7 @@ use App\Http\Controllers\Employee\AttendanceController;
 use App\Http\Controllers\Employee\EmployeeController;
 use App\Http\Controllers\Employee\LeaveController as EmployeeLeaveController;
 use App\Http\Controllers\LoginController;
+use App\Http\Controllers\ProjectMaster\ProjectMasterController;
 use App\Http\Controllers\RolePermission\PermissionController;
 use App\Http\Controllers\RolePermission\RoleController;
 use App\Http\Controllers\Settings\HolidayController;
@@ -96,7 +97,7 @@ Route::prefix('permissions')->as('permissions.')->middleware(['auth'])->group(fu
 
 // holiday
 Route::prefix('holidays')->as('holidays.')->middleware(['auth'])->group(function () {
-    Route::get('/', [HolidayController::class, 'index'])->name('index');
+    Route::get('/index', [HolidayController::class, 'index'])->name('index');
     Route::get('/holiday-list', [HolidayController::class, 'holidayList'])->name('holiday_list');
     Route::post('/year-filter', [HolidayController::class, 'yearFilter'])->name('year_filter');
     Route::post('/get-holiday', [HolidayController::class, 'getHoliday'])->name('get_holiday');
@@ -105,7 +106,7 @@ Route::prefix('holidays')->as('holidays.')->middleware(['auth'])->group(function
 
 // settings
 Route::prefix('settings')->as('settings.')->middleware(['auth'])->group(function () {
-    Route::get('/', [DashboardController::class, 'settings'])->name('index');
+    Route::get('/index', [DashboardController::class, 'settings'])->name('index');
     Route::get('/leave', [LeaveController::class, 'index'])->name('leave');
 });
 
@@ -127,6 +128,14 @@ Route::prefix('employee-leaves')->as('employee_leaves.')->middleware(['auth'])->
     Route::get('/index', [EmployeeLeaveController::class, 'employeeLeavesIndex'])->name('employee_leaves');
     Route::post('/datatable', [EmployeeLeaveController::class, 'allEmployeeLeaves'])->name('employee_leves_list');
     Route::post('/update-status', [EmployeeLeaveController::class, 'updateStatus'])->name('update_status');
+});
+
+// project master
+Route::prefix('project-master')->as('project_master.')->middleware(['auth'])->group(function () {
+    Route::get('/index', [ProjectMasterController::class, 'index'])->name('project_master_list');
+    Route::post('/datatable', [ProjectMasterController::class, 'datatable']);
+    Route::post('/create-or-update/{project?}', [ProjectMasterController::class, 'storeOrUpdate']);
+    Route::get('/delete/{project}',[ProjectMasterController::class, 'destroy']);
 });
 
 // common

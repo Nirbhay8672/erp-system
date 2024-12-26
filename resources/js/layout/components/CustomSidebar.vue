@@ -135,14 +135,21 @@ let menuItems = reactive([
     {
         name: "Holiday",
         icon: "fa fa-calendar",
-        url: "holidays",
+        url: "holidays/index",
         parent_segment : "holidays",
+        has_permission: true,
+    },
+    {
+        name: "Project Master",
+        icon: "fa fa-folder-open",
+        url: "project-master/index",
+        parent_segment : "project-master",
         has_permission: true,
     },
     {
         name: "Settings",
         icon: "fa fa-gear",
-        url: "settings",
+        url: "settings/index",
         parent_segment : "settings",
         has_permission: hasPermission('view_settings'),
     },
